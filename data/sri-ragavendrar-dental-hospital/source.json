@@ -1,0 +1,65 @@
+{
+  "clinic": {
+    "name": "Sri Ragavendrar Dental Hospital",
+    "slug": "sri-ragavendrar-dental-hospital",
+    "tagline": "Exceptional Dental Care in Your City",
+    "description": "Welcome to Sri Ragavendrar Dental Hospital. Providing top-tier dental services tailored to your needs in a comfortable environment.",
+    "address": {
+      "full": "\nCamp Rd, Barathi Nagar, IOB Colony, Tambaram, Chennai, Tamil Nadu 600073",
+      "area": "",
+      "city": "Tambaram",
+      "state": "Chennai",
+      "country": "India"
+    },
+    "contact": {
+      "phone": "04422293386",
+      "website": ""
+    }
+  },
+  "business": {
+    "rating": "",
+    "reviewCount": "",
+    "timings": [],
+    "services": [
+      "Teeth Cleaning",
+      "Root Canal Treatment",
+      "Dental Implants",
+      "Braces & Aligners",
+      "Teeth Whitening"
+    ],
+    "highlights": [
+      "Experienced dental team",
+      "Modern equipment",
+      "Patient-friendly care"
+    ]
+  },
+  "doctor": {
+    "name": "Dr. Sri Team",
+    "images": [],
+    "experience": "5+ years",
+    "specialization": "General Dentistry"
+  },
+  "reviews": [
+    {
+      "author": "John Doe",
+      "rating": "5",
+      "text": "Great experience, highly recommend!"
+    }
+  ],
+  "media": {
+    "clinicImages": [
+      "/api/media?slug=sri-ragavendrar-dental-hospital&file=clinicImages-1.jpg"
+    ],
+    "treatmentImages": [],
+    "otherImages": []
+  },
+  "overrides": {
+    "doctorName": "",
+    "doctorImages": [],
+    "extraImages": []
+  },
+  "meta": {
+    "generatedAt": "2026-04-11T11:06:35.660Z",
+    "source": "google_maps"
+  }
+}
