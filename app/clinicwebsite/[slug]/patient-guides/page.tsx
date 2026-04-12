@@ -42,7 +42,7 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
     {
       icon: AlertTriangle,
       category: 'Post-Treatment Recovery',
-      title: 'Face Swelling 2 Days After Root Canal: Causes and Solutions',
+      title: 'Face Swelling 2 Days After Root Canal',
       intro: 'You just had a root canal. The worst is supposed to be over — but now, two days later, your face is still swollen and you are not sure if that is normal. This guide will help you understand what to expect during recovery.',
       sections: [
         {
@@ -64,7 +64,7 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
     {
       icon: Clock,
       category: 'Post-Treatment Recovery',
-      title: 'Jaw Pain and Recovery After Wisdom Tooth Extraction',
+      title: 'Jaw Pain After Wisdom Tooth Extraction',
       intro: 'The first few days after wisdom tooth removal are always rough — the swelling, the ice packs, the soup-only diet. But if your jaw still hurts two weeks later, you might be wondering if something went wrong.',
       sections: [
         {
@@ -86,7 +86,7 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
     {
       icon: Droplets,
       category: 'Cosmetic Dentistry',
-      title: 'The Truth About Teeth Whitening: Professional vs. At-Home',
+      title: 'Professional vs. At-Home Teeth Whitening',
       intro: 'Teeth whitening is the most requested cosmetic dental procedure in the world. But with so many options — from drugstore strips to Instagram-promoted kits — how do you know what actually works and what might harm your teeth?',
       sections: [
         {
@@ -108,7 +108,7 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
     {
       icon: Baby,
       category: 'Pediatric Care',
-      title: 'How to Prepare Your Child for Their First Dental Visit',
+      title: 'Preparing Your Child for the Dentist',
       intro: 'A child\'s first dental experience sets the tone for a lifetime of oral health. A positive first visit builds trust and eliminates fear; a traumatic one can create dental anxiety that persists into adulthood. Here is how to set your child up for success.',
       sections: [
         {
@@ -130,7 +130,7 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
     {
       icon: ShieldCheck,
       category: 'Dental Implants',
-      title: 'Understanding Dental Implants: Are You a Good Candidate?',
+      title: 'Are You a Candidate for Implants?',
       intro: 'Dental implants are the gold standard for replacing missing teeth — but they are not right for everyone. This guide covers the key requirements, the procedure itself, and how to determine if implants are the best option for your situation.',
       sections: [
         {
@@ -152,15 +152,16 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
   ];
 
   return (
-    <>
+    <div className="font-sans text-[#202A36] bg-gray-50 min-h-screen selection:bg-[#202A36] selection:text-white">
       {/* Page Hero Banner */}
-      <section className="relative bg-slate-900 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/40 to-slate-900 pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-emerald-600/10 rounded-full blur-[120px] translate-y-1/2 translate-x-1/4 pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28 relative z-10">
-          <p className="text-emerald-400 font-bold tracking-widest uppercase text-sm mb-4">Patient Education</p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">Guides Written By<br/>Our Dental Experts</h2>
-          <p className="text-xl text-slate-300 max-w-3xl font-medium leading-relaxed">
+      <section className="bg-[#202A36] text-white py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-8 w-full">
+          <p className="text-gray-400 font-semibold tracking-[0.15em] uppercase text-xs mb-6">Patient Education</p>
+          <div className="flex flex-col mb-8">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Guides Written By</h2>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">Our Dental Experts</h2>
+          </div>
+          <p className="text-xl text-gray-400 max-w-3xl font-light leading-relaxed">
             Empowering you with clear, honest, jargon-free information so you can make confident decisions about your dental health. Every guide is reviewed by our specialist team.
           </p>
         </div>
@@ -168,71 +169,72 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
 
       {/* Guides List */}
       <div className="bg-white">
+        <div className="max-w-4xl mx-auto px-8 w-full pt-16">
         {guides.map((guide, idx) => {
-          const isEven = idx % 2 === 0;
           const IconComp = guide.icon;
 
           return (
-            <section key={idx} className={`py-20 lg:py-28 border-b border-slate-100 ${isEven ? 'bg-white' : 'bg-slate-50/50'}`}>
-              <div className="max-w-4xl mx-auto px-6">
+            <article key={idx} className="mb-24 pb-24 border-b border-gray-100 last:border-0 last:mb-0 last:pb-16">
                 {/* Category & Title */}
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 bg-gray-50">
                     <IconComp className="w-5 h-5" />
                   </div>
-                  <span className="text-indigo-600 font-bold text-sm tracking-widest uppercase">{guide.category}</span>
+                  <span className="text-gray-500 font-semibold text-xs tracking-[0.15em] uppercase">{guide.category}</span>
                 </div>
 
-                <h3 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 leading-tight">{guide.title}</h3>
-                <p className="text-slate-600 text-lg leading-relaxed mb-10 border-l-4 border-indigo-200 pl-6 italic">{guide.intro}</p>
+                <h3 className="text-4xl lg:text-5xl font-normal text-[#202A36] mb-8 leading-tight tracking-tight">{guide.title}</h3>
+                <p className="text-gray-500 text-[18px] leading-relaxed mb-12 border-l-2 border-gray-200 pl-6 italic font-light">{guide.intro}</p>
 
                 {/* Content Sections */}
-                <div className="space-y-10 mb-12">
+                <div className="space-y-12 mb-12">
                   {guide.sections.map((section, sIdx) => (
                     <div key={sIdx}>
-                      <h4 className="text-xl font-bold text-slate-900 mb-4">{section.heading}</h4>
-                      <p className="text-slate-600 text-[17px] leading-relaxed">{section.content}</p>
+                      <h4 className="text-xl font-medium text-[#202A36] mb-4">{section.heading}</h4>
+                      <p className="text-gray-600 text-[16px] leading-relaxed font-light">{section.content}</p>
                     </div>
                   ))}
                 </div>
 
                 {/* Tips Box */}
-                <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-8">
-                  <div className="flex items-center gap-3 mb-5">
-                    <Lightbulb className="w-5 h-5 text-indigo-600" />
-                    <h4 className="font-bold text-slate-900 text-lg">Expert Tips</h4>
+                <div className="bg-gray-50 rounded-3xl p-10 border border-gray-100">
+                  <div className="flex items-center gap-3 mb-6">
+                    <Lightbulb className="w-5 h-5 text-gray-600" />
+                    <h4 className="font-medium text-[#202A36] text-lg">Expert Tips</h4>
                   </div>
-                  <ul className="space-y-3">
+                  <ul className="space-y-4">
                     {guide.tips.map((tip, tIdx) => (
-                      <li key={tIdx} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                        <span className="text-slate-700 font-medium">{tip}</span>
+                      <li key={tIdx} className="flex items-start gap-4">
+                        <CheckCircle2 className="w-5 h-5 text-gray-400 shrink-0" />
+                        <span className="text-gray-600 font-light">{tip}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-              </div>
-            </section>
+            </article>
           );
         })}
+        </div>
       </div>
 
       {/* Bottom CTA */}
-      <section className="bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-700 py-20 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-white/10 rounded-full blur-3xl pointer-events-none translate-x-1/2 -translate-y-1/2" />
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <h3 className="text-3xl md:text-4xl font-black text-white mb-4">Have Questions About Your Dental Health?</h3>
-          <p className="text-xl text-indigo-100 mb-10 font-medium">Our specialists are here to provide personalised advice. No question is too small — your dental health matters.</p>
+      <section className="bg-[#202A36] py-24 lg:py-40 text-white">
+        <div className="max-w-4xl mx-auto px-8 text-center w-full">
+          <div className="flex flex-col mb-8">
+            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Have Questions</h3>
+            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">About Your Health?</h3>
+          </div>
+          <p className="text-xl text-gray-400 font-light mb-12 max-w-2xl mx-auto">Our specialists are here to provide personalised advice. No question is too small — your dental health matters.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white text-indigo-900 px-10 py-5 rounded-full font-black hover:bg-slate-50 hover:scale-105 transition-all duration-300 shadow-xl text-lg">
-              <Phone className="w-5 h-5 text-indigo-600" /> Ask Our Specialists
+            <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-[#202A36] px-8 py-4 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm tracking-wide">
+              <Phone className="w-4 h-4" /> Ask Our Specialists
             </a>
-            <Link href={`${basePath}/contact-us`} className="w-full sm:w-auto inline-flex items-center justify-center gap-3 border-2 border-white/30 text-white px-10 py-5 rounded-full font-bold hover:bg-white/10 transition-all duration-300 text-lg">
-              Send Your Question <ArrowRight className="w-5 h-5" />
+            <Link href={`${basePath}/contact-us`} className="w-full sm:w-auto flex items-center justify-center gap-2 border border-gray-600 text-white px-8 py-4 rounded-full font-medium hover:bg-gray-800 transition-colors text-sm tracking-wide">
+              Send Your Question <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

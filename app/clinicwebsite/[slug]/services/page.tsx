@@ -216,27 +216,28 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
     : ['Cosmetic Dentistry', 'Dental Implants', 'Invisalign Treatment', 'Root Canal Treatment', 'Full Mouth Rehabilitation', 'Teeth Whitening', 'Braces Treatment', 'Teeth Cleaning'];
 
   return (
-    <>
+    <div className="font-sans text-[#202A36] bg-gray-50 min-h-screen selection:bg-[#202A36] selection:text-white">
       {/* Page Hero Banner */}
-      <section className="relative bg-slate-900 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/40 to-slate-900 pointer-events-none" />
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28 relative z-10">
-          <p className="text-indigo-400 font-bold tracking-widest uppercase text-sm mb-4">Our Treatments</p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">Comprehensive Dental<br/>Services Under One Roof</h2>
-          <p className="text-xl text-slate-300 max-w-3xl font-medium leading-relaxed">
+      <section className="bg-[#202A36] text-white py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-8 w-full">
+          <p className="text-gray-400 font-semibold tracking-[0.15em] uppercase text-xs mb-6">Our Treatments</p>
+          <div className="flex flex-col mb-8">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Comprehensive Dental</h2>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">Services Under One Roof</h2>
+          </div>
+          <p className="text-xl text-gray-400 max-w-3xl font-light leading-relaxed">
             At {clinic.name || 'our clinic'}, we provide quality dental care for everyone. Whether it's Invisalign, implants, cosmetic dentistry, or pediatric care — our team of specialists has you covered with advanced technology and a compassionate approach.
           </p>
         </div>
       </section>
 
       {/* Quick Stats Bar */}
-      <section className="bg-indigo-600 text-white py-6">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div><span className="text-2xl font-black">{servicesList.length}+</span><p className="text-indigo-100 text-sm font-medium mt-1">Specialised Treatments</p></div>
-          <div><span className="text-2xl font-black">15+</span><p className="text-indigo-100 text-sm font-medium mt-1">Years Combined Experience</p></div>
-          <div><span className="text-2xl font-black">100%</span><p className="text-indigo-100 text-sm font-medium mt-1">Sterilisation Standards</p></div>
-          <div><span className="text-2xl font-black">Pain-Free</span><p className="text-indigo-100 text-sm font-medium mt-1">Modern Sedation Options</p></div>
+      <section className="bg-gray-100 border-b border-gray-200 py-10">
+        <div className="max-w-7xl mx-auto px-8 w-full grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div><span className="text-3xl font-normal text-[#202A36]">{servicesList.length}+</span><p className="text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-2">Specialised Treatments</p></div>
+          <div><span className="text-3xl font-normal text-[#202A36]">15+</span><p className="text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-2">Years Experience</p></div>
+          <div><span className="text-3xl font-normal text-[#202A36]">100%</span><p className="text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-2">Sterilisation Standards</p></div>
+          <div><span className="text-3xl font-normal text-[#202A36]">Pain-Free</span><p className="text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-2">Sedation Options</p></div>
         </div>
       </section>
 
@@ -251,43 +252,41 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
             <section
               key={idx}
               id={`service-${idx}`}
-              className={`py-20 lg:py-28 border-b border-slate-100 ${isEven ? 'bg-white' : 'bg-slate-50/50'}`}
+              className={`py-24 lg:py-32 border-b border-gray-100 ${isEven ? 'bg-white' : 'bg-gray-50'}`}
             >
-              <div className="max-w-7xl mx-auto px-6">
+              <div className="max-w-7xl mx-auto px-8 w-full">
                 {/* Service Header */}
                 <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
                   {/* Left: Content */}
                   <div className={`flex-1 ${!isEven ? 'lg:order-2' : ''}`}>
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 shadow-sm border border-indigo-100">
-                        <IconComponent className="w-7 h-7" />
+                    <div className="flex items-center gap-4 mb-8">
+                      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-800 border border-gray-200">
+                        <IconComponent className="w-5 h-5" />
                       </div>
-                      <div>
-                        <p className="text-indigo-600 font-bold text-sm tracking-widest uppercase">Treatment {String(idx + 1).padStart(2, '0')}</p>
-                      </div>
+                      <p className="text-gray-400 font-semibold text-xs tracking-widest uppercase">Treatment {String(idx + 1).padStart(2, '0')}</p>
                     </div>
 
-                    <h3 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">{serviceName}</h3>
-                    <p className="text-lg text-indigo-600 font-semibold mb-6 italic">
+                    <h3 className="text-3xl lg:text-4xl font-normal text-[#202A36] mb-4">{serviceName}</h3>
+                    <p className="text-gray-500 font-medium mb-8">
                       {svcData?.tagline || 'Expert care tailored to your unique needs.'}
                     </p>
-                    <p className="text-slate-600 leading-relaxed text-[17px] mb-10">
+                    <p className="text-gray-600 font-light leading-relaxed text-[16px] mb-12">
                       {svcData?.description || 'Our specialists provide professional, personalised treatment focused precisely on your individual needs, ensuring total comfort and optimal clinical outcomes. We use the latest equipment and techniques to deliver predictable, lasting results.'}
                     </p>
 
                     {/* Benefits */}
-                    <div className="mb-10">
-                      <h4 className="text-lg font-bold text-slate-900 mb-4">Key Benefits</h4>
-                      <ul className="space-y-3">
+                    <div className="mb-12">
+                      <h4 className="text-sm font-semibold tracking-widest uppercase text-gray-500 mb-6">Key Benefits</h4>
+                      <ul className="space-y-4">
                         {(svcData?.benefits || [
                           'Personalised treatment approach for every patient',
                           'Modern equipment and sterilisation standards',
                           'Experienced specialists with advanced training',
                           'Comfortable, anxiety-free clinical environment',
                         ]).map((b, i) => (
-                          <li key={i} className="flex items-start gap-3">
-                            <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span className="text-slate-700 font-medium">{b}</span>
+                          <li key={i} className="flex items-start gap-4">
+                            <CheckCircle2 className="w-5 h-5 text-gray-400 shrink-0" />
+                            <span className="text-gray-600 font-light">{b}</span>
                           </li>
                         ))}
                       </ul>
@@ -295,7 +294,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
 
                     <a
                       href={`tel:${clinic.contact?.phone || ''}`}
-                      className="inline-flex items-center gap-2 bg-indigo-600 text-white px-8 py-3.5 rounded-full font-bold hover:bg-indigo-700 transition-all duration-300 shadow-lg shadow-indigo-600/20"
+                      className="inline-flex items-center gap-2 border border-gray-300 text-[#202A36] px-8 py-3.5 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm"
                     >
                       <Phone className="w-4 h-4" /> Book This Treatment
                     </a>
@@ -303,21 +302,21 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
 
                   {/* Right: Process Steps */}
                   <div className={`flex-1 ${!isEven ? 'lg:order-1' : ''}`}>
-                    <div className="bg-white rounded-3xl border border-slate-200 p-8 lg:p-10 shadow-sm h-full">
-                      <h4 className="text-lg font-bold text-slate-900 mb-8">How It Works</h4>
-                      <div className="space-y-8">
+                    <div className="bg-white rounded-3xl border border-gray-100 p-10 lg:p-12 h-full flex flex-col">
+                      <h4 className="text-xl font-medium text-[#202A36] mb-10">How It Works</h4>
+                      <div className="space-y-10 flex-grow">
                         {(svcData?.process || [
                           'Initial consultation and comprehensive examination',
                           'Custom treatment plan development and discussion',
                           'Treatment execution using advanced techniques',
                           'Follow-up care and long-term maintenance guidance',
                         ]).map((step, i) => (
-                          <div key={i} className="flex items-start gap-5">
-                            <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black text-sm shrink-0 shadow-md">
+                          <div key={i} className="flex items-start gap-6">
+                            <div className="w-8 h-8 rounded-full flex items-center justify-center text-gray-400 font-medium text-xs tracking-widest shrink-0 border border-gray-200">
                               {String(i + 1).padStart(2, '0')}
                             </div>
                             <div className="pt-1.5">
-                              <p className="text-slate-700 font-medium leading-relaxed">{step}</p>
+                              <p className="text-gray-600 font-light leading-relaxed">{step}</p>
                             </div>
                           </div>
                         ))}
@@ -332,21 +331,23 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
       </div>
 
       {/* Bottom CTA */}
-      <section className="bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-700 py-20 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-white/10 rounded-full blur-3xl pointer-events-none translate-x-1/2 -translate-y-1/2" />
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <h3 className="text-3xl md:text-4xl font-black text-white mb-4">Not Sure Which Treatment You Need?</h3>
-          <p className="text-xl text-indigo-100 mb-10 font-medium">Book a free consultation and our specialists will evaluate your dental health and recommend the best path forward.</p>
+      <section className="bg-[#202A36] py-24 lg:py-40 text-white">
+        <div className="max-w-4xl mx-auto px-8 w-full text-center">
+          <div className="flex flex-col mb-8">
+            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Not Sure Which</h3>
+            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">Treatment You Need?</h3>
+          </div>
+          <p className="text-xl text-gray-400 font-light mb-12 max-w-2xl mx-auto">Book a free consultation and our specialists will evaluate your dental health and recommend the best path forward.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white text-indigo-900 px-10 py-5 rounded-full font-black hover:bg-slate-50 hover:scale-105 transition-all duration-300 shadow-xl text-lg">
-              <Phone className="w-5 h-5 text-indigo-600" /> Call {clinic.contact?.phone || 'Now'}
+            <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-[#202A36] px-8 py-4 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm tracking-wide">
+              <Phone className="w-4 h-4" /> Call {clinic.contact?.phone || 'Now'}
             </a>
-            <Link href={`${basePath}/contact-us`} className="w-full sm:w-auto inline-flex items-center justify-center gap-3 border-2 border-white/30 text-white px-10 py-4.5 rounded-full font-bold hover:bg-white/10 transition-all duration-300 text-lg">
-              Send Enquiry <ArrowRight className="w-5 h-5" />
+            <Link href={`${basePath}/contact-us`} className="w-full sm:w-auto flex items-center justify-center gap-2 border border-gray-600 text-white px-8 py-4 rounded-full font-medium hover:bg-gray-800 transition-colors text-sm tracking-wide">
+              Send Enquiry <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

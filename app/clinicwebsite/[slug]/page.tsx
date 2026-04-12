@@ -1,9 +1,12 @@
 import { readSourceConfig } from '@/lib/dataBuilder';
 import { notFound } from 'next/navigation';
 import { 
-  Star, ArrowRight, Shield, Activity, ChevronRight, Quote, Plus, Minus, PlayCircle, ImageIcon
+  Star, ArrowRight, Shield, Activity, ChevronRight, Quote, Plus, Minus, 
+  PlayCircle, Phone, Microscope, Award, Smile, Users, Stethoscope, 
+  HeartPulse, Image as ImageIcon, Camera, CheckCircle2
 } from 'lucide-react';
 import Link from 'next/link';
+import ClientHero from './ClientHero';
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -17,8 +20,9 @@ export default async function ClinicHome({ params }: PageProps) {
   const data = await readSourceConfig(slug);
   if (!data) return notFound();
 
-  const { clinic, business, media } = data;
+  const { clinic, doctor, business, media } = data;
   const heroImage = media.clinicImages?.[0] || 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=2000';
+  const doctorImage = media.otherImages?.[0] || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800';
 
   const defaultReviews = [
     { author: "Sarah Jenkins", rating: 5, text: "Absolutely wonderful experience. The staff was incredibly welcoming and the treatment was painless. Highly recommend their cosmetic dentistry services!" },
@@ -35,121 +39,140 @@ export default async function ClinicHome({ params }: PageProps) {
     { q: "Do you provide Invisalign clear aligners?", a: "Yes—our Invisalign® service lets you straighten teeth discreetly with nearly invisible, removable trays, guided by our certified orthodontics experts." }
   ];
 
-  return (
-    <>
-      {/* Hero Section */}
-      <section className="relative pt-10 pb-32 lg:pt-16 lg:pb-40 overflow-hidden isolate">
-        <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-          <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-indigo-200 to-violet-400 opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-16">
-          <div className="flex-1 space-y-8 text-center lg:text-left z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50/80 backdrop-blur border border-indigo-100 text-indigo-700 font-bold text-sm shadow-sm">
-              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-              Top Rated Dental Clinic ({business.reviewCount || '500+'} Patient Smiles)
-            </div>
-            
-            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 leading-[1.1] drop-shadow-sm">
-              {clinic.tagline || 'Experience Dental Care At Its Best'}
-            </h2>
-            
-            <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium">
-              {clinic.description || 'Welcome to our premium dental center. From routine checkups to full mouth rehabilitation, we prioritize your smile and comfort.'}
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
-              <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto bg-indigo-600 text-white px-8 py-4 rounded-full font-bold hover:bg-indigo-700 transition-all duration-300 shadow-xl shadow-indigo-600/20 hover:shadow-indigo-600/40 hover:-translate-y-1 flex items-center justify-center gap-2 text-lg">
-                Schedule Your Visit <ArrowRight className="w-5 h-5" />
-              </a>
-              <Link href={`${basePath}/about-us`} className="w-full sm:w-auto bg-white border-2 border-slate-200 text-slate-700 px-8 py-4 rounded-full font-bold hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700 transition-all duration-300 flex items-center justify-center">
-                Meet the Experts
-              </Link>
-            </div>
-          </div>
+  const getServiceDescription = (svc: string) => {
+    const lower = svc.toLowerCase();
+    if (lower.includes('cosmetic')) return 'Enhance your smile with our advanced cosmetic treatments, including teeth whitening and custom veneers designed for perfection.';
+    if (lower.includes('implant')) return 'Restore your confidence with permanent, natural-looking tooth replacements that function just like natural teeth.';
+    if (lower.includes('invisalign') || lower.includes('aligners')) return 'Discreetly straighten your teeth with clear, comfortable custom-fit aligners—no traditional metal brackets required.';
+    if (lower.includes('root canal')) return 'Save your natural tooth and relieve severe pain utilizing our precision endodontic therapy in a relaxed environment.';
+    if (lower.includes('rehabilitation') || lower.includes('rehab')) return 'A comprehensive, tailored approach to entirely restore your oral health, jaw functionality, and the aesthetics of your smile.';
+    if (lower.includes('sedation') || lower.includes('pain-free')) return 'Experience deeply relaxed dental care perfectly suited for patients with dental anxiety, phobias, or special needs.';
+    if (lower.includes('braces') || lower.includes('orthodontic')) return 'Traditional and modern orthodontic solutions designed to correct misalignments effectively for children, teens, and adults.';
+    if (lower.includes('cleaning') || lower.includes('checkup')) return 'Essential preventive care. We remove plaque, prevent decay, and provide comprehensive screenings to keep your gums healthy.';
+    if (lower.includes('crown') || lower.includes('bridge')) return 'Durable, tooth-colored custom prosthetics that securely cover, protect, and restore the natural shape of damaged or missing teeth.';
+    if (lower.includes('whitening')) return 'Professional, high-grade teeth whitening procedures to eliminate deep stains and brighten your smile significantly in just one visit.';
+    if (lower.includes('gum') || lower.includes('periodont')) return 'Advanced treatments including laser therapy to effectively treat gum disease and enhance your overall periodontal health.';
+    return 'Professional, personalized dental treatment focused precisely on your individual needs, ensuring total comfort and optimal clinical outcomes.';
+  };
 
-          <div className="flex-1 w-full relative z-10">
-            <div className="relative w-full aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl group">
-              <img src={heroImage} alt="State of the art dental clinic" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/0 to-slate-900/0"></div>
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                 <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/50 cursor-pointer hover:bg-white/30 transition-colors">
-                   <PlayCircle className="w-10 h-10 text-white" />
-                 </div>
-              </div>
+  const servicesList = business.services?.length
+    ? business.services.slice(0, 6)
+    : ['Cosmetic Dentistry', 'Dental Implants', 'Invisalign Treatment', 'Root Canal', 'Full Mouth Rehab', 'Sedation Dentistry'];
+
+  return (
+    <div className="font-sans text-[#202A36] bg-gray-50 min-h-screen selection:bg-[#202A36] selection:text-white">
+      <ClientHero clinic={clinic} business={business} basePath={basePath} />
+
+      {/* WHY CHOOSE US */}
+      <section className="py-24 lg:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-8 w-full">
+          <div className="mb-20 space-y-5">
+            <h3 className="text-sm font-semibold text-gray-500 tracking-[0.15em] uppercase">Why Choose Us</h3>
+            <div className="flex flex-col">
+              <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">Dedicated To</h4>
+              <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-[#202A36] leading-none tracking-tighter -mt-[6px]">Your Health</h4>
             </div>
-            
-            <div className="absolute -bottom-8 -left-8 sm:-left-12 bg-white/90 backdrop-blur-xl border border-white p-6 rounded-2xl shadow-2xl max-w-[260px] animate-[bounce_4s_ease-in-out_infinite]">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-emerald-100 rounded-xl text-emerald-600 shrink-0">
-                  <Shield className="w-6 h-6" />
+            <p className="text-xl text-gray-600 max-w-2xl pt-2">We combine expertise, cutting-edge technology, and a friendly approach to care for all your dental needs.</p>
+          </div>
+          
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+            {[
+              { title: "Advanced Technology", desc: "We use the latest dental equipment and 3D imaging for precise, effective, and efficient treatments.", icon: Microscope },
+              { title: "Expert Specialists", desc: "Our dentists are highly skilled professionals, including specialized Endodontists and Implantologists.", icon: Award },
+              { title: "Patient Comfort Focus", desc: "We prioritize your comfort with a welcoming atmosphere, painless sedation dentistry, and premium care.", icon: Smile },
+              { title: "Affordable Care", desc: "Quality dental services are accessible. We believe everyone deserves great dental health without hidden costs.", icon: Users }
+            ].map((feature, idx) => (
+              <div key={idx} className="flex flex-col group p-6 rounded-3xl hover:bg-gray-50 transition-colors duration-300">
+                <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center mb-6 text-gray-800 group-hover:bg-[#202A36] group-hover:text-white transition-colors duration-300">
+                  <feature.icon className="w-6 h-6" />
                 </div>
-                <div>
-                  <p className="font-bold text-slate-900 leading-tight">Advanced Painless Tech</p>
-                  <p className="text-sm text-slate-500 font-medium mt-1">Exceptional Care</p>
-                </div>
+                <h5 className="text-xl font-medium text-[#202A36] mb-3">{feature.title}</h5>
+                <p className="text-gray-500 leading-relaxed font-normal text-[15px]">{feature.desc}</p>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Services Snapshot */}
-      <section className="py-24 bg-white relative border-t border-slate-100">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
-            <div className="max-w-2xl space-y-4">
-              <h3 className="text-indigo-600 font-bold tracking-widest uppercase text-sm">Comprehensive Care</h3>
-              <h4 className="text-4xl md:text-5xl font-black text-slate-900">Featured Treatments</h4>
+      {/* SERVICES */}
+      <section className="py-24 lg:py-32 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-8 w-full">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mb-20">
+            <div className="space-y-5 flex-1">
+              <h3 className="text-sm font-semibold text-gray-500 tracking-[0.15em] uppercase">Comprehensive Services</h3>
+              <div className="flex flex-col">
+                <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">Explore Our</h4>
+                <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-[#202A36] leading-none tracking-tighter -mt-[6px]">Treatments</h4>
+              </div>
+              <p className="text-xl text-gray-600 max-w-2xl pt-2">Whether it's routine cleanings, Invisalign teeth aligners, or complex root canal treatments, we handle it with utmost care.</p>
             </div>
-            <Link href={`${basePath}/services`} className="hidden md:inline-flex items-center gap-2 text-indigo-600 font-bold hover:text-indigo-800 transition-colors">
-              View All Services <ArrowRight className="w-4 h-4" />
+            <Link href={`${basePath}/services`} className="inline-flex items-center gap-2 pb-1 border-b border-[#202A36] text-[#202A36] font-medium hover:text-gray-600 hover:border-gray-600 transition-colors uppercase tracking-wider text-sm whitespace-nowrap">
+              View All Services
             </Link>
           </div>
           
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-             {['Cosmetic Dentistry', 'Dental Implants', 'Invisalign Treatment', 'Root Canal'].map((svc: string, i: number) => (
-                <div key={i} className="group p-6 rounded-3xl bg-slate-50 hover:bg-slate-900 border border-slate-100 hover:border-slate-800 shadow-sm transition-all duration-500 flex flex-col justify-between min-h-[200px]">
-                  <div>
-                    <div className="w-12 h-12 bg-white group-hover:bg-indigo-500/20 rounded-xl flex items-center justify-center mb-6 shadow-sm transition-colors text-indigo-600 group-hover:text-indigo-400">
-                      <Activity className="w-6 h-6" />
-                    </div>
-                    <h5 className="text-xl font-bold text-slate-900 group-hover:text-white transition-colors leading-tight mb-3">{svc}</h5>
-                  </div>
-                  <Link href={`${basePath}/services`} className="flex items-center gap-2 text-sm font-bold text-indigo-600 group-hover:text-indigo-400 opacity-80 group-hover:opacity-100 mt-auto pt-4 border-t border-slate-200 group-hover:border-slate-700 transition-colors">
-                    Read Details <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {servicesList.map((svc: string, i: number) => (
+              <div key={i} className="bg-white p-10 rounded-3xl border border-gray-100 hover:border-gray-300 hover:shadow-lg transition-all duration-300 flex flex-col group min-h-[320px]">
+                <div className="mb-8">
+                   <Activity className="w-8 h-8 text-gray-400 group-hover:text-[#202A36] transition-colors" />
                 </div>
-              ))}
+                <h5 className="text-2xl font-normal text-[#202A36] mb-4 tracking-tight">{svc}</h5>
+                <p className="text-gray-500 leading-relaxed mb-8 flex-grow text-[15px]">
+                  {getServiceDescription(svc)}
+                </p>
+                <Link href={`${basePath}/services`} className="flex items-center justify-between mt-auto border-t border-gray-100 pt-6">
+                  <span className="text-sm font-medium uppercase tracking-[0.15em] text-[#202A36] group-hover:text-gray-500 transition-colors">Read Details</span>
+                  <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 group-hover:bg-[#202A36] group-hover:text-white transition-all transform group-hover:translate-x-1">
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Patient Reviews Section */}
-      <section className="py-24 bg-slate-50 relative">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h3 className="text-indigo-600 font-bold tracking-widest uppercase text-sm">Patient Stories</h3>
-            <h4 className="text-4xl md:text-5xl font-black text-slate-900">Over 500+ Happy Patients</h4>
-            <p className="text-lg text-slate-600 font-medium">Don't just take our word for it. Read real experiences from our valued community.</p>
+      {/* GALLERY */}
+      <section className="py-24 lg:py-32 bg-[#202A36]">
+        <div className="max-w-7xl mx-auto px-8 w-full">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mb-20">
+            <div className="space-y-5 flex-1">
+              <h3 className="text-sm font-semibold text-gray-400 tracking-[0.15em] uppercase">Visual Evidence</h3>
+              <div className="flex flex-col">
+                <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Before & After</h4>
+                <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">Results</h4>
+              </div>
+              <p className="text-xl text-gray-400 max-w-2xl pt-2">Witness the transformative power of our dental treatments. Your dream smile is completely within reach.</p>
+            </div>
+            <Link href={`${basePath}/gallery`} className="inline-flex items-center gap-2 pb-1 border-b border-white text-white font-medium hover:text-gray-300 hover:border-gray-300 transition-colors uppercase tracking-wider text-sm whitespace-nowrap">
+              View Full Gallery
+            </Link>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {displayReviews.slice(0, 3).map((review: any, i: number) => (
-              <div key={i} className="bg-white p-8 rounded-[2rem] shadow-sm shadow-slate-200/50 border border-slate-200 flex flex-col h-full hover:-translate-y-2 transition-transform duration-300">
-                <Quote className="text-indigo-100 w-12 h-12 mb-4" />
-                <p className="text-slate-700 leading-relaxed mb-8 relative z-10 flex-grow text-lg font-medium">"{review.text}"</p>
-                <div className="flex items-center gap-4 mt-auto pt-6 border-t border-slate-100">
-                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-full flex items-center justify-center text-white font-black text-xl shadow-inner">
-                    {review.author ? review.author.charAt(0) : 'U'}
-                  </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { title: 'Smile Makeover', sub: 'Cosmetic Veneers' },
+              { title: 'Dental Implants', sub: 'Full-Arch Restoration' },
+              { title: 'Orthodontic Correction', sub: 'Invisalign Results' },
+            ].map((item, idx) => (
+              <div key={idx} className="group cursor-pointer flex flex-col h-full">
+                <div className="aspect-[4/3] bg-[#1a222c] rounded-3xl overflow-hidden relative mb-6">
+                   <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500"></div>
+                   <div className="absolute inset-0 flex items-center justify-center opacity-75 group-hover:opacity-100 transition-opacity">
+                     <span className="flex flex-col items-center gap-3 text-white">
+                        <Camera className="w-8 h-8" />
+                        <span className="text-xs uppercase tracking-[0.15em] font-semibold">Before & After</span>
+                     </span>
+                   </div>
+                </div>
+                <div className="flex justify-between items-center px-2">
                   <div>
-                    <h6 className="font-bold text-slate-900">{review.author || 'Patient'}</h6>
-                    <div className="flex gap-1 mt-1">
-                      {[...Array(5)].map((_, j) => (
-                        <Star key={j} className={`w-3.5 h-3.5 ${j < parseInt(review.rating) ? 'fill-amber-400 text-amber-400' : 'fill-slate-200 text-slate-200'}`} />
-                      ))}
-                    </div>
+                    <h5 className="text-xl font-normal text-white">{item.title}</h5>
+                    <p className="text-gray-400 mt-1 uppercase text-xs tracking-widest font-semibold">{item.sub}</p>
+                  </div>
+                  <div className="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#202A36] transition-all">
+                    <ArrowRight className="w-4 h-4 group-hover:-rotate-45 transition-transform" />
                   </div>
                 </div>
               </div>
@@ -158,32 +181,157 @@ export default async function ClinicHome({ params }: PageProps) {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-24 bg-white border-y border-slate-200">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-16 space-y-4">
-            <h3 className="text-indigo-600 font-bold tracking-widest uppercase text-sm">Common Queries</h3>
-            <h4 className="text-4xl md:text-5xl font-black text-slate-900">Frequently Asked Questions</h4>
+      {/* SPECIALISTS */}
+      <section className="py-24 lg:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-8 w-full">
+           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+             <div className="order-2 lg:order-1 relative">
+                <img src={doctorImage} alt={doctor.name || "Specialist"} className="w-full aspect-[4/5] object-cover rounded-3xl bg-gray-100" />
+                <div className="absolute -bottom-8 -right-4 md:right-8 bg-white p-6 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-6">
+                   <div>
+                     <h4 className="text-xl font-medium text-[#202A36]">{doctor.name || 'Our Lead Specialist'}</h4>
+                     <p className="text-xs text-gray-500 uppercase tracking-widest mt-1 font-semibold">{doctor.specialization || 'Orthodontist & Implantologist'}</p>
+                   </div>
+                   <div className="text-gray-400 font-medium text-sm border-l border-gray-200 pl-6">{doctor.experience || '10+ Years'}</div>
+                </div>
+             </div>
+             
+             <div className="order-1 lg:order-2 space-y-12">
+               <div className="space-y-5">
+                 <h3 className="text-sm font-semibold text-gray-500 tracking-[0.15em] uppercase">Our Clinical Team</h3>
+                 <div className="flex flex-col">
+                   <h4 className="text-5xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">A Board of</h4>
+                   <h4 className="text-5xl lg:text-7xl font-normal text-[#202A36] leading-none tracking-tighter -mt-[6px]">Specialists</h4>
+                 </div>
+                 <blockquote className="text-xl text-gray-600 leading-relaxed pt-6 border-l-2 pl-6 border-gray-200 italic">
+                   "Our practice is distinguished by a diverse team of doctors, each bringing years of specialized expertise to ensure true full-mouth rehabilitation."
+                 </blockquote>
+               </div>
+
+               <div className="space-y-8">
+                 <div className="flex gap-5 group">
+                   <div className="mt-1"><Stethoscope className="w-6 h-6 text-gray-400 group-hover:text-[#202A36] transition-colors" /></div>
+                   <div>
+                     <h5 className="text-lg font-medium text-[#202A36]">Oral Surgeons & Implantologists</h5>
+                     <p className="text-gray-500 mt-2 text-[15px] leading-relaxed">Experts in complex extractions (wisdom tooth removal) and permanent dental implants replacing missing teeth.</p>
+                   </div>
+                 </div>
+                 <div className="flex gap-5 group">
+                   <div className="mt-1"><HeartPulse className="w-6 h-6 text-gray-400 group-hover:text-[#202A36] transition-colors" /></div>
+                   <div>
+                     <h5 className="text-lg font-medium text-[#202A36]">Endodontists & Periodontists</h5>
+                     <p className="text-gray-500 mt-2 text-[15px] leading-relaxed">Specialists handling profound root canal treatments and advanced laser gum surgeries to save natural teeth.</p>
+                   </div>
+                 </div>
+                 <div className="flex gap-5 group">
+                   <div className="mt-1"><Smile className="w-6 h-6 text-gray-400 group-hover:text-[#202A36] transition-colors" /></div>
+                   <div>
+                     <h5 className="text-lg font-medium text-[#202A36]">Pediatric & Orthodontic Experts</h5>
+                     <p className="text-gray-500 mt-2 text-[15px] leading-relaxed">Providing child-friendly dental care and perfecting smiles with modern braces and invisible aligners.</p>
+                   </div>
+                 </div>
+               </div>
+               
+               <div className="pt-4">
+                  <Link href={`${basePath}/about-us`} className="inline-flex px-8 py-3.5 rounded-full bg-gray-200 text-gray-900 hover:bg-gray-300 transition-colors font-medium">
+                    Learn More About Us
+                  </Link>
+               </div>
+             </div>
+           </div>
+        </div>
+      </section>
+
+      {/* REVIEWS */}
+      <section className="py-24 lg:py-32 bg-gray-50 border-t border-gray-200">
+        <div className="max-w-7xl mx-auto px-8 w-full">
+          <div className="mb-20 space-y-5 text-center">
+            <h3 className="text-sm font-semibold text-gray-500 tracking-[0.15em] uppercase">Patient Stories</h3>
+            <div className="flex flex-col items-center">
+              <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">Over 500+</h4>
+              <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-[#202A36] leading-none tracking-tighter -mt-[6px]">Happy Patients</h4>
+            </div>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto pt-2">Don't just take our word for it. Read real experiences from our valued community.</p>
           </div>
 
-          <div className="space-y-4">
-            {faqs.map((faq, idx) => (
-              <details key={idx} className="group bg-slate-50 border border-slate-200 rounded-[1.5rem] open:bg-white open:ring-2 open:ring-indigo-600/20 open:shadow-lg transition-all duration-300">
-                <summary className="flex items-center justify-between p-6 cursor-pointer list-none font-bold text-lg text-slate-900 group-open:text-indigo-600">
-                  {faq.q}
-                  <span className="relative flex h-6 w-6 shrink-0 items-center justify-center ml-4">
-                    <Plus className="absolute h-5 w-5 text-indigo-600 transition-opacity group-open:opacity-0" />
-                    <Minus className="absolute h-5 w-5 text-indigo-600 opacity-0 transition-opacity group-open:opacity-100" />
-                  </span>
-                </summary>
-                <div className="px-6 pb-6 pt-0 text-slate-600 font-medium leading-relaxed border-t border-slate-100 mt-2 pt-4">
-                  {faq.a}
-                </div>
-              </details>
+          <div className="grid md:grid-cols-3 gap-8">
+            {displayReviews.slice(0, 3).map((review: any, i: number) => (
+              <div key={i} className="bg-white p-10 rounded-3xl border border-gray-100 flex flex-col h-full hover:shadow-lg hover:border-gray-300 transition-all duration-300">
+                 <div className="flex gap-1 mb-8">
+                   {[...Array(5)].map((_, j) => (
+                     <Star key={j} className={`w-4 h-4 ${j < parseInt(review.rating) ? 'fill-gray-800 text-gray-800' : 'fill-gray-200 text-gray-200'}`} />
+                   ))}
+                 </div>
+                 <p className="text-gray-600 leading-relaxed mb-10 text-[16px] flex-grow font-light">"{review.text}"</p>
+                 <div className="flex items-center gap-4 mt-auto border-t border-gray-100 pt-6">
+                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-[#202A36] font-semibold text-sm">
+                      {review.author ? review.author.charAt(0) : 'U'}
+                    </div>
+                    <div>
+                      <h6 className="font-semibold text-sm text-[#202A36] uppercase tracking-wider">{review.author || 'Patient'}</h6>
+                    </div>
+                 </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
-    </>
+
+      {/* FAQ */}
+      <section className="py-24 lg:py-32 bg-white">
+        <div className="max-w-4xl mx-auto px-8 w-full">
+          <div className="mb-20 space-y-5 text-center">
+             <h3 className="text-sm font-semibold text-gray-500 tracking-[0.15em] uppercase">Common Queries</h3>
+             <div className="flex flex-col items-center">
+               <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">Frequently Asked</h4>
+               <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-[#202A36] leading-none tracking-tighter -mt-[6px]">Questions</h4>
+             </div>
+          </div>
+
+          <div className="space-y-2">
+            {faqs.map((faq, idx) => (
+               <details key={idx} className="group border-b border-gray-200 open:pb-6">
+                 <summary className="flex items-center justify-between py-8 cursor-pointer list-none font-medium text-xl text-[#202A36]">
+                   <span className="pr-8">{faq.q}</span>
+                   <span className="flex shrink-0 w-8 h-8 items-center justify-center rounded-full bg-gray-50 group-open:bg-[#202A36] group-open:text-white transition-colors border border-gray-200 group-open:border-[#202A36]">
+                     <Plus className="w-4 h-4 group-open:hidden" />
+                     <Minus className="w-4 h-4 hidden group-open:block" />
+                   </span>
+                 </summary>
+                 <p className="text-gray-600 leading-relaxed pt-2 pb-4 text-[17px] font-light">
+                   {faq.a}
+                 </p>
+               </details>
+            ))}
+          </div>
+          
+          <div className="mt-16 bg-gray-50 rounded-3xl p-10 text-center border border-gray-100 flex flex-col items-center">
+             <h5 className="font-medium text-2xl text-[#202A36] mb-3">Have a different question?</h5>
+             <p className="text-gray-500 mb-8 max-w-lg mx-auto">Our front-desk team is always available to help you with your queries.</p>
+             <a href={`tel:${clinic.contact?.phone || ''}`} className="inline-flex px-8 py-3.5 rounded-full bg-[#202A36] text-white hover:bg-[#1a2229] transition-colors font-medium text-sm tracking-wide">
+                Call Us Directly
+             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="py-24 lg:py-40 bg-[#202A36] text-white">
+        <div className="max-w-4xl mx-auto px-8 text-center w-full">
+            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter mb-4">Your Smile Transformation</h3>
+            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter mb-8 -mt-[6px]">Starts Here</h3>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-12">Don't put off essential dental care. Book your consultation today and experience elite dentistry tailored to your needs.</p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+               <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-[#202A36] font-medium hover:bg-gray-100 transition-colors flex items-center justify-center gap-2 text-sm tracking-wide">
+                 <Phone className="w-4 h-4" /> Dial {clinic.contact?.phone || 'Now'}
+               </a>
+               <Link href={`${basePath}/contact-us`} className="w-full sm:w-auto px-8 py-4 rounded-full bg-transparent border border-gray-600 text-white font-medium hover:bg-gray-800 transition-colors flex items-center justify-center gap-2 text-sm tracking-wide">
+                 Send Enquiry <ArrowRight className="w-4 h-4" />
+               </Link>
+            </div>
+        </div>
+      </section>
+    </div>
   );
 }
