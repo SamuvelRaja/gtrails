@@ -48,13 +48,13 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
   ];
 
   return (
-    <div className="font-sans text-[#202A36] bg-gray-50 min-h-screen selection:bg-[#202A36] selection:text-white">
+    <div className="font-sans text-emerald-900 bg-gray-50 min-h-screen selection:bg-emerald-900 selection:text-white">
       {/* Page Hero Banner */}
       <section className="relative text-white py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src="/images/heroes/gallery_hero_1776016836321.png" alt="Smile Gallery" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-[#202A36]/75"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#202A36] via-[#202A36]/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-emerald-900/75"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-emerald-900 via-emerald-900/40 to-transparent"></div>
         </div>
         <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           <p className="text-gray-400 font-semibold tracking-[0.15em] uppercase text-xs mb-6">Smile Gallery</p>
@@ -71,7 +71,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
       {/* Introduction Text */}
       <section className="py-20 bg-white border-b border-gray-100">
         <div className="max-w-4xl mx-auto px-8 text-center space-y-6">
-          <h3 className="text-2xl md:text-3xl font-normal text-[#202A36] tracking-tight">Witness the Transformative Power of Modern Dentistry</h3>
+          <h3 className="text-2xl md:text-3xl font-normal text-emerald-900 tracking-tight">Witness the Transformative Power of Modern Dentistry</h3>
           <p className="text-gray-500 text-[16px] leading-relaxed font-light">
             Our gallery features genuine before-and-after results from patients who trusted us with their care. From subtle whitening enhancements to complex full-mouth rehabilitations, each case demonstrates our team's dedication to clinical precision and aesthetic excellence. These results are achieved through advanced technology, meticulous planning, and the skilled hands of our specialist team.
           </p>
@@ -85,7 +85,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
             {galleryCategories.map((category, idx) => (
               <div key={idx} className="bg-white rounded-3xl border border-gray-100 cursor-pointer group flex flex-col h-full hover:shadow-lg hover:border-gray-200 transition-all duration-300">
                 {/* Image Placeholder */}
-                <div className="aspect-[4/3] bg-[#1a222c] relative flex items-center justify-center overflow-hidden rounded-t-3xl border-b border-gray-100">
+                <div className="aspect-[4/3] bg-emerald-950 relative flex items-center justify-center overflow-hidden rounded-t-3xl border-b border-gray-100">
                   {clinicImages[idx] ? (
                     <img src={clinicImages[idx]} alt={category.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   ) : (
@@ -100,13 +100,13 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
 
                 {/* Content */}
                 <div className="p-8 flex-grow flex flex-col">
-                  <h4 className="font-medium text-[#202A36] text-xl mb-1">{category.title}</h4>
+                  <h4 className="font-medium text-emerald-900 text-xl mb-1">{category.title}</h4>
                   <p className="text-gray-400 font-semibold text-xs tracking-widest uppercase mb-4">{category.subtitle}</p>
                   <p className="text-gray-500 text-[14px] leading-relaxed font-light flex-grow">{category.description}</p>
                   
                   <div className="mt-8 flex justify-between items-center pt-6 border-t border-gray-50">
-                     <span className="text-xs font-semibold text-[#202A36] uppercase tracking-widest group-hover:text-gray-500 transition-colors">View Cases</span>
-                     <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 group-hover:bg-[#202A36] group-hover:text-white transition-all transform group-hover:translate-x-1">
+                     <span className="text-xs font-semibold text-emerald-900 uppercase tracking-widest group-hover:text-gray-500 transition-colors">View Cases</span>
+                     <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 group-hover:bg-emerald-900 group-hover:text-white transition-all transform group-hover:translate-x-1">
                         <ArrowRight className="w-4 h-4" />
                      </div>
                   </div>
@@ -126,7 +126,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
                 <h3 className="text-gray-500 font-semibold tracking-[0.15em] uppercase text-xs">Virtual Tour</h3>
                 <div className="flex flex-col">
                    <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-gray-400 leading-none tracking-tighter">Take a Look</h4>
-                   <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-[#202A36] leading-none tracking-tighter -mt-[4px]">Inside Our Clinic</h4>
+                   <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-emerald-900 leading-none tracking-tighter -mt-[4px]">Inside Our Clinic</h4>
                 </div>
               </div>
 
@@ -140,7 +140,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
               </div>
 
               <div className="pt-4">
-                <Link href={`${basePath}/contact-us`} className="inline-flex items-center gap-2 bg-gray-100 text-[#202A36] px-8 py-3.5 rounded-full font-medium hover:bg-gray-200 transition-colors text-sm">
+                <Link href={`${basePath}/contact-us`} className="inline-flex items-center gap-2 bg-gray-100 text-emerald-900 px-8 py-3.5 rounded-full font-medium hover:bg-gray-200 transition-colors text-sm">
                   Schedule a Visit <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -178,7 +178,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
       </section>
 
       {/* Bottom CTA */}
-      <section className="bg-[#202A36] py-24 lg:py-40 text-white">
+      <section className="bg-emerald-900 py-24 lg:py-40 text-white">
         <div className="max-w-4xl mx-auto px-8 text-center w-full">
           <div className="flex flex-col mb-8">
             <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Want Results</h3>
@@ -186,7 +186,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
           </div>
           <p className="text-xl text-gray-400 font-light mb-12 max-w-2xl mx-auto">Every great smile starts with a single consultation. Let our specialists design a personalised treatment plan just for you.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-[#202A36] px-8 py-4 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm tracking-wide">
+            <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-emerald-900 px-8 py-4 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm tracking-wide">
               <Phone className="w-4 h-4" /> Book Consultation
             </a>
           </div>

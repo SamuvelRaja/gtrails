@@ -216,13 +216,13 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
     : ['Cosmetic Dentistry', 'Dental Implants', 'Invisalign Treatment', 'Root Canal Treatment', 'Full Mouth Rehabilitation', 'Teeth Whitening', 'Braces Treatment', 'Teeth Cleaning'];
 
   return (
-    <div className="font-sans text-[#202A36] bg-gray-50 min-h-screen selection:bg-[#202A36] selection:text-white">
+    <div className="font-sans text-emerald-900 bg-gray-50 min-h-screen selection:bg-emerald-900 selection:text-white">
       {/* Page Hero Banner */}
       <section className="relative text-white py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src="/images/heroes/services_hero_1776016873482.png" alt="Our Services" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-[#202A36]/75"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#202A36] via-[#202A36]/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-emerald-900/75"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-emerald-900 via-emerald-900/40 to-transparent"></div>
         </div>
         <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           <p className="text-gray-400 font-semibold tracking-[0.15em] uppercase text-xs mb-6">Our Treatments</p>
@@ -239,10 +239,10 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
       {/* Quick Stats Bar */}
       <section className="bg-gray-100 border-b border-gray-200 py-10">
         <div className="max-w-7xl mx-auto px-8 w-full grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div><span className="text-3xl font-normal text-[#202A36]">{servicesList.length}+</span><p className="text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-2">Specialised Treatments</p></div>
-          <div><span className="text-3xl font-normal text-[#202A36]">15+</span><p className="text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-2">Years Experience</p></div>
-          <div><span className="text-3xl font-normal text-[#202A36]">100%</span><p className="text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-2">Sterilisation Standards</p></div>
-          <div><span className="text-3xl font-normal text-[#202A36]">Pain-Free</span><p className="text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-2">Sedation Options</p></div>
+          <div><span className="text-3xl font-normal text-emerald-900">{servicesList.length}+</span><p className="text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-2">Specialised Treatments</p></div>
+          <div><span className="text-3xl font-normal text-emerald-900">15+</span><p className="text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-2">Years Experience</p></div>
+          <div><span className="text-3xl font-normal text-emerald-900">100%</span><p className="text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-2">Sterilisation Standards</p></div>
+          <div><span className="text-3xl font-normal text-emerald-900">Pain-Free</span><p className="text-gray-500 text-[11px] font-semibold tracking-widest uppercase mt-2">Sedation Options</p></div>
         </div>
       </section>
 
@@ -271,7 +271,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
                       <p className="text-gray-400 font-semibold text-xs tracking-widest uppercase">Treatment {String(idx + 1).padStart(2, '0')}</p>
                     </div>
 
-                    <h3 className="text-3xl lg:text-4xl font-normal text-[#202A36] mb-4">{serviceName}</h3>
+                    <h3 className="text-3xl lg:text-4xl font-normal text-emerald-900 mb-4">{serviceName}</h3>
                     <p className="text-gray-500 font-medium mb-8">
                       {svcData?.tagline || 'Expert care tailored to your unique needs.'}
                     </p>
@@ -299,7 +299,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
 
                     <a
                       href={`tel:${clinic.contact?.phone || ''}`}
-                      className="inline-flex items-center gap-2 border border-gray-300 text-[#202A36] px-8 py-3.5 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm"
+                      className="inline-flex items-center gap-2 border border-gray-300 text-emerald-900 px-8 py-3.5 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm"
                     >
                       <Phone className="w-4 h-4" /> Book This Treatment
                     </a>
@@ -308,7 +308,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
                   {/* Right: Process Steps */}
                   <div className={`flex-1 ${!isEven ? 'lg:order-1' : ''}`}>
                     <div className="bg-white rounded-3xl border border-gray-100 p-10 lg:p-12 h-full flex flex-col">
-                      <h4 className="text-xl font-medium text-[#202A36] mb-10">How It Works</h4>
+                      <h4 className="text-xl font-medium text-emerald-900 mb-10">How It Works</h4>
                       <div className="space-y-10 flex-grow">
                         {(svcData?.process || [
                           'Initial consultation and comprehensive examination',
@@ -336,7 +336,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
       </div>
 
       {/* Bottom CTA */}
-      <section className="bg-[#202A36] py-24 lg:py-40 text-white">
+      <section className="bg-emerald-900 py-24 lg:py-40 text-white">
         <div className="max-w-4xl mx-auto px-8 w-full text-center">
           <div className="flex flex-col mb-8">
             <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Not Sure Which</h3>
@@ -344,7 +344,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
           </div>
           <p className="text-xl text-gray-400 font-light mb-12 max-w-2xl mx-auto">Book a free consultation and our specialists will evaluate your dental health and recommend the best path forward.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-[#202A36] px-8 py-4 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm tracking-wide">
+            <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-emerald-900 px-8 py-4 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm tracking-wide">
               <Phone className="w-4 h-4" /> Call {clinic.contact?.phone || 'Now'}
             </a>
             <Link href={`${basePath}/contact-us`} className="w-full sm:w-auto flex items-center justify-center gap-2 border border-gray-600 text-white px-8 py-4 rounded-full font-medium hover:bg-gray-800 transition-colors text-sm tracking-wide">

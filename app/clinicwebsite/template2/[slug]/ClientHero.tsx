@@ -44,7 +44,7 @@ export default function ClientHero({ clinic, business, basePath }: ClientHeroPro
                 <h1 className="text-6xl md:text-7xl lg:text-8xl font-normal text-gray-500 leading-none tracking-tighter">
                   {line1}
                 </h1>
-                <h1 className="text-6xl md:text-7xl lg:text-8xl font-normal text-[#202A36] leading-none tracking-tighter -mt-[12px]">
+                <h1 className="text-6xl md:text-7xl lg:text-8xl font-normal text-blue-900 leading-none tracking-tighter -mt-[12px]">
                   {line2}
                 </h1>
               </div>
@@ -58,13 +58,13 @@ export default function ClientHero({ clinic, business, basePath }: ClientHeroPro
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link 
                   href={`${basePath}/about-us`}
-                  className="px-8 py-4 rounded-full bg-white border border-gray-200 text-[#202A36] font-medium hover:bg-gray-100 transition-colors text-sm tracking-wide"
+                  className="px-8 py-4 rounded-full bg-white border border-gray-200 text-blue-900 font-medium hover:bg-gray-100 transition-colors text-sm tracking-wide"
                 >
                   Meet the Experts
                 </Link>
                 <a 
                   href={`tel:${clinic.contact?.phone || ''}`}
-                  className="px-8 py-4 rounded-full text-white bg-[#202A36] hover:bg-[#1a222c] font-medium transition-colors text-sm tracking-wide"
+                  className="px-8 py-4 rounded-full text-white bg-blue-900 hover:bg-blue-950 font-medium transition-colors text-sm tracking-wide"
                 >
                   Schedule Your Visit
                 </a>

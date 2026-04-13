@@ -19,13 +19,13 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
   const clinicImage = media.clinicImages?.[0] || 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=2000';
 
   return (
-    <div className="font-sans text-[#202A36] bg-gray-50 min-h-screen selection:bg-[#202A36] selection:text-white">
+    <div className="font-sans text-emerald-900 bg-gray-50 min-h-screen selection:bg-emerald-900 selection:text-white">
       {/* Page Hero Banner */}
       <section className="relative text-white py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src="/images/heroes/about_us_hero_1776016804621.png" alt="About Us" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-[#202A36]/75"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#202A36] via-[#202A36]/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-emerald-900/75"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-emerald-900 via-emerald-900/40 to-transparent"></div>
         </div>
         <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           <p className="text-gray-400 font-semibold tracking-[0.15em] uppercase text-xs mb-6">About Us</p>
@@ -60,7 +60,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
                 <h3 className="text-gray-500 font-semibold tracking-[0.15em] uppercase text-xs">Who We Are</h3>
                 <div className="flex flex-col">
                   <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-gray-400 leading-none tracking-tighter">Welcome to</h4>
-                  <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-[#202A36] leading-none tracking-tighter -mt-[4px]">{clinic.name || 'Our Clinic'}</h4>
+                  <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-emerald-900 leading-none tracking-tighter -mt-[4px]">{clinic.name || 'Our Clinic'}</h4>
                 </div>
               </div>
               <div className="space-y-6 text-gray-600 text-[16px] leading-relaxed font-light">
@@ -85,10 +85,10 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
             {/* Vision */}
             <div className="bg-white rounded-3xl p-10 lg:p-12 border border-gray-100 flex flex-col group">
-              <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center text-gray-800 mb-8 group-hover:bg-[#202A36] group-hover:text-white transition-colors duration-300">
+              <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center text-gray-800 mb-8 group-hover:bg-emerald-900 group-hover:text-white transition-colors duration-300">
                 <Eye className="w-6 h-6" />
               </div>
-              <h4 className="text-3xl font-normal text-[#202A36] mb-6 tracking-tight">Our Vision</h4>
+              <h4 className="text-3xl font-normal text-emerald-900 mb-6 tracking-tight">Our Vision</h4>
               <p className="text-gray-500 leading-relaxed font-light text-[16px] flex-grow">
                 To be the most trusted dental healthcare institution in the region — one where every patient, regardless of their background, receives world-class treatment delivered with empathy, transparency, and clinical excellence. We envision a community where dental anxiety is a thing of the past and every individual has access to the care they deserve.
               </p>
@@ -96,10 +96,10 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
 
             {/* Mission */}
             <div className="bg-white rounded-3xl p-10 lg:p-12 border border-gray-100 flex flex-col group">
-              <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center text-gray-800 mb-8 group-hover:bg-[#202A36] group-hover:text-white transition-colors duration-300">
+              <div className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center text-gray-800 mb-8 group-hover:bg-emerald-900 group-hover:text-white transition-colors duration-300">
                 <Target className="w-6 h-6" />
               </div>
-              <h4 className="text-3xl font-normal text-[#202A36] mb-6 tracking-tight">Our Mission</h4>
+              <h4 className="text-3xl font-normal text-emerald-900 mb-6 tracking-tight">Our Mission</h4>
               <p className="text-gray-500 leading-relaxed font-light text-[16px] flex-grow">
                 To provide an exceptional standard of dental care through continuous investment in advanced technology, specialised training, and a genuine spirit of compassion. We are committed to preventive care — addressing small issues before they become major concerns — while making every visit a comfortable, positive, and empowering experience for our patients.
               </p>
@@ -115,7 +115,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
             <h3 className="text-sm font-semibold text-gray-500 tracking-[0.15em] uppercase">Guiding Principles</h3>
             <div className="flex flex-col items-center">
               <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">The Values</h4>
-              <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-[#202A36] leading-none tracking-tighter -mt-[6px]">That Drive Us</h4>
+              <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-emerald-900 leading-none tracking-tighter -mt-[6px]">That Drive Us</h4>
             </div>
             <p className="text-lg text-gray-500 font-light pt-2 max-w-2xl mx-auto">Every decision we make — from the equipment we invest in to the way we greet you at the door — is guided by these six principles.</p>
           </div>
@@ -130,10 +130,10 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
               { icon: Smile, title: 'Comfort & Compassion', desc: 'We understand dental anxiety is real. Our welcoming environment, gentle technique, and sedation options ensure every visit is stress-free.' },
             ].map((value, i) => (
               <div key={i} className="p-8 rounded-3xl bg-gray-50 flex flex-col group border border-gray-100 hover:border-gray-200 transition-colors">
-                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-gray-800 mb-6 border border-gray-200 group-hover:bg-[#202A36] group-hover:text-white group-hover:border-[#202A36] transition-colors">
+                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-gray-800 mb-6 border border-gray-200 group-hover:bg-emerald-900 group-hover:text-white group-hover:border-emerald-900 transition-colors">
                   <value.icon className="w-5 h-5" />
                 </div>
-                <h5 className="font-medium text-[#202A36] text-xl mb-3">{value.title}</h5>
+                <h5 className="font-medium text-emerald-900 text-xl mb-3">{value.title}</h5>
                 <p className="text-gray-500 font-light leading-relaxed">{value.desc}</p>
               </div>
             ))}
@@ -142,7 +142,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
       </section>
 
       {/* Our Journey / Timeline */}
-      <section className="py-24 lg:py-32 bg-[#202A36] text-white">
+      <section className="py-24 lg:py-32 bg-emerald-900 text-white">
         <div className="max-w-5xl mx-auto px-8 w-full">
           <div className="text-center mb-24 space-y-5">
             <h3 className="text-gray-400 font-semibold tracking-[0.15em] uppercase text-xs">Our Journey</h3>
@@ -164,7 +164,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
             ].map((milestone, i) => (
               <div key={i} className={`relative flex flex-col md:flex-row items-start gap-8 md:gap-16 pb-16 last:pb-0 ${i % 2 === 0 ? '' : 'md:flex-row-reverse'}`}>
                 {/* Dot */}
-                <div className="absolute left-6 md:left-1/2 w-4 h-4 bg-white rounded-full border-[4px] border-[#202A36] -translate-x-1/2 mt-2 z-10" />
+                <div className="absolute left-6 md:left-1/2 w-4 h-4 bg-white rounded-full border-[4px] border-emerald-900 -translate-x-1/2 mt-2 z-10" />
                 
                 {/* Content */}
                 <div className={`flex-1 pl-16 md:pl-0 ${i % 2 === 0 ? 'md:text-right md:pr-16' : 'md:text-left md:pl-16'}`}>
@@ -193,7 +193,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
                    className="w-full aspect-[3/4] object-cover"
                  />
                  <div className="absolute bottom-6 left-6 right-6 bg-white rounded-2xl p-6 shadow-xl border border-gray-100 text-center">
-                    <h4 className="text-xl font-medium text-[#202A36]">{doctor.name || 'Our Lead Specialist'}</h4>
+                    <h4 className="text-xl font-medium text-emerald-900">{doctor.name || 'Our Lead Specialist'}</h4>
                     <p className="text-gray-500 font-semibold mt-1 text-xs tracking-widest uppercase">{doctor.specialization || 'Orthodontist & Implantologist'} • {doctor.experience || '10+ Years'}</p>
                  </div>
               </div>
@@ -204,11 +204,11 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
                 <h3 className="text-gray-500 font-semibold tracking-[0.15em] uppercase text-xs">Meet Our Founder</h3>
                 <div className="flex flex-col">
                   <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">Our Lead</h4>
-                  <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-[#202A36] leading-none tracking-tighter -mt-[6px]">Specialist</h4>
+                  <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-emerald-900 leading-none tracking-tighter -mt-[6px]">Specialist</h4>
                 </div>
               </div>
               
-              <div className="inline-flex items-center gap-2 px-6 py-2.5 bg-gray-50 text-[#202A36] rounded-full font-medium text-sm border border-gray-200">
+              <div className="inline-flex items-center gap-2 px-6 py-2.5 bg-gray-50 text-emerald-900 rounded-full font-medium text-sm border border-gray-200">
                 {doctor.specialization || 'Dental Specialist'} &bull; {doctor.experience || '10+ Years Experience'}
               </div>
               
@@ -244,7 +244,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
             <h3 className="text-gray-500 font-semibold tracking-[0.15em] uppercase text-xs">Our Clinical Departments</h3>
             <div className="flex flex-col items-center">
               <h4 className="text-5xl md:text-6xl font-normal text-gray-400 leading-none tracking-tighter">A Specialist</h4>
-              <h4 className="text-5xl md:text-6xl font-normal text-[#202A36] leading-none tracking-tighter -mt-[4px]">For Every Need</h4>
+              <h4 className="text-5xl md:text-6xl font-normal text-emerald-900 leading-none tracking-tighter -mt-[4px]">For Every Need</h4>
             </div>
             <p className="text-gray-500 font-light text-lg pt-2 max-w-2xl mx-auto">Our multi-disciplinary team collaborates to deliver coordinated, holistic dental care under one roof.</p>
           </div>
@@ -259,10 +259,10 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
               { icon: Award, title: 'Prosthodontists', desc: 'Artists of dentistry who design and craft veneers, crowns, bridges, and full-mouth aesthetic rehabilitations for picture-perfect smiles.' },
             ].map((dept, i) => (
               <div key={i} className="bg-white p-8 rounded-3xl border border-gray-100 flex flex-col group">
-                <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-gray-800 mb-6 border border-gray-100 group-hover:bg-[#202A36] group-hover:text-white transition-colors duration-300">
+                <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-gray-800 mb-6 border border-gray-100 group-hover:bg-emerald-900 group-hover:text-white transition-colors duration-300">
                   <dept.icon className="w-5 h-5" />
                 </div>
-                <h5 className="font-medium text-[#202A36] text-xl mb-3">{dept.title}</h5>
+                <h5 className="font-medium text-emerald-900 text-xl mb-3">{dept.title}</h5>
                 <p className="text-gray-500 leading-relaxed font-light">{dept.desc}</p>
               </div>
             ))}
@@ -271,7 +271,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
       </section>
 
       {/* Bottom CTA */}
-      <section className="bg-[#202A36] py-24 lg:py-40 text-white">
+      <section className="bg-emerald-900 py-24 lg:py-40 text-white">
         <div className="max-w-4xl mx-auto px-8 text-center w-full">
           <div className="flex flex-col mb-8">
             <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Experience The</h3>
@@ -279,7 +279,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
           </div>
           <p className="text-xl text-gray-400 font-light mb-12 max-w-2xl mx-auto">Come visit us. See our facility, meet our team, and let us show you what patient-first dental care truly feels like.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-[#202A36] px-8 py-4 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm tracking-wide">
+            <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-emerald-900 px-8 py-4 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm tracking-wide">
               <Phone className="w-4 h-4" /> Call {clinic.contact?.phone || 'Now'}
             </a>
             <Link href={`${basePath}/contact-us`} className="w-full sm:w-auto flex items-center justify-center gap-2 border border-gray-600 text-white px-8 py-4 rounded-full font-medium hover:bg-gray-800 transition-colors text-sm tracking-wide">

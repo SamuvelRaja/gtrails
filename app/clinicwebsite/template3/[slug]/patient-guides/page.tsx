@@ -9,7 +9,7 @@ import {
 export default async function PatientGuidesPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
   const { slug } = resolvedParams;
-  const basePath = `/clinicwebsite/${slug}`;
+  const basePath = `/clinicwebsite/template3/${slug}`;
 
   const data = await readSourceConfig(slug);
   if (!data) return notFound();
@@ -152,13 +152,13 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
   ];
 
   return (
-    <div className="font-sans text-[#202A36] bg-gray-50 min-h-screen selection:bg-[#202A36] selection:text-white">
+    <div className="font-sans text-emerald-900 bg-gray-50 min-h-screen selection:bg-emerald-900 selection:text-white">
       {/* Page Hero Banner */}
       <section className="relative text-white py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src="/images/heroes/patient_guides_hero_1776016856386.png" alt="Patient Guides" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-[#202A36]/75"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#202A36] via-[#202A36]/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-emerald-900/75"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-emerald-900 via-emerald-900/40 to-transparent"></div>
         </div>
         <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           <p className="text-gray-400 font-semibold tracking-[0.15em] uppercase text-xs mb-6">Patient Education</p>
@@ -188,14 +188,14 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
                   <span className="text-gray-500 font-semibold text-xs tracking-[0.15em] uppercase">{guide.category}</span>
                 </div>
 
-                <h3 className="text-4xl lg:text-5xl font-normal text-[#202A36] mb-8 leading-tight tracking-tight">{guide.title}</h3>
+                <h3 className="text-4xl lg:text-5xl font-normal text-emerald-900 mb-8 leading-tight tracking-tight">{guide.title}</h3>
                 <p className="text-gray-500 text-[18px] leading-relaxed mb-12 border-l-2 border-gray-200 pl-6 italic font-light">{guide.intro}</p>
 
                 {/* Content Sections */}
                 <div className="space-y-12 mb-12">
                   {guide.sections.map((section, sIdx) => (
                     <div key={sIdx}>
-                      <h4 className="text-xl font-medium text-[#202A36] mb-4">{section.heading}</h4>
+                      <h4 className="text-xl font-medium text-emerald-900 mb-4">{section.heading}</h4>
                       <p className="text-gray-600 text-[16px] leading-relaxed font-light">{section.content}</p>
                     </div>
                   ))}
@@ -205,7 +205,7 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
                 <div className="bg-gray-50 rounded-3xl p-10 border border-gray-100">
                   <div className="flex items-center gap-3 mb-6">
                     <Lightbulb className="w-5 h-5 text-gray-600" />
-                    <h4 className="font-medium text-[#202A36] text-lg">Expert Tips</h4>
+                    <h4 className="font-medium text-emerald-900 text-lg">Expert Tips</h4>
                   </div>
                   <ul className="space-y-4">
                     {guide.tips.map((tip, tIdx) => (
@@ -223,7 +223,7 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
       </div>
 
       {/* Bottom CTA */}
-      <section className="bg-[#202A36] py-24 lg:py-40 text-white">
+      <section className="bg-emerald-900 py-24 lg:py-40 text-white">
         <div className="max-w-4xl mx-auto px-8 text-center w-full">
           <div className="flex flex-col mb-8">
             <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Have Questions</h3>
@@ -231,7 +231,7 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
           </div>
           <p className="text-xl text-gray-400 font-light mb-12 max-w-2xl mx-auto">Our specialists are here to provide personalised advice. No question is too small — your dental health matters.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-[#202A36] px-8 py-4 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm tracking-wide">
+            <a href={`tel:${clinic.contact?.phone || ''}`} className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-emerald-900 px-8 py-4 rounded-full font-medium hover:bg-gray-100 transition-colors text-sm tracking-wide">
               <Phone className="w-4 h-4" /> Ask Our Specialists
             </a>
             <Link href={`${basePath}/contact-us`} className="w-full sm:w-auto flex items-center justify-center gap-2 border border-gray-600 text-white px-8 py-4 rounded-full font-medium hover:bg-gray-800 transition-colors text-sm tracking-wide">

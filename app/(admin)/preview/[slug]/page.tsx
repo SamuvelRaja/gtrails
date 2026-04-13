@@ -8,9 +8,9 @@ export default function PreviewPage({ params }: { params: Promise<{ slug: string
   const { slug } = resolvedParams;
 
   const templates = [
-    { id: '1', name: 'Modern Dental', description: 'Clean, airy layout focusing on technology.' },
-    { id: '2', name: 'Family Care', description: 'Warm, approachable design for family dentistry.' },
-    { id: '3', name: 'Premium Clinic', description: 'Elegant, high-end theme for aesthetic dentistry.' },
+    { id: '1', name: 'Modern Dental', description: 'Clean, airy layout focusing on technology.', href: `/clinicwebsite/${slug}` },
+    { id: '2', name: 'Family Care', description: 'Warm, approachable design for family dentistry.', href: `/clinicwebsite/template2/${slug}` },
+    { id: '3', name: 'Premium Clinic', description: 'Elegant, high-end theme for aesthetic dentistry.', href: `/clinicwebsite/template3/${slug}` },
   ];
 
   return (
@@ -23,7 +23,7 @@ export default function PreviewPage({ params }: { params: Promise<{ slug: string
           {templates.map((tpl) => (
             <Link
               key={tpl.id}
-              href={`/clinicwebsite/${slug}?template=${tpl.id}`}
+              href={tpl.href}
               className="group block"
               target="_blank"
             >
