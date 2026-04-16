@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { chromium, type Page } from 'playwright';
 
 export interface ReviewData {
@@ -367,23 +368,179 @@ async function scrollGalleryStep(page: Page): Promise<ScrollStepResult> {
 const REVIEW_CARD_SELECTOR = '[data-review-id], .jftiEf, .GHT2ce';
 const REVIEW_SCROLL_CONTAINER_SELECTOR = 'div[role="feed"], div.m6QErb, div[aria-label*="review" i]';
 const REVIEW_TRIGGER_EXCLUDE_RE = /(write|add|post|question|q&a|share|photo|direction|website|call|save)/i;
+const STRICT_REVIEW_TRIGGER_SELECTORS = [
+    'button[jsaction*="pane.rating.moreReviews"]',
+    'button[jsaction*="pane.reviewChart.moreReviews"]',
+    'button[jsaction*="pane.review.moreReviews"]',
+    'button[aria-label*="More reviews" i]',
+    'button:has-text("More reviews")',
+    'button:has-text("All reviews")',
+    'a:has-text("More reviews")',
+    'a:has-text("All reviews")',
+];
+const FALLBACK_REVIEW_TRIGGER_SELECTORS = [
+    'button[aria-label*="reviews" i]',
+    'button:has-text("Reviews")',
+    'div[role="tab"]:has-text("Reviews")',
+    'button[aria-label*="stars" i]',
+    '[role="button"][aria-label*="stars" i]',
+    '.F7nice',
+    '.dmRWX',
+    '.skqShb',
+];
 
-async function openExpandedReviewsPanel(page: Page): Promise<boolean> {
-    const openSelectors = [
-        'button[jsaction*="pane.rating.moreReviews"]',
-        'button[jsaction*="pane.reviewChart.moreReviews"]',
-        'button[jsaction*="pane.review.moreReviews"]',
-        'button[aria-label*="More reviews" i]',
-        'button:has-text("More reviews")',
-        'button:has-text("All reviews")',
-        'a:has-text("More reviews")',
-        'a:has-text("All reviews")',
-        'button[aria-label*="reviews" i]',
-        'button:has-text("Reviews")',
-        'div[role="tab"]:has-text("Reviews")',
-    ];
+type ReviewSurfaceSnapshot = {
+    cardCount: number;
+    feedCount: number;
+    maxScrollableOverflow: number;
+    hasSortControl: boolean;
+    url: string;
+};
 
-    for (const selector of openSelectors) {
+async function isLimitedGoogleMapsView(page: Page): Promise<boolean> {
+    return page.evaluate(() => {
+        const text = document.body?.innerText || '';
+        return /limited (?:view|access) of google maps|get the most out of google maps/i.test(text);
+    }).catch(() => false);
+}
+
+async function countReviewTriggers(page: Page): Promise<number> {
+    let total = 0;
+
+    for (const selector of [...STRICT_REVIEW_TRIGGER_SELECTORS, ...FALLBACK_REVIEW_TRIGGER_SELECTORS]) {
+        total += await page.locator(selector).count().catch(() => 0);
+    }
+
+    return total;
+}
+
+async function scrollDetailsPanelToRevealReviews(page: Page): Promise<void> {
+    const maxPasses = 8;
+
+    for (let pass = 0; pass < maxPasses; pass++) {
+        const triggerCount = await countReviewTriggers(page);
+        if (triggerCount > 0) return;
+
+        const moved = await page.evaluate(() => {
+            const isScrollable = (el: Element): el is HTMLElement => {
+                if (!(el instanceof HTMLElement)) return false;
+                const style = window.getComputedStyle(el);
+                const overflowY = style.overflowY;
+                const overflow = style.overflow;
+                const canScroll =
+                    overflowY === 'auto' ||
+                    overflowY === 'scroll' ||
+                    overflow === 'auto' ||
+                    overflow === 'scroll';
+                return canScroll && el.scrollHeight > el.clientHeight + 20;
+            };
+
+            const container = Array.from(document.querySelectorAll('div, main, section'))
+                .filter(isScrollable)
+                .sort((a, b) => (b.scrollHeight - b.clientHeight) - (a.scrollHeight - a.clientHeight))[0];
+
+            if (!container) return false;
+
+            const before = container.scrollTop;
+            const step = Math.max(420, Math.floor(container.clientHeight * 0.85));
+            container.scrollTop = Math.min(container.scrollTop + step, container.scrollHeight);
+            return container.scrollTop > before + 1;
+        });
+
+        if (!moved) return;
+        await page.waitForTimeout(900);
+    }
+}
+
+async function getReviewSurfaceSnapshot(page: Page): Promise<ReviewSurfaceSnapshot> {
+    const surface = await page.evaluate(({ reviewSelector, containerSelector }) => {
+        const isScrollable = (el: Element): el is HTMLElement => {
+            if (!(el instanceof HTMLElement)) return false;
+            const style = window.getComputedStyle(el);
+            const overflowY = style.overflowY;
+            const overflow = style.overflow;
+            const canScroll =
+                overflowY === 'auto' ||
+                overflowY === 'scroll' ||
+                overflow === 'auto' ||
+                overflow === 'scroll';
+            return canScroll && el.scrollHeight > el.clientHeight + 20;
+        };
+
+        const candidates = new Set<HTMLElement>();
+        for (const element of Array.from(document.querySelectorAll(containerSelector))) {
+            if (isScrollable(element)) candidates.add(element);
+        }
+
+        const reviewCards = Array.from(document.querySelectorAll(reviewSelector)).slice(0, 12);
+        for (const card of reviewCards) {
+            if (!(card instanceof HTMLElement)) continue;
+
+            let node: HTMLElement | null = card;
+            for (let i = 0; i < 14 && node; i++) {
+                node = node.parentElement;
+                if (!node) break;
+                if (isScrollable(node)) candidates.add(node);
+            }
+        }
+
+        const maxScrollableOverflow = Array.from(candidates).reduce((max, element) => {
+            return Math.max(max, element.scrollHeight - element.clientHeight);
+        }, 0);
+
+        const hasSortControl = Boolean(
+            document.querySelector('button[aria-label*="Sort reviews" i], button:has-text("Sort"), [aria-label*="Newest" i]'),
+        );
+
+        return {
+            cardCount: reviewCards.length,
+            feedCount: candidates.size,
+            maxScrollableOverflow,
+            hasSortControl,
+        };
+    }, { reviewSelector: REVIEW_CARD_SELECTOR, containerSelector: REVIEW_SCROLL_CONTAINER_SELECTOR }).catch(() => ({
+        cardCount: 0,
+        feedCount: 0,
+        maxScrollableOverflow: 0,
+        hasSortControl: false,
+    }));
+
+    return {
+        ...surface,
+        url: page.url(),
+    };
+}
+
+async function hasExpandedReviewSurface(
+    page: Page,
+    baseline?: ReviewSurfaceSnapshot,
+): Promise<boolean> {
+    const snapshot = await getReviewSurfaceSnapshot(page);
+
+    if (!baseline) {
+        return snapshot.cardCount > 0 && (
+            snapshot.hasSortControl ||
+            snapshot.maxScrollableOverflow > 220 ||
+            snapshot.feedCount > 0
+        );
+    }
+
+    const cardsGrew = snapshot.cardCount > baseline.cardCount + 1;
+    const overflowGrew = snapshot.maxScrollableOverflow > baseline.maxScrollableOverflow + 180;
+    const feedGrew = snapshot.feedCount > baseline.feedCount;
+    const urlChanged = snapshot.url !== baseline.url;
+
+    return snapshot.cardCount > 0 && (
+        snapshot.hasSortControl ||
+        cardsGrew ||
+        overflowGrew ||
+        feedGrew ||
+        urlChanged
+    );
+}
+
+async function tryReviewTriggers(page: Page, selectors: string[]): Promise<boolean> {
+    for (const selector of selectors) {
         const triggers = page.locator(selector);
         const triggerCount = Math.min(await triggers.count().catch(() => 0), 8);
         if (triggerCount === 0) continue;
@@ -402,10 +559,12 @@ async function openExpandedReviewsPanel(page: Page): Promise<boolean> {
             if (REVIEW_TRIGGER_EXCLUDE_RE.test(descriptorLower)) continue;
 
             const isLikelyReviewTrigger =
-                /reviews?|more|all|google/i.test(descriptorLower) ||
+                /reviews?|more|all|google|star/i.test(descriptorLower) ||
                 /\d/.test(descriptorLower) ||
                 Boolean(href && /^https?:\/\//i.test(href));
             if (!isLikelyReviewTrigger) continue;
+
+            const before = await getReviewSurfaceSnapshot(page);
 
             if (href && /^https?:\/\//i.test(href)) {
                 await page.goto(href, { waitUntil: 'domcontentloaded', timeout: 30000 }).catch(() => {});
@@ -415,21 +574,41 @@ async function openExpandedReviewsPanel(page: Page): Promise<boolean> {
 
             await page.waitForTimeout(2200);
 
-            const [reviewCards, reviewFeeds] = await Promise.all([
-                page.locator(REVIEW_CARD_SELECTOR).count().catch(() => 0),
-                page.locator(REVIEW_SCROLL_CONTAINER_SELECTOR).count().catch(() => 0),
-            ]);
-
-            if (reviewCards >= 2 || (reviewCards > 0 && reviewFeeds > 0)) {
+            if (await hasExpandedReviewSurface(page, before)) {
                 return true;
             }
 
             await page.keyboard.press('Escape').catch(() => {});
+            await page.waitForTimeout(600);
         }
     }
 
-    const reviewCards = await page.locator(REVIEW_CARD_SELECTOR).count().catch(() => 0);
-    return reviewCards > 0;
+    return false;
+}
+
+async function openExpandedReviewsPanel(page: Page): Promise<boolean> {
+    if (await hasExpandedReviewSurface(page)) {
+        return true;
+    }
+
+    await scrollDetailsPanelToRevealReviews(page);
+
+    if (await tryReviewTriggers(page, STRICT_REVIEW_TRIGGER_SELECTORS)) {
+        return true;
+    }
+
+    if (await tryReviewTriggers(page, FALLBACK_REVIEW_TRIGGER_SELECTORS)) {
+        if (await hasExpandedReviewSurface(page)) {
+            return true;
+        }
+
+        await scrollDetailsPanelToRevealReviews(page);
+        if (await tryReviewTriggers(page, STRICT_REVIEW_TRIGGER_SELECTORS)) {
+            return true;
+        }
+    }
+
+    return hasExpandedReviewSurface(page);
 }
 
 async function expandVisibleReviewBodies(page: Page): Promise<void> {
@@ -510,11 +689,17 @@ async function scrollReviewPanelStep(page: Page): Promise<{ moved: boolean; atEn
 }
 
 export async function scrapeGoogleBusinessProfile(url: string, photosUrl?: string): Promise<ScrapedData> {
-  const browser = await chromium.launch({ headless: true });
+  const storageStatePath = process.env.GOOGLE_MAPS_STORAGE_STATE_PATH?.trim();
+  const storageState = storageStatePath && fs.existsSync(storageStatePath)
+      ? storageStatePath
+      : undefined;
+  const browser = await chromium.launch({ headless: process.env.GOOGLE_MAPS_HEADLESS !== 'false' });
     const context = await browser.newContext({
         userAgent:
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
         locale: 'en-US',
+        viewport: { width: 1280, height: 900 },
+        ...(storageState ? { storageState } : {}),
     });
   const page = await context.newPage();
 
@@ -601,125 +786,134 @@ export async function scrapeGoogleBusinessProfile(url: string, photosUrl?: strin
     try {
         console.log('Attempting to extract 5-star reviews...');
         await page.waitForTimeout(2000);
-        await openExpandedReviewsPanel(page);
+        const reviewsPanelOpened = await openExpandedReviewsPanel(page);
+        const limitedView = await isLimitedGoogleMapsView(page);
 
-        const reviewMap = new Map<string, ReviewData>();
-        let stagnantPasses = 0;
-        let maxVisibleReviewCards = 0;
-        const maxReviewPasses = 300;
+        if (!reviewsPanelOpened && limitedView) {
+            console.log(
+                'Google Maps limited view detected. Reviews are hidden for signed-out sessions; skipping review scrape.',
+            );
+        } else if (!reviewsPanelOpened) {
+            console.log('Expanded reviews panel could not be opened. Keeping reviews empty for this scrape.');
+        } else {
+            const reviewMap = new Map<string, ReviewData>();
+            let stagnantPasses = 0;
+            let maxVisibleReviewCards = 0;
+            const maxReviewPasses = 300;
 
-        for (let pass = 0; pass < maxReviewPasses; pass++) {
-            await expandVisibleReviewBodies(page);
+            for (let pass = 0; pass < maxReviewPasses; pass++) {
+                await expandVisibleReviewBodies(page);
 
-            const visibleReviews = await page.evaluate((reviewSelector) => {
-                const rows = Array.from(document.querySelectorAll(reviewSelector));
-                const results: { author: string; rating: number; text: string }[] = [];
+                const visibleReviews = await page.evaluate((reviewSelector) => {
+                    const rows = Array.from(document.querySelectorAll(reviewSelector));
+                    const results: { author: string; rating: number; text: string }[] = [];
 
-                const isLikelyUiNoise = (line: string) => {
-                    return /^(Like|Share|Reply|Edit|Owner|Local Guide)$/i.test(line) ||
-                        /^(a|an|\d+)\s+(day|week|month|year)s?\s+ago$/i.test(line) ||
-                        /^\d+\s+reviews?(\s*·\s*\d+\s+photos?)?$/i.test(line);
-                };
+                    const isLikelyUiNoise = (line: string) => {
+                        return /^(Like|Share|Reply|Edit|Owner|Local Guide)$/i.test(line) ||
+                            /^(a|an|\d+)\s+(day|week|month|year)s?\s+ago$/i.test(line) ||
+                            /^\d+\s+reviews?(\s*·\s*\d+\s+photos?)?$/i.test(line);
+                    };
 
-                const parseRating = (raw: string): number => {
-                    const normalized = raw.replace(',', '.');
-                    const starsWordMatch = normalized.match(/([1-5](?:\.[0-9])?)\s*stars?/i);
-                    if (starsWordMatch) return Number(starsWordMatch[1]);
+                    const parseRating = (raw: string): number => {
+                        const normalized = raw.replace(',', '.');
+                        const starsWordMatch = normalized.match(/([1-5](?:\.[0-9])?)\s*stars?/i);
+                        if (starsWordMatch) return Number(starsWordMatch[1]);
 
-                    const slashMatch = normalized.match(/([1-5](?:\.[0-9])?)\s*\/\s*5/);
-                    if (slashMatch) return Number(slashMatch[1]);
+                        const slashMatch = normalized.match(/([1-5](?:\.[0-9])?)\s*\/\s*5/);
+                        if (slashMatch) return Number(slashMatch[1]);
 
-                    const outOfMatch = normalized.match(/([1-5](?:\.[0-9])?)\s*(?:out of|sur|de|von|di|dari)?\s*5/i);
-                    if (outOfMatch) return Number(outOfMatch[1]);
+                        const outOfMatch = normalized.match(/([1-5](?:\.[0-9])?)\s*(?:out of|sur|de|von|di|dari)?\s*5/i);
+                        if (outOfMatch) return Number(outOfMatch[1]);
 
-                    const genericMatches = Array.from(normalized.matchAll(/([1-5](?:\.[0-9])?)/g))
-                        .map((match) => Number(match[1]))
-                        .filter((value) => Number.isFinite(value));
-                    if (genericMatches.length > 0) return Math.max(...genericMatches);
+                        const genericMatches = Array.from(normalized.matchAll(/([1-5](?:\.[0-9])?)/g))
+                            .map((match) => Number(match[1]))
+                            .filter((value) => Number.isFinite(value));
+                        if (genericMatches.length > 0) return Math.max(...genericMatches);
 
-                    return 0;
-                };
+                        return 0;
+                    };
 
-                for (const row of rows) {
-                    const card = row as HTMLElement;
-                    const rawAuthor = (card.querySelector('.d4r55, .TSUbDb, .WNxzHc') as HTMLElement | null)?.innerText?.trim() || '';
-                    const author = rawAuthor
-                        .split('\n')
-                        .map((value) => value.trim())
-                        .find((value) => value.length > 0) || '';
-
-                    const textCandidates = Array.from(
-                        card.querySelectorAll('.wiI7pd, .MyEned, [data-review-text], span[jsname="fbQN7e"], div[jsname="bN97Pc"]'),
-                    )
-                        .map((el) => (el as HTMLElement).innerText?.trim() || '')
-                        .filter((value) => value.length > 0)
-                        .sort((a, b) => b.length - a.length);
-
-                    let text = textCandidates[0] || '';
-
-                    if (!text) {
-                        const lines = card.innerText
+                    for (const row of rows) {
+                        const card = row as HTMLElement;
+                        const rawAuthor = (card.querySelector('.d4r55, .TSUbDb, .WNxzHc') as HTMLElement | null)?.innerText?.trim() || '';
+                        const author = rawAuthor
                             .split('\n')
-                            .map((line) => line.trim())
-                            .filter((line) => line.length > 0);
+                            .map((value) => value.trim())
+                            .find((value) => value.length > 0) || '';
 
-                        for (const line of lines) {
-                            if (line.length < 8) continue;
-                            if (/stars?/i.test(line)) continue;
-                            if (isLikelyUiNoise(line)) continue;
-                            if (line.length > text.length) text = line;
+                        const textCandidates = Array.from(
+                            card.querySelectorAll('.wiI7pd, .MyEned, [data-review-text], span[jsname="fbQN7e"], div[jsname="bN97Pc"]'),
+                        )
+                            .map((el) => (el as HTMLElement).innerText?.trim() || '')
+                            .filter((value) => value.length > 0)
+                            .sort((a, b) => b.length - a.length);
+
+                        let text = textCandidates[0] || '';
+
+                        if (!text) {
+                            const lines = card.innerText
+                                .split('\n')
+                                .map((line) => line.trim())
+                                .filter((line) => line.length > 0);
+
+                            for (const line of lines) {
+                                if (line.length < 8) continue;
+                                if (/stars?/i.test(line)) continue;
+                                if (isLikelyUiNoise(line)) continue;
+                                if (line.length > text.length) text = line;
+                            }
                         }
+
+                        const ratingLabels = Array.from(card.querySelectorAll('[aria-label]'))
+                            .map((node) => node.getAttribute('aria-label') || '')
+                            .filter((label) => /star|\/\s*5|out of|sur\s*5|de\s*5|von\s*5|di\s*5|dari\s*5/i.test(label));
+
+                        let rating = 0;
+                        for (const label of ratingLabels) {
+                            const parsed = parseRating(label);
+                            if (parsed > rating) rating = parsed;
+                        }
+
+                        if (!author || !text) continue;
+                        if (text.length < 8) continue;
+                        if (rating < 4.8) continue;
+
+                        results.push({ author, rating: 5, text: text.replace(/\s+/g, ' ').trim() });
                     }
 
-                    const ratingLabels = Array.from(card.querySelectorAll('[aria-label]'))
-                        .map((node) => node.getAttribute('aria-label') || '')
-                        .filter((label) => /star|\/\s*5|out of|sur\s*5|de\s*5|von\s*5|di\s*5|dari\s*5/i.test(label));
+                    return results;
+                }, REVIEW_CARD_SELECTOR);
 
-                    let rating = 0;
-                    for (const label of ratingLabels) {
-                        const parsed = parseRating(label);
-                        if (parsed > rating) rating = parsed;
+                const beforeCount = reviewMap.size;
+                for (const review of visibleReviews) {
+                    const key = `${review.author.toLowerCase()}::${review.text.toLowerCase()}`;
+                    if (!reviewMap.has(key)) {
+                        reviewMap.set(key, review);
                     }
-
-                    if (!author || !text) continue;
-                    if (text.length < 8) continue;
-                    if (rating < 4.8) continue;
-
-                    results.push({ author, rating: 5, text: text.replace(/\s+/g, ' ').trim() });
                 }
 
-                return results;
-            }, REVIEW_CARD_SELECTOR);
+                const visibleCardCount = await page.locator(REVIEW_CARD_SELECTOR).count().catch(() => 0);
+                const discoveredNewCards = visibleCardCount > maxVisibleReviewCards;
+                if (discoveredNewCards) maxVisibleReviewCards = visibleCardCount;
 
-            const beforeCount = reviewMap.size;
-            for (const review of visibleReviews) {
-                const key = `${review.author.toLowerCase()}::${review.text.toLowerCase()}`;
-                if (!reviewMap.has(key)) {
-                    reviewMap.set(key, review);
+                const { moved, atEnd } = await scrollReviewPanelStep(page);
+
+                if (reviewMap.size > beforeCount || discoveredNewCards) {
+                    stagnantPasses = 0;
+                } else if (moved) {
+                    stagnantPasses += 1;
+                } else {
+                    stagnantPasses += 2;
                 }
+
+                if (atEnd && stagnantPasses >= 6) break;
+                if (stagnantPasses >= 20) break;
+
+                await page.waitForTimeout(stagnantPasses > 0 ? 950 : 700);
             }
 
-            const visibleCardCount = await page.locator(REVIEW_CARD_SELECTOR).count().catch(() => 0);
-            const discoveredNewCards = visibleCardCount > maxVisibleReviewCards;
-            if (discoveredNewCards) maxVisibleReviewCards = visibleCardCount;
-
-            const { moved, atEnd } = await scrollReviewPanelStep(page);
-
-            if (reviewMap.size > beforeCount || discoveredNewCards) {
-                stagnantPasses = 0;
-            } else if (moved) {
-                stagnantPasses += 1;
-            } else {
-                stagnantPasses += 2;
-            }
-
-            if (atEnd && stagnantPasses >= 6) break;
-            if (stagnantPasses >= 20) break;
-
-            await page.waitForTimeout(stagnantPasses > 0 ? 950 : 700);
+            extractedReviews.push(...Array.from(reviewMap.values()));
         }
-
-        extractedReviews.push(...Array.from(reviewMap.values()));
         console.log(`Successfully scraped ${extractedReviews.length} 5-star reviews.`);
     } catch (e) {
         console.log('Error extracting 5-star reviews:', e);

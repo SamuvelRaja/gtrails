@@ -39,13 +39,7 @@
     "experience": "5+ years",
     "specialization": "General Dentistry"
   },
-  "reviews": [
-    {
-      "author": "John Doe",
-      "rating": "5",
-      "text": "Great experience, highly recommend!"
-    }
-  ],
+  "reviews": [],
   "media": {
     "clinicImages": [
       "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=clinicImages-1.jpg",
@@ -146,7 +140,7 @@
     "extraImages": []
   },
   "meta": {
-    "generatedAt": "2026-04-15T04:33:59.128Z",
+    "generatedAt": "2026-04-16T13:35:30.922Z",
     "source": "google_maps"
   }
 }
