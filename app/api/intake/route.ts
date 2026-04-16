@@ -8,11 +8,12 @@ import fs from 'fs/promises';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const gbpUrl = typeof body.gbpUrl === 'string' ? body.gbpUrl.trim() : '';
+    const rawUrl = body.gbpUrl || body.url || '';
+    const gbpUrl = typeof rawUrl === 'string' ? rawUrl.trim() : '';
     const photosUrl = typeof body.photosUrl === 'string' ? body.photosUrl.trim() : '';
     const forceRefresh = Boolean(body.forceRefresh);
 
-    if (!gbpUrl || !/google\.[^/]+\/maps/i.test(gbpUrl)) {
+    if (!gbpUrl || !/(google\.[^/]+\/maps|maps\.app\.goo\.gl|g\.page|maps\.google\.|g\.co|google\.[^/]+\/search|goo\.gl)/i.test(gbpUrl)) {
       return NextResponse.json({ error: 'Invalid Google Maps URL' }, { status: 400 });
     }
 
@@ -24,13 +25,49 @@ export async function POST(req: Request) {
 
     const dataPath = path.join(process.cwd(), 'data', slug);
 
+    const MIN_CACHED_FIVE_STAR_REVIEWS = 5;
+    const MIN_CACHED_IMAGES = 8;
+
     // Reuse cache only when this is not an explicit photo-refresh request.
     const shouldUseCache = !forceRefresh && !photosUrl;
     if (shouldUseCache) {
       try {
-        const stats = await fs.stat(path.join(dataPath, 'source.json'));
+        const sourcePath = path.join(dataPath, 'source.json');
+        const stats = await fs.stat(sourcePath);
         if (stats.isFile()) {
-          return NextResponse.json({ slug, cached: true });
+          const existing = JSON.parse(await fs.readFile(sourcePath, 'utf-8'));
+          const existingReviews = Array.isArray(existing?.reviews)
+            ? existing.reviews.filter((review: unknown) => {
+                if (!review || typeof review !== 'object') return false;
+                const item = review as { text?: unknown; rating?: unknown };
+                const text = typeof item.text === 'string' ? item.text.trim() : '';
+                const numericRating = Number(item.rating);
+                return text.length > 0 && Number.isFinite(numericRating) && numericRating >= 5;
+              })
+            : [];
+
+          const existingMedia = existing?.media && typeof existing.media === 'object'
+            ? existing.media as {
+                clinicImages?: unknown;
+                treatmentImages?: unknown;
+                otherImages?: unknown;
+              }
+            : {};
+
+          const existingImageCount = [
+            existingMedia.clinicImages,
+            existingMedia.treatmentImages,
+            existingMedia.otherImages,
+          ].reduce<number>((total, value) => {
+            return total + (Array.isArray(value) ? value.length : 0);
+          }, 0);
+
+          if (
+            existingReviews.length >= MIN_CACHED_FIVE_STAR_REVIEWS &&
+            existingImageCount >= MIN_CACHED_IMAGES
+          ) {
+            return NextResponse.json({ slug, cached: true });
+          }
         }
       } catch {
         // Doesn't exist, proceed
@@ -51,6 +88,11 @@ export async function POST(req: Request) {
          try { await fs.rename(dataPath, newPath); } catch {}
       }
     }
+
+    const activeDataPath = path.join(process.cwd(), 'data', slug);
+    const activeImagesPath = path.join(activeDataPath, 'images');
+    await fs.rm(activeImagesPath, { recursive: true, force: true });
+    await fs.mkdir(activeImagesPath, { recursive: true });
 
     // 3. Process images in parallel (up to 12)
     type MediaCategory = 'clinicImages' | 'treatmentImages' | 'otherImages';
@@ -87,7 +129,8 @@ export async function POST(req: Request) {
       reviewCount: scrapedData.reviewCount, 
       address: scrapedData.address, 
       phone: scrapedData.phone,
-      media: mediaObj 
+      media: mediaObj,
+      reviews: scrapedData.reviews,
     });
 
     return NextResponse.json({ slug });

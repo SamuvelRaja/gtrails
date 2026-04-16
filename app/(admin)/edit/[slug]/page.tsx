@@ -11,8 +11,10 @@ export default function EditPage({ params }: { params: Promise<{ slug: string }>
   
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+  const [savingDraft, setSavingDraft] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const [error, setError] = useState('');
+  const [saveMessage, setSaveMessage] = useState('');
 
   useEffect(() => {
     async function fetchData() {
@@ -20,7 +22,10 @@ export default function EditPage({ params }: { params: Promise<{ slug: string }>
         const res = await fetch(`/api/data?slug=${slug}`);
         if (!res.ok) throw new Error('Failed to load data');
         const json = await res.json();
-        setData(json);
+        setData({
+          ...json,
+          reviews: Array.isArray(json?.reviews) ? json.reviews : []
+        });
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -30,20 +35,48 @@ export default function EditPage({ params }: { params: Promise<{ slug: string }>
     fetchData();
   }, [slug]);
 
-  const handleGenerate = async () => {
-    setSaving(true);
+  const saveSourceData = async () => {
+    if (!data) throw new Error('No data available to save');
+
+    const res = await fetch('/api/data', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug, sourceData: data })
+    });
+
+    const result = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(result?.error || 'Failed to save data');
+    }
+  };
+
+  const handleSaveDraft = async () => {
+    setSavingDraft(true);
+    setError('');
+    setSaveMessage('');
+
     try {
-      const res = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug, sourceData: data })
-      });
-      if (!res.ok) throw new Error('Failed to save data');
+      await saveSourceData();
+      setSaveMessage('Changes saved successfully.');
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setSavingDraft(false);
+    }
+  };
+
+  const handleGenerate = async () => {
+    setGenerating(true);
+    setError('');
+    setSaveMessage('');
+
+    try {
+      await saveSourceData();
       router.push(`/preview/${slug}`);
     } catch (err: any) {
       setError(err.message);
     } finally {
-      setSaving(false);
+      setGenerating(false);
     }
   };
 
@@ -78,6 +111,33 @@ export default function EditPage({ params }: { params: Promise<{ slug: string }>
         [field]: value.split('\n')
       }
     }));
+  };
+
+  const handleReviewChange = (index: number, field: string, value: string) => {
+    setData((prev: any) => {
+      const reviews = Array.isArray(prev.reviews) ? [...prev.reviews] : [];
+      const current = reviews[index] || {};
+      reviews[index] = { ...current, [field]: value };
+      return { ...prev, reviews };
+    });
+  };
+
+  const addReview = () => {
+    setData((prev: any) => ({
+      ...prev,
+      reviews: [
+        ...(Array.isArray(prev.reviews) ? prev.reviews : []),
+        { author: '', rating: '5', text: '' }
+      ]
+    }));
+  };
+
+  const removeReview = (index: number) => {
+    setData((prev: any) => {
+      const reviews = Array.isArray(prev.reviews) ? [...prev.reviews] : [];
+      reviews.splice(index, 1);
+      return { ...prev, reviews };
+    });
   };
 
   const removeImage = (category: string, index: number) => {
@@ -153,15 +213,32 @@ export default function EditPage({ params }: { params: Promise<{ slug: string }>
             </h1>
             <p className="text-gray-500 text-sm mt-1">Refine the scraped data before final generation.</p>
           </div>
-          <button
-            onClick={handleGenerate}
-            disabled={saving}
-            className="flex items-center py-3 px-8 rounded-lg shadow-md text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 transition-all w-full md:w-auto justify-center"
-          >
-            {saving && <Loader2 className="animate-spin -ml-1 mr-2 h-5 w-5" />}
-            Generate Templates
-          </button>
+          <div className="w-full md:w-auto flex flex-col sm:flex-row gap-3">
+            <button
+              onClick={handleSaveDraft}
+              disabled={savingDraft || generating}
+              className="flex items-center py-3 px-6 rounded-lg shadow-sm text-sm font-semibold text-gray-800 bg-gray-100 hover:bg-gray-200 disabled:bg-gray-100 disabled:text-gray-400 transition-all justify-center"
+            >
+              {savingDraft && <Loader2 className="animate-spin -ml-1 mr-2 h-5 w-5" />}
+              Save Changes
+            </button>
+
+            <button
+              onClick={handleGenerate}
+              disabled={savingDraft || generating}
+              className="flex items-center py-3 px-8 rounded-lg shadow-md text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 transition-all justify-center"
+            >
+              {generating && <Loader2 className="animate-spin -ml-1 mr-2 h-5 w-5" />}
+              Save & Open Preview
+            </button>
+          </div>
         </div>
+
+        {saveMessage && (
+          <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700">
+            {saveMessage}
+          </div>
+        )}
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Column 1: Clinic Data */}
@@ -248,6 +325,71 @@ export default function EditPage({ params }: { params: Promise<{ slug: string }>
                 <textarea className="w-full text-gray-900 border border-gray-300 rounded-lg p-3 text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-colors resize-none" 
                           rows={6} value={(data.business.services || []).join('\n')} onChange={e => handleArrayChange('business', 'services', e.target.value)} />
              </div>
+          </div>
+
+          {/* Full Width: Reviews */}
+          <div className="lg:col-span-2 space-y-4">
+             <div className="flex justify-between items-center pb-2 border-b border-gray-100">
+               <h2 className="text-xl font-bold text-gray-800">Patient Reviews</h2>
+               <button onClick={addReview} className="flex items-center gap-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">
+                 <Plus className="w-4 h-4" /> Add Review
+               </button>
+             </div>
+
+             {(data.reviews || []).length > 0 ? (
+               <div className="space-y-4">
+                 {(data.reviews || []).map((review: any, index: number) => (
+                   <div key={index} className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                     <div className="flex items-center justify-between mb-4">
+                       <h3 className="font-semibold text-gray-800">Review {index + 1}</h3>
+                       <button
+                         onClick={() => removeReview(index)}
+                         className="inline-flex items-center gap-1 text-xs bg-red-50 text-red-600 border border-red-100 hover:bg-red-100 px-2.5 py-1.5 rounded-md"
+                       >
+                         <Trash2 className="w-3.5 h-3.5" /> Remove
+                       </button>
+                     </div>
+
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                       <div>
+                         <label className="block text-sm font-semibold text-gray-700 mb-1">Author</label>
+                         <input
+                           className="w-full text-gray-900 border border-gray-300 rounded-lg p-2.5 text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                           value={review.author || ''}
+                           onChange={e => handleReviewChange(index, 'author', e.target.value)}
+                         />
+                       </div>
+
+                       <div>
+                         <label className="block text-sm font-semibold text-gray-700 mb-1">Rating (1-5)</label>
+                         <input
+                           type="number"
+                           min={1}
+                           max={5}
+                           className="w-full text-gray-900 border border-gray-300 rounded-lg p-2.5 text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                           value={review.rating ?? ''}
+                           onChange={e => handleReviewChange(index, 'rating', e.target.value)}
+                         />
+                       </div>
+                     </div>
+
+                     <div className="mt-4">
+                       <label className="block text-sm font-semibold text-gray-700 mb-1">Review Text</label>
+                       <textarea
+                         rows={3}
+                         className="w-full text-gray-900 border border-gray-300 rounded-lg p-2.5 text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"
+                         value={review.text || ''}
+                         onChange={e => handleReviewChange(index, 'text', e.target.value)}
+                       />
+                     </div>
+                   </div>
+                 ))}
+               </div>
+             ) : (
+               <p className="text-sm text-gray-500 italic p-4 bg-gray-50 border border-gray-100 rounded-lg">
+                 No reviews available. Click Add Review to include one.
+               </p>
+             )}
           </div>
 
           {/* Full Width: Scraped Media */}

@@ -59,7 +59,7 @@ export async function createSourceConfig(slug: string, data: any): Promise<Gener
       experience: '5+ years',
       specialization: 'General Dentistry'
     },
-    reviews: [
+    reviews: data.reviews && data.reviews.length > 0 ? data.reviews : [
       {
         author: 'John Doe',
         rating: '5',

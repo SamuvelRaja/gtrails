@@ -54,13 +54,13 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
         <div className="absolute inset-0 z-0">
           <img src="/images/heroes/gallery_hero_1776016836321.png" alt="Smile Gallery" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-blue-900/75"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-blue-900 via-blue-900/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-blue-900 via-blue-900/40 to-transparent"></div>
         </div>
         <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           <p className="text-gray-400 font-semibold tracking-[0.15em] uppercase text-xs mb-6">Smile Gallery</p>
           <div className="flex flex-col mb-8">
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">See the Transformations</h2>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">For Yourself</h2>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-1.5">For Yourself</h2>
           </div>
           <p className="text-xl text-gray-400 max-w-3xl font-light leading-relaxed">
             Browse real patient cases showcasing the life-changing results of our dental treatments. Every smile here tells a story of trust, expertise, and renewed confidence.
@@ -85,7 +85,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
             {galleryCategories.map((category, idx) => (
               <div key={idx} className="bg-white rounded-3xl border border-gray-100 cursor-pointer group flex flex-col h-full hover:shadow-lg hover:border-gray-200 transition-all duration-300">
                 {/* Image Placeholder */}
-                <div className="aspect-[4/3] bg-blue-950 relative flex items-center justify-center overflow-hidden rounded-t-3xl border-b border-gray-100">
+                <div className="aspect-4/3 bg-blue-950 relative flex items-center justify-center overflow-hidden rounded-t-3xl border-b border-gray-100">
                   {clinicImages[idx] ? (
                     <img src={clinicImages[idx]} alt={category.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   ) : (
@@ -99,10 +99,10 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
                 </div>
 
                 {/* Content */}
-                <div className="p-8 flex-grow flex flex-col">
+                <div className="p-8 grow flex flex-col">
                   <h4 className="font-medium text-blue-900 text-xl mb-1">{category.title}</h4>
                   <p className="text-gray-400 font-semibold text-xs tracking-widest uppercase mb-4">{category.subtitle}</p>
-                  <p className="text-gray-500 text-[14px] leading-relaxed font-light flex-grow">{category.description}</p>
+                  <p className="text-gray-500 text-[14px] leading-relaxed font-light grow">{category.description}</p>
                   
                   <div className="mt-8 flex justify-between items-center pt-6 border-t border-gray-50">
                      <span className="text-xs font-semibold text-blue-900 uppercase tracking-widest group-hover:text-gray-500 transition-colors">View Cases</span>
@@ -126,7 +126,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
                 <h3 className="text-gray-500 font-semibold tracking-[0.15em] uppercase text-xs">Virtual Tour</h3>
                 <div className="flex flex-col">
                    <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-gray-400 leading-none tracking-tighter">Take a Look</h4>
-                   <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-blue-900 leading-none tracking-tighter -mt-[4px]">Inside Our Clinic</h4>
+                   <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-blue-900 leading-none tracking-tighter -mt-1">Inside Our Clinic</h4>
                 </div>
               </div>
 
@@ -148,7 +148,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
 
             <div className="flex-1 w-full">
               <div className="grid grid-cols-2 gap-4">
-                <div className="aspect-[3/4] bg-gray-100 rounded-3xl overflow-hidden flex items-center justify-center">
+                <div className="aspect-3/4 bg-gray-100 rounded-3xl overflow-hidden flex items-center justify-center">
                   {clinicImages[0] ? (
                     <img src={clinicImages[0]} alt="Clinic interior" className="w-full h-full object-cover" />
                   ) : (
@@ -182,7 +182,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ slug: 
         <div className="max-w-4xl mx-auto px-8 text-center w-full">
           <div className="flex flex-col mb-8">
             <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Want Results</h3>
-            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">Like These?</h3>
+            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-1.5">Like These?</h3>
           </div>
           <p className="text-xl text-gray-400 font-light mb-12 max-w-2xl mx-auto">Every great smile starts with a single consultation. Let our specialists design a personalised treatment plan just for you.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

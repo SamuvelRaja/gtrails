@@ -158,13 +158,13 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
         <div className="absolute inset-0 z-0">
           <img src="/images/heroes/patient_guides_hero_1776016856386.png" alt="Patient Guides" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-emerald-900/75"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-emerald-900 via-emerald-900/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-emerald-900 via-emerald-900/40 to-transparent"></div>
         </div>
         <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           <p className="text-gray-400 font-semibold tracking-[0.15em] uppercase text-xs mb-6">Patient Education</p>
           <div className="flex flex-col mb-8">
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Guides Written By</h2>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">Our Dental Experts</h2>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-1.5">Our Dental Experts</h2>
           </div>
           <p className="text-xl text-gray-400 max-w-3xl font-light leading-relaxed">
             Empowering you with clear, honest, jargon-free information so you can make confident decisions about your dental health. Every guide is reviewed by our specialist team.
@@ -227,7 +227,7 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
         <div className="max-w-4xl mx-auto px-8 text-center w-full">
           <div className="flex flex-col mb-8">
             <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Have Questions</h3>
-            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">About Your Health?</h3>
+            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-1.5">About Your Health?</h3>
           </div>
           <p className="text-xl text-gray-400 font-light mb-12 max-w-2xl mx-auto">Our specialists are here to provide personalised advice. No question is too small — your dental health matters.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

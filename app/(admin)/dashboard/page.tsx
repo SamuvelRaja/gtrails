@@ -2,13 +2,14 @@ import fs from 'fs/promises';
 import path from 'path';
 import Link from 'next/link';
 import { ExternalLink, Edit } from 'lucide-react';
+import DeleteClinicButton from '@/components/DeleteClinicButton';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Dashboard() {
   const dataDir = path.join(process.cwd(), 'data');
   
-  let clinics: any[] = [];
+  const clinics: any[] = [];
   
   try {
     const slugs = await fs.readdir(dataDir);
@@ -79,6 +80,7 @@ export default async function Dashboard() {
                    <Link href={`/preview/${clinic.slug}`} className="flex-1 flex justify-center items-center py-2 px-3 bg-blue-50 text-blue-700 font-semibold text-sm rounded-md border border-blue-100 hover:bg-blue-100 transition-colors">
                      <ExternalLink className="w-4 h-4 mr-2" /> View Previews
                    </Link>
+                   <DeleteClinicButton slug={clinic.slug} clinicName={clinic.name} />
                 </div>
               </div>
             </div>

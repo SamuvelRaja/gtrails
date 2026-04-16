@@ -222,13 +222,13 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
         <div className="absolute inset-0 z-0">
           <img src="/images/heroes/services_hero_1776016873482.png" alt="Our Services" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-emerald-900/75"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-emerald-900 via-emerald-900/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-emerald-900 via-emerald-900/40 to-transparent"></div>
         </div>
         <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           <p className="text-gray-400 font-semibold tracking-[0.15em] uppercase text-xs mb-6">Our Treatments</p>
           <div className="flex flex-col mb-8">
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Comprehensive Dental</h2>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">Services Under One Roof</h2>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-1.5">Services Under One Roof</h2>
           </div>
           <p className="text-xl text-gray-400 max-w-3xl font-light leading-relaxed">
             At {clinic.name || 'our clinic'}, we provide quality dental care for everyone. Whether it's Invisalign, implants, cosmetic dentistry, or pediatric care — our team of specialists has you covered with advanced technology and a compassionate approach.
@@ -309,7 +309,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
                   <div className={`flex-1 ${!isEven ? 'lg:order-1' : ''}`}>
                     <div className="bg-white rounded-3xl border border-gray-100 p-10 lg:p-12 h-full flex flex-col">
                       <h4 className="text-xl font-medium text-emerald-900 mb-10">How It Works</h4>
-                      <div className="space-y-10 flex-grow">
+                      <div className="space-y-10 grow">
                         {(svcData?.process || [
                           'Initial consultation and comprehensive examination',
                           'Custom treatment plan development and discussion',
@@ -340,7 +340,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
         <div className="max-w-4xl mx-auto px-8 w-full text-center">
           <div className="flex flex-col mb-8">
             <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Not Sure Which</h3>
-            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">Treatment You Need?</h3>
+            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-1.5">Treatment You Need?</h3>
           </div>
           <p className="text-xl text-gray-400 font-light mb-12 max-w-2xl mx-auto">Book a free consultation and our specialists will evaluate your dental health and recommend the best path forward.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

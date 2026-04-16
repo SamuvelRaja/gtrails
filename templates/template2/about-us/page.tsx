@@ -25,13 +25,13 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
         <div className="absolute inset-0 z-0">
           <img src="/images/heroes/about_us_hero_1776016804621.png" alt="About Us" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-blue-900/75"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-blue-900 via-blue-900/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-blue-900 via-blue-900/40 to-transparent"></div>
         </div>
         <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           <p className="text-gray-400 font-semibold tracking-[0.15em] uppercase text-xs mb-6">About Us</p>
           <div className="flex flex-col mb-8">
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">The Story Behind</h2>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">Your Trusted Clinic</h2>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-1.5">Your Trusted Clinic</h2>
           </div>
           <p className="text-xl text-gray-400 max-w-2xl font-light leading-relaxed">
             Learn about our journey, our guiding principles, and the exceptional team of specialists who make {clinic.name || 'our clinic'} a premier destination for comprehensive dental care.
@@ -49,7 +49,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
                 <img
                   src={clinicImage}
                   alt={`${clinic.name || 'Clinic'} facility`}
-                  className="w-full aspect-[4/3] object-cover"
+                  className="w-full aspect-4/3 object-cover"
                 />
               </div>
             </div>
@@ -60,7 +60,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
                 <h3 className="text-gray-500 font-semibold tracking-[0.15em] uppercase text-xs">Who We Are</h3>
                 <div className="flex flex-col">
                   <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-gray-400 leading-none tracking-tighter">Welcome to</h4>
-                  <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-blue-900 leading-none tracking-tighter -mt-[4px]">{clinic.name || 'Our Clinic'}</h4>
+                  <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-blue-900 leading-none tracking-tighter -mt-1">{clinic.name || 'Our Clinic'}</h4>
                 </div>
               </div>
               <div className="space-y-6 text-gray-600 text-[16px] leading-relaxed font-light">
@@ -89,7 +89,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
                 <Eye className="w-6 h-6" />
               </div>
               <h4 className="text-3xl font-normal text-blue-900 mb-6 tracking-tight">Our Vision</h4>
-              <p className="text-gray-500 leading-relaxed font-light text-[16px] flex-grow">
+              <p className="text-gray-500 leading-relaxed font-light text-[16px] grow">
                 To be the most trusted dental healthcare institution in the region — one where every patient, regardless of their background, receives world-class treatment delivered with empathy, transparency, and clinical excellence. We envision a community where dental anxiety is a thing of the past and every individual has access to the care they deserve.
               </p>
             </div>
@@ -100,7 +100,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
                 <Target className="w-6 h-6" />
               </div>
               <h4 className="text-3xl font-normal text-blue-900 mb-6 tracking-tight">Our Mission</h4>
-              <p className="text-gray-500 leading-relaxed font-light text-[16px] flex-grow">
+              <p className="text-gray-500 leading-relaxed font-light text-[16px] grow">
                 To provide an exceptional standard of dental care through continuous investment in advanced technology, specialised training, and a genuine spirit of compassion. We are committed to preventive care — addressing small issues before they become major concerns — while making every visit a comfortable, positive, and empowering experience for our patients.
               </p>
             </div>
@@ -115,7 +115,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
             <h3 className="text-sm font-semibold text-gray-500 tracking-[0.15em] uppercase">Guiding Principles</h3>
             <div className="flex flex-col items-center">
               <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">The Values</h4>
-              <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-[6px]">That Drive Us</h4>
+              <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-1.5">That Drive Us</h4>
             </div>
             <p className="text-lg text-gray-500 font-light pt-2 max-w-2xl mx-auto">Every decision we make — from the equipment we invest in to the way we greet you at the door — is guided by these six principles.</p>
           </div>
@@ -148,7 +148,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
             <h3 className="text-gray-400 font-semibold tracking-[0.15em] uppercase text-xs">Our Journey</h3>
             <div className="flex flex-col items-center">
               <h4 className="text-5xl md:text-6xl font-normal text-gray-500 leading-none tracking-tighter">Milestones</h4>
-              <h4 className="text-5xl md:text-6xl font-normal text-white leading-none tracking-tighter -mt-[4px]">That Define Us</h4>
+              <h4 className="text-5xl md:text-6xl font-normal text-white leading-none tracking-tighter -mt-1">That Define Us</h4>
             </div>
           </div>
 
@@ -164,7 +164,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
             ].map((milestone, i) => (
               <div key={i} className={`relative flex flex-col md:flex-row items-start gap-8 md:gap-16 pb-16 last:pb-0 ${i % 2 === 0 ? '' : 'md:flex-row-reverse'}`}>
                 {/* Dot */}
-                <div className="absolute left-6 md:left-1/2 w-4 h-4 bg-white rounded-full border-[4px] border-blue-900 -translate-x-1/2 mt-2 z-10" />
+                <div className="absolute left-6 md:left-1/2 w-4 h-4 bg-white rounded-full border-4 border-blue-900 -translate-x-1/2 mt-2 z-10" />
                 
                 {/* Content */}
                 <div className={`flex-1 pl-16 md:pl-0 ${i % 2 === 0 ? 'md:text-right md:pr-16' : 'md:text-left md:pl-16'}`}>
@@ -190,7 +190,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
                  <img 
                    src={doctorImage} 
                    alt={doctor.name || 'Specialist'} 
-                   className="w-full aspect-[3/4] object-cover"
+                   className="w-full aspect-3/4 object-cover"
                  />
                  <div className="absolute bottom-6 left-6 right-6 bg-white rounded-2xl p-6 shadow-xl border border-gray-100 text-center">
                     <h4 className="text-xl font-medium text-blue-900">{doctor.name || 'Our Lead Specialist'}</h4>
@@ -204,7 +204,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
                 <h3 className="text-gray-500 font-semibold tracking-[0.15em] uppercase text-xs">Meet Our Founder</h3>
                 <div className="flex flex-col">
                   <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">Our Lead</h4>
-                  <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-[6px]">Specialist</h4>
+                  <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-1.5">Specialist</h4>
                 </div>
               </div>
               
@@ -244,7 +244,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
             <h3 className="text-gray-500 font-semibold tracking-[0.15em] uppercase text-xs">Our Clinical Departments</h3>
             <div className="flex flex-col items-center">
               <h4 className="text-5xl md:text-6xl font-normal text-gray-400 leading-none tracking-tighter">A Specialist</h4>
-              <h4 className="text-5xl md:text-6xl font-normal text-blue-900 leading-none tracking-tighter -mt-[4px]">For Every Need</h4>
+              <h4 className="text-5xl md:text-6xl font-normal text-blue-900 leading-none tracking-tighter -mt-1">For Every Need</h4>
             </div>
             <p className="text-gray-500 font-light text-lg pt-2 max-w-2xl mx-auto">Our multi-disciplinary team collaborates to deliver coordinated, holistic dental care under one roof.</p>
           </div>
@@ -275,7 +275,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
         <div className="max-w-4xl mx-auto px-8 text-center w-full">
           <div className="flex flex-col mb-8">
             <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Experience The</h3>
-            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">Difference Today</h3>
+            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-1.5">Difference Today</h3>
           </div>
           <p className="text-xl text-gray-400 font-light mb-12 max-w-2xl mx-auto">Come visit us. See our facility, meet our team, and let us show you what patient-first dental care truly feels like.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

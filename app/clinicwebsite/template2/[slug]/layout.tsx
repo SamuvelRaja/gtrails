@@ -69,7 +69,7 @@ export default async function ClinicLayout({ children, params }: LayoutProps) {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow">
+      <main className="grow">
         {children}
       </main>
 

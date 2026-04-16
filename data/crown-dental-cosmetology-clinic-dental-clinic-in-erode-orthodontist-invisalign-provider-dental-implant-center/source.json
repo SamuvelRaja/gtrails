@@ -1,0 +1,152 @@
+{
+  "clinic": {
+    "name": "Crown Dental & Cosmetology Clinic | Dental Clinic in Erode | Orthodontist | Invisalign Provider | Dental Implant Center",
+    "slug": "crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center",
+    "tagline": "Exceptional Dental Care in Your City",
+    "description": "Welcome to Crown Dental & Cosmetology Clinic | Dental Clinic in Erode | Orthodontist | Invisalign Provider | Dental Implant Center. Providing top-tier dental services tailored to your needs in a comfortable environment.",
+    "address": {
+      "full": "Shop No: 2, A Square building, 19, Vasuki St, Erode Fort, Erode, Tamil Nadu 638001",
+      "area": "",
+      "city": "Erode Fort",
+      "state": "Erode",
+      "country": "India"
+    },
+    "contact": {
+      "phone": "08946013270",
+      "website": ""
+    }
+  },
+  "business": {
+    "rating": "4.9",
+    "reviewCount": "",
+    "timings": [],
+    "services": [
+      "Teeth Cleaning",
+      "Root Canal Treatment",
+      "Dental Implants",
+      "Braces & Aligners",
+      "Teeth Whitening"
+    ],
+    "highlights": [
+      "Experienced dental team",
+      "Modern equipment",
+      "Patient-friendly care"
+    ]
+  },
+  "doctor": {
+    "name": "Dr. Crown Team",
+    "images": [],
+    "experience": "5+ years",
+    "specialization": "General Dentistry"
+  },
+  "reviews": [
+    {
+      "author": "John Doe",
+      "rating": "5",
+      "text": "Great experience, highly recommend!"
+    }
+  ],
+  "media": {
+    "clinicImages": [
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=clinicImages-1.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=clinicImages-2.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=clinicImages-3.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=clinicImages-4.jpg"
+    ],
+    "treatmentImages": [
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=treatmentImages-5.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=treatmentImages-6.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=treatmentImages-7.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=treatmentImages-8.jpg"
+    ],
+    "otherImages": [
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-9.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-10.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-11.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-12.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-13.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-14.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-15.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-16.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-17.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-18.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-19.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-20.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-21.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-22.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-23.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-24.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-25.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-26.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-27.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-28.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-29.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-30.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-31.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-32.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-33.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-34.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-35.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-36.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-37.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-38.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-39.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-40.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-41.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-42.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-43.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-44.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-45.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-46.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-47.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-48.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-49.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-50.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-51.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-52.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-53.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-54.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-55.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-56.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-57.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-58.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-59.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-60.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-61.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-62.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-63.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-64.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-65.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-66.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-67.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-68.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-69.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-70.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-71.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-72.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-73.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-74.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-75.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-76.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-77.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-78.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-79.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-80.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-81.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-82.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-83.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-84.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-85.jpg",
+      "/api/media?slug=crown-dental-cosmetology-clinic-dental-clinic-in-erode-orthodontist-invisalign-provider-dental-implant-center&file=otherImages-86.jpg"
+    ]
+  },
+  "overrides": {
+    "doctorName": "",
+    "doctorImages": [],
+    "extraImages": []
+  },
+  "meta": {
+    "generatedAt": "2026-04-15T04:33:59.128Z",
+    "source": "google_maps"
+  }
+}

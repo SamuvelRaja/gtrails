@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import ClientHero from './ClientHero';
+import ReviewsSlider from '@/components/ReviewsSlider';
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -70,7 +71,7 @@ export default async function ClinicHome({ params }: PageProps) {
             <h3 className="text-sm font-semibold text-gray-500 tracking-[0.15em] uppercase">Why Choose Us</h3>
             <div className="flex flex-col">
               <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">Dedicated To</h4>
-              <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-[6px]">Your Health</h4>
+              <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-1.5">Your Health</h4>
             </div>
             <p className="text-xl text-gray-600 max-w-2xl pt-2">We combine expertise, cutting-edge technology, and a friendly approach to care for all your dental needs.</p>
           </div>
@@ -102,7 +103,7 @@ export default async function ClinicHome({ params }: PageProps) {
               <h3 className="text-sm font-semibold text-gray-500 tracking-[0.15em] uppercase">Comprehensive Services</h3>
               <div className="flex flex-col">
                 <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">Explore Our</h4>
-                <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-[6px]">Treatments</h4>
+                <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-1.5">Treatments</h4>
               </div>
               <p className="text-xl text-gray-600 max-w-2xl pt-2">Whether it's routine cleanings, Invisalign teeth aligners, or complex root canal treatments, we handle it with utmost care.</p>
             </div>
@@ -113,12 +114,12 @@ export default async function ClinicHome({ params }: PageProps) {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {servicesList.map((svc: string, i: number) => (
-              <div key={i} className="bg-white p-10 rounded-3xl border border-gray-100 hover:border-gray-300 hover:shadow-lg transition-all duration-300 flex flex-col group min-h-[320px]">
+              <div key={i} className="bg-white p-10 rounded-3xl border border-gray-100 hover:border-gray-300 hover:shadow-lg transition-all duration-300 flex flex-col group min-h-80">
                 <div className="mb-8">
                    <Activity className="w-8 h-8 text-gray-400 group-hover:text-blue-900 transition-colors" />
                 </div>
                 <h5 className="text-2xl font-normal text-blue-900 mb-4 tracking-tight">{svc}</h5>
-                <p className="text-gray-500 leading-relaxed mb-8 flex-grow text-[15px]">
+                <p className="text-gray-500 leading-relaxed mb-8 grow text-[15px]">
                   {getServiceDescription(svc)}
                 </p>
                 <Link href={`${basePath}/services`} className="flex items-center justify-between mt-auto border-t border-gray-100 pt-6">
@@ -141,7 +142,7 @@ export default async function ClinicHome({ params }: PageProps) {
               <h3 className="text-sm font-semibold text-gray-400 tracking-[0.15em] uppercase">Visual Evidence</h3>
               <div className="flex flex-col">
                 <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">Before & After</h4>
-                <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">Results</h4>
+                <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-1.5">Results</h4>
               </div>
               <p className="text-xl text-gray-400 max-w-2xl pt-2">Witness the transformative power of our dental treatments. Your dream smile is completely within reach.</p>
             </div>
@@ -157,7 +158,7 @@ export default async function ClinicHome({ params }: PageProps) {
               { title: 'Orthodontic Correction', sub: 'Invisalign Results' },
             ].map((item, idx) => (
               <div key={idx} className="group cursor-pointer flex flex-col h-full">
-                <div className="aspect-[4/3] bg-blue-950 rounded-3xl overflow-hidden relative mb-6">
+                <div className="aspect-4/3 bg-blue-950 rounded-3xl overflow-hidden relative mb-6">
                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500"></div>
                    <div className="absolute inset-0 flex items-center justify-center opacity-75 group-hover:opacity-100 transition-opacity">
                      <span className="flex flex-col items-center gap-3 text-white">
@@ -186,7 +187,7 @@ export default async function ClinicHome({ params }: PageProps) {
         <div className="max-w-7xl mx-auto px-8 w-full">
            <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
              <div className="order-2 lg:order-1 relative">
-                <img src={doctorImage} alt={doctor.name || "Specialist"} className="w-full aspect-[4/5] object-cover rounded-3xl bg-gray-100" />
+                <img src={doctorImage} alt={doctor.name || "Specialist"} className="w-full aspect-4/5 object-cover rounded-3xl bg-gray-100" />
                 <div className="absolute -bottom-8 -right-4 md:right-8 bg-white p-6 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-6">
                    <div>
                      <h4 className="text-xl font-medium text-blue-900">{doctor.name || 'Our Lead Specialist'}</h4>
@@ -201,7 +202,7 @@ export default async function ClinicHome({ params }: PageProps) {
                  <h3 className="text-sm font-semibold text-gray-500 tracking-[0.15em] uppercase">Our Clinical Team</h3>
                  <div className="flex flex-col">
                    <h4 className="text-5xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">A Board of</h4>
-                   <h4 className="text-5xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-[6px]">Specialists</h4>
+                   <h4 className="text-5xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-1.5">Specialists</h4>
                  </div>
                  <blockquote className="text-xl text-gray-600 leading-relaxed pt-6 border-l-2 pl-6 border-gray-200 italic">
                    "Our practice is distinguished by a diverse team of doctors, each bringing years of specialized expertise to ensure true full-mouth rehabilitation."
@@ -249,31 +250,35 @@ export default async function ClinicHome({ params }: PageProps) {
             <h3 className="text-sm font-semibold text-gray-500 tracking-[0.15em] uppercase">Patient Stories</h3>
             <div className="flex flex-col items-center">
               <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">Over 500+</h4>
-              <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-[6px]">Happy Patients</h4>
+              <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-1.5">Happy Patients</h4>
             </div>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto pt-2">Don't just take our word for it. Read real experiences from our valued community.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {displayReviews.slice(0, 3).map((review: any, i: number) => (
-              <div key={i} className="bg-white p-10 rounded-3xl border border-gray-100 flex flex-col h-full hover:shadow-lg hover:border-gray-300 transition-all duration-300">
-                 <div className="flex gap-1 mb-8">
-                   {[...Array(5)].map((_, j) => (
-                     <Star key={j} className={`w-4 h-4 ${j < parseInt(review.rating) ? 'fill-gray-800 text-gray-800' : 'fill-gray-200 text-gray-200'}`} />
-                   ))}
-                 </div>
-                 <p className="text-gray-600 leading-relaxed mb-10 text-[16px] flex-grow font-light">"{review.text}"</p>
-                 <div className="flex items-center gap-4 mt-auto border-t border-gray-100 pt-6">
-                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-blue-900 font-semibold text-sm">
-                      {review.author ? review.author.charAt(0) : 'U'}
-                    </div>
-                    <div>
-                      <h6 className="font-semibold text-sm text-blue-900 uppercase tracking-wider">{review.author || 'Patient'}</h6>
-                    </div>
-                 </div>
-              </div>
-            ))}
-          </div>
+          {displayReviews.length > 5 ? (
+            <ReviewsSlider reviews={displayReviews} theme="template2" />
+          ) : (
+            <div className="grid md:grid-cols-3 gap-8">
+              {displayReviews.map((review: any, i: number) => (
+                <div key={i} className="bg-white p-10 rounded-3xl border border-gray-100 flex flex-col h-full hover:shadow-lg hover:border-gray-300 transition-all duration-300">
+                   <div className="flex gap-1 mb-8">
+                     {[...Array(5)].map((_, j) => (
+                       <Star key={j} className={`w-4 h-4 ${j < parseInt(review.rating) ? 'fill-gray-800 text-gray-800' : 'fill-gray-200 text-gray-200'}`} />
+                     ))}
+                   </div>
+                   <p className="text-gray-600 leading-relaxed mb-10 text-[16px] grow font-light">"{review.text}"</p>
+                   <div className="flex items-center gap-4 mt-auto border-t border-gray-100 pt-6">
+                      <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-blue-900 font-semibold text-sm">
+                        {review.author ? review.author.charAt(0) : 'U'}
+                      </div>
+                      <div>
+                        <h6 className="font-semibold text-sm text-blue-900 uppercase tracking-wider">{review.author || 'Patient'}</h6>
+                      </div>
+                   </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -284,7 +289,7 @@ export default async function ClinicHome({ params }: PageProps) {
              <h3 className="text-sm font-semibold text-gray-500 tracking-[0.15em] uppercase">Common Queries</h3>
              <div className="flex flex-col items-center">
                <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-400 leading-none tracking-tighter">Frequently Asked</h4>
-               <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-[6px]">Questions</h4>
+               <h4 className="text-5xl md:text-6xl lg:text-7xl font-normal text-blue-900 leading-none tracking-tighter -mt-1.5">Questions</h4>
              </div>
           </div>
 
@@ -319,7 +324,7 @@ export default async function ClinicHome({ params }: PageProps) {
       <section className="py-24 lg:py-40 bg-blue-900 text-white">
         <div className="max-w-4xl mx-auto px-8 text-center w-full">
             <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter mb-4">Your Smile Transformation</h3>
-            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter mb-8 -mt-[6px]">Starts Here</h3>
+            <h3 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter mb-8 -mt-1.5">Starts Here</h3>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-12">Don't put off essential dental care. Book your consultation today and experience elite dentistry tailored to your needs.</p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

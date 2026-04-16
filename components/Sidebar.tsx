@@ -13,7 +13,7 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-gray-900 border-r border-gray-800 text-gray-300 flex-shrink-0 hidden md:flex flex-col h-full sticky top-0">
+    <aside className="w-64 bg-gray-900 border-r border-gray-800 text-gray-300 shrink-0 hidden md:flex flex-col h-full sticky top-0">
       <div className="h-16 flex items-center px-6 border-b border-gray-800 font-bold tracking-tight text-white gap-2 shrink-0">
         <Stethoscope className="w-5 h-5 text-blue-500" />
         ClinicGen

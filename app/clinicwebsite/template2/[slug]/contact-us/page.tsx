@@ -23,13 +23,13 @@ export default async function ContactUsPage({ params }: { params: Promise<{ slug
         <div className="absolute inset-0 z-0">
           <img src="/images/heroes/contact_us_hero_1776016820813.png" alt="Contact Us" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-blue-900/75"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-blue-900 via-blue-900/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-blue-900 via-blue-900/40 to-transparent"></div>
         </div>
         <div className="max-w-7xl mx-auto px-8 w-full relative z-10">
           <p className="text-gray-400 font-semibold tracking-[0.15em] uppercase text-xs mb-6">Contact Us</p>
           <div className="flex flex-col mb-8">
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-500 leading-none tracking-tighter">We're Ready To</h2>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-[6px]">Help You Smile</h2>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-none tracking-tighter -mt-1.5">Help You Smile</h2>
           </div>
           <p className="text-xl text-gray-400 max-w-3xl font-light leading-relaxed">
             Whether you need to book an appointment, ask about a treatment, or find directions to our clinic — we're here to help. Reach out through any channel that's most convenient for you.
@@ -185,7 +185,7 @@ export default async function ContactUsPage({ params }: { params: Promise<{ slug
             <h3 className="text-sm font-semibold text-gray-500 tracking-[0.15em] uppercase">Your First Visit</h3>
             <div className="flex flex-col items-center">
               <h4 className="text-5xl md:text-6xl font-normal text-gray-400 leading-none tracking-tighter">What to Expect</h4>
-              <h4 className="text-5xl md:text-6xl font-normal text-blue-900 leading-none tracking-tighter -mt-[4px]">When You Arrive</h4>
+              <h4 className="text-5xl md:text-6xl font-normal text-blue-900 leading-none tracking-tighter -mt-1">When You Arrive</h4>
             </div>
             <p className="text-lg text-gray-500 font-light pt-2">We want your visit to be seamless from the moment you walk through our door.</p>
           </div>
@@ -218,7 +218,7 @@ export default async function ContactUsPage({ params }: { params: Promise<{ slug
                 <h3 className="text-gray-500 font-semibold tracking-[0.15em] uppercase text-xs">Location</h3>
                 <div className="flex flex-col">
                   <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-gray-400 leading-none tracking-tighter">How to</h4>
-                  <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-blue-900 leading-none tracking-tighter -mt-[4px]">Find Us</h4>
+                  <h4 className="text-4xl md:text-5xl lg:text-6xl font-normal text-blue-900 leading-none tracking-tighter -mt-1">Find Us</h4>
                 </div>
               </div>
               
@@ -248,7 +248,7 @@ export default async function ContactUsPage({ params }: { params: Promise<{ slug
 
             {/* Map Placeholder */}
             <div className="flex-1 w-full">
-              <div className="aspect-[4/3] bg-gray-50 rounded-3xl border border-gray-100 flex items-center justify-center flex-col p-8 text-center">
+              <div className="aspect-4/3 bg-gray-50 rounded-3xl border border-gray-100 flex items-center justify-center flex-col p-8 text-center">
                 <Navigation className="w-10 h-10 text-gray-300 mb-4" />
                 <p className="font-medium text-blue-900 text-xl mb-1">Interactive Map</p>
                 <p className="text-gray-400 font-light text-sm">Google Maps embed will appear here</p>

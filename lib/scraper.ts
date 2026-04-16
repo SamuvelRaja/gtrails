@@ -1,5 +1,11 @@
 import { chromium, type Page } from 'playwright';
 
+export interface ReviewData {
+  author: string;
+  rating: number;
+  text: string;
+}
+
 export interface ScrapedData {
   name: string;
   rating: string;
@@ -7,13 +13,86 @@ export interface ScrapedData {
   address: string;
   phone: string;
   imageUrls: string[];
+  reviews: ReviewData[];
 }
 
-const GOOGLE_PHOTO_HOST_RE = /(googleusercontent\.com|ggpht\.com)/i;
+const GOOGLE_PHOTO_HOST_RE = /(googleusercontent\.com|ggpht\.com|gstatic\.com|googleapis\.com)/i;
 const SMALL_IMAGE_RE = /(w16-h16|w24-h24|w32-h32|w36-h36|w40-h40|w48-h48|w64-h64|=s32|=s40|=s48|=s64)/i;
+const NOISE_IMAGE_RE = /(maps\/vt|mapfiles|\/maps-api-v3\/|\/icons\/)/i;
+
+function decodeRepeated(value: string, rounds = 3): string {
+    let current = value;
+    for (let i = 0; i < rounds; i++) {
+        try {
+            const decoded = decodeURIComponent(current);
+            if (decoded === current) break;
+            current = decoded;
+        } catch {
+            break;
+        }
+    }
+    return current;
+}
+
+function extractEmbeddedGooglePhotoUrl(rawUrl: string): string {
+    const decodedRaw = decodeRepeated(rawUrl);
+
+    const extractFromText = (text: string): string | null => {
+        const sixMatch = text.match(/!6s(https?:\/\/[^!]+)!/i);
+        if (sixMatch) return decodeRepeated(sixMatch[1]);
+
+        const directMatch = text.match(/https?:\/\/[^\s!]+(?:googleusercontent|ggpht|gstatic|googleapis)[^\s!]*/i);
+        if (directMatch) return decodeRepeated(directMatch[0]);
+
+        return null;
+    };
+
+    const direct = extractFromText(decodedRaw);
+    if (direct) return direct;
+
+    try {
+        const parsed = new URL(decodedRaw);
+        const continueParam = parsed.searchParams.get('continue');
+        if (continueParam) {
+            const decodedContinue = decodeRepeated(continueParam);
+            const embedded = extractFromText(decodedContinue);
+            if (embedded) return embedded;
+        }
+    } catch {
+        // Keep raw URL if it cannot be parsed.
+    }
+
+    return decodedRaw;
+}
+
+function isSmallDimensionUrl(url: string): boolean {
+    const whMatch = url.match(/(?:=|\/)w(\d+)-h(\d+)/i);
+    if (whMatch) {
+        const width = Number(whMatch[1]);
+        const height = Number(whMatch[2]);
+        if (Number.isFinite(width) && Number.isFinite(height)) {
+            return width <= 720 && height <= 540;
+        }
+    }
+
+    const sizeMatch = url.match(/=(?:s|w)(\d+)/i);
+    if (sizeMatch) {
+        const size = Number(sizeMatch[1]);
+        if (Number.isFinite(size)) return size <= 720;
+    }
+
+    return false;
+}
 
 function normalizeCandidateUrl(url: string): string {
-    return url
+    const cleaned = url
+        .replace(/\\u003d/g, '=')
+        .replace(/\\u0026/g, '&')
+        .replace(/&amp;/g, '&')
+        .trim();
+
+    const extracted = extractEmbeddedGooglePhotoUrl(cleaned);
+    return extracted
         .replace(/\\u003d/g, '=')
         .replace(/\\u0026/g, '&')
         .replace(/&amp;/g, '&')
@@ -24,8 +103,19 @@ function isLikelyPhotoUrl(url: string): boolean {
     if (!url || url.startsWith('data:')) return false;
     if (!/^https?:\/\//i.test(url)) return false;
     if (!GOOGLE_PHOTO_HOST_RE.test(url)) return false;
+    if (NOISE_IMAGE_RE.test(url)) return false;
     if (SMALL_IMAGE_RE.test(url)) return false;
     return true;
+}
+
+function promoteGooglePhotoUrl(url: string): string {
+    if (!GOOGLE_PHOTO_HOST_RE.test(url)) return url;
+
+    return url
+        .replace(/=w\d+-h\d+(-[a-z0-9-]+)?/gi, '=w2048-h1536$1')
+        .replace(/=w\d+(?!-h)(-[a-z0-9-]+)?/gi, '=w2048$1')
+        .replace(/=s\d+(-[a-z0-9-]+)?/gi, '=s2048$1')
+        .replace(/\/w\d+-h\d+(-[a-z0-9-]+)?\//gi, '/w2048-h1536$1/');
 }
 
 function addImageCandidate(raw: string | null | undefined, bucket: Set<string>): void {
@@ -34,6 +124,15 @@ function addImageCandidate(raw: string | null | undefined, bucket: Set<string>):
     const candidate = normalizeCandidateUrl(raw).split(/\s+/)[0] || '';
     if (!candidate) return;
     if (!isLikelyPhotoUrl(candidate)) return;
+
+    const promoted = promoteGooglePhotoUrl(candidate);
+    let addedPromoted = false;
+    if (promoted !== candidate && isLikelyPhotoUrl(promoted)) {
+        bucket.add(promoted);
+        addedPromoted = true;
+    }
+
+    if (addedPromoted && isSmallDimensionUrl(candidate)) return;
 
     bucket.add(candidate);
 }
@@ -83,7 +182,9 @@ async function collectImageCandidates(page: Page, bucket: Set<string>): Promise<
         }
     }
 
-    const imageLinks = page.locator('a[href*="googleusercontent.com"], a[href*="ggpht.com"]');
+    const imageLinks = page.locator(
+        'a[href*="googleusercontent.com"], a[href*="ggpht.com"], a[href*="googleapis.com"], a[href*="gstatic.com"]',
+    );
     const linkCount = await imageLinks.count();
     for (let i = 0; i < linkCount; i++) {
         const href = await imageLinks.nth(i).getAttribute('href').catch(() => null);
@@ -263,6 +364,151 @@ async function scrollGalleryStep(page: Page): Promise<ScrollStepResult> {
     });
 }
 
+const REVIEW_CARD_SELECTOR = '[data-review-id], .jftiEf, .GHT2ce';
+const REVIEW_SCROLL_CONTAINER_SELECTOR = 'div[role="feed"], div.m6QErb, div[aria-label*="review" i]';
+const REVIEW_TRIGGER_EXCLUDE_RE = /(write|add|post|question|q&a|share|photo|direction|website|call|save)/i;
+
+async function openExpandedReviewsPanel(page: Page): Promise<boolean> {
+    const openSelectors = [
+        'button[jsaction*="pane.rating.moreReviews"]',
+        'button[jsaction*="pane.reviewChart.moreReviews"]',
+        'button[jsaction*="pane.review.moreReviews"]',
+        'button[aria-label*="More reviews" i]',
+        'button:has-text("More reviews")',
+        'button:has-text("All reviews")',
+        'a:has-text("More reviews")',
+        'a:has-text("All reviews")',
+        'button[aria-label*="reviews" i]',
+        'button:has-text("Reviews")',
+        'div[role="tab"]:has-text("Reviews")',
+    ];
+
+    for (const selector of openSelectors) {
+        const triggers = page.locator(selector);
+        const triggerCount = Math.min(await triggers.count().catch(() => 0), 8);
+        if (triggerCount === 0) continue;
+
+        for (let i = 0; i < triggerCount; i++) {
+            const trigger = triggers.nth(i);
+
+            const [label, text, href] = await Promise.all([
+                trigger.getAttribute('aria-label').catch(() => null),
+                trigger.innerText().catch(() => ''),
+                trigger.getAttribute('href').catch(() => null),
+            ]);
+
+            const descriptor = `${label || ''} ${text || ''}`.replace(/\s+/g, ' ').trim();
+            const descriptorLower = descriptor.toLowerCase();
+            if (REVIEW_TRIGGER_EXCLUDE_RE.test(descriptorLower)) continue;
+
+            const isLikelyReviewTrigger =
+                /reviews?|more|all|google/i.test(descriptorLower) ||
+                /\d/.test(descriptorLower) ||
+                Boolean(href && /^https?:\/\//i.test(href));
+            if (!isLikelyReviewTrigger) continue;
+
+            if (href && /^https?:\/\//i.test(href)) {
+                await page.goto(href, { waitUntil: 'domcontentloaded', timeout: 30000 }).catch(() => {});
+            } else {
+                await trigger.click({ force: true, timeout: 3000 }).catch(() => {});
+            }
+
+            await page.waitForTimeout(2200);
+
+            const [reviewCards, reviewFeeds] = await Promise.all([
+                page.locator(REVIEW_CARD_SELECTOR).count().catch(() => 0),
+                page.locator(REVIEW_SCROLL_CONTAINER_SELECTOR).count().catch(() => 0),
+            ]);
+
+            if (reviewCards >= 2 || (reviewCards > 0 && reviewFeeds > 0)) {
+                return true;
+            }
+
+            await page.keyboard.press('Escape').catch(() => {});
+        }
+    }
+
+    const reviewCards = await page.locator(REVIEW_CARD_SELECTOR).count().catch(() => 0);
+    return reviewCards > 0;
+}
+
+async function expandVisibleReviewBodies(page: Page): Promise<void> {
+    await page.evaluate((reviewSelector) => {
+        const expandTextRe = /(more|read more|full review|show more|see more|plus|mais|mehr|ver m[aá]s)/i;
+        const rows = Array.from(document.querySelectorAll(reviewSelector));
+
+        for (const row of rows) {
+            const buttons = Array.from(row.querySelectorAll('button'));
+            for (const button of buttons) {
+                const className = button.className || '';
+                const jsaction = button.getAttribute('jsaction') || '';
+                const descriptor = `${button.getAttribute('aria-label') || ''} ${button.textContent || ''}`.trim();
+
+                if (
+                    className.includes('w8nwRe') ||
+                    jsaction.includes('pane.review.expandReview') ||
+                    expandTextRe.test(descriptor)
+                ) {
+                    (button as HTMLButtonElement).click();
+                }
+            }
+        }
+    }, REVIEW_CARD_SELECTOR);
+}
+
+async function scrollReviewPanelStep(page: Page): Promise<{ moved: boolean; atEnd: boolean }> {
+    return page.evaluate(({ reviewSelector, containerSelector }) => {
+        const isScrollable = (el: Element): el is HTMLElement => {
+            if (!(el instanceof HTMLElement)) return false;
+            const style = window.getComputedStyle(el);
+            const overflowY = style.overflowY;
+            const overflow = style.overflow;
+            const canScroll =
+                overflowY === 'auto' ||
+                overflowY === 'scroll' ||
+                overflow === 'auto' ||
+                overflow === 'scroll';
+            return canScroll && el.scrollHeight > el.clientHeight + 20;
+        };
+
+        const candidates = new Set<HTMLElement>();
+        const explicitContainers = Array.from(document.querySelectorAll(containerSelector));
+        for (const element of explicitContainers) {
+            if (isScrollable(element)) candidates.add(element);
+        }
+
+        const reviewCards = Array.from(document.querySelectorAll(reviewSelector)).slice(0, 10);
+        for (const card of reviewCards) {
+            if (!(card instanceof HTMLElement)) continue;
+
+            let node: HTMLElement | null = card;
+            for (let i = 0; i < 14 && node; i++) {
+                node = node.parentElement;
+                if (!node) break;
+                if (isScrollable(node)) candidates.add(node);
+            }
+        }
+
+        const container = Array.from(candidates)
+            .sort((a, b) => (b.scrollHeight - b.clientHeight) - (a.scrollHeight - a.clientHeight))[0];
+
+        if (container) {
+            const before = container.scrollTop;
+            const step = Math.max(700, Math.floor(container.clientHeight * 0.92));
+            container.scrollTop = Math.min(container.scrollTop + step, container.scrollHeight);
+            const moved = container.scrollTop > before + 1;
+            const atEnd = container.scrollTop >= container.scrollHeight - container.clientHeight - 4;
+            return { moved, atEnd };
+        }
+
+        const before = window.scrollY;
+        window.scrollBy(0, Math.max(700, Math.floor(window.innerHeight * 0.8)));
+        const moved = window.scrollY > before + 1;
+        const atEnd = window.scrollY + window.innerHeight >= document.body.scrollHeight - 4;
+        return { moved, atEnd };
+    }, { reviewSelector: REVIEW_CARD_SELECTOR, containerSelector: REVIEW_SCROLL_CONTAINER_SELECTOR });
+}
+
 export async function scrapeGoogleBusinessProfile(url: string, photosUrl?: string): Promise<ScrapedData> {
   const browser = await chromium.launch({ headless: true });
     const context = await browser.newContext({
@@ -305,21 +551,31 @@ export async function scrapeGoogleBusinessProfile(url: string, photosUrl?: strin
     const name = await page.locator('h1').innerText().catch(() => '');
 
     // Extract Rating & Review Count
-    // Format is typically "4.8" stars and "(1,234)" reviews
-    const ratingText = await page.locator('span[aria-label*="stars"]').first().getAttribute('aria-label').catch(() => '');
     let rating = '';
     let reviewCount = '';
     
-    if (ratingText) {
-      const ratingMatch = ratingText.match(/([0-9.]+)\s+stars/i);
-      if (ratingMatch) rating = ratingMatch[1];
-    }
+    try {
+        const ratingLocators = await page.locator('[aria-label*="stars"]').all();
+        for (const loc of ratingLocators) {
+            const ariaLabel = await loc.getAttribute('aria-label') || '';
+            
+            const ratingMatch = ariaLabel.match(/([0-9.,]+)\s*stars?/i);
+            if (ratingMatch && !rating) rating = ratingMatch[1].replace(',', '.');
+            
+            const reviewMatch = ariaLabel.replace(/,/g, '').match(/([0-9]+)\s*reviews?/i);
+            if (reviewMatch && !reviewCount) reviewCount = reviewMatch[1];
+            
+            if (rating && reviewCount) break;
+        }
+    } catch {}
     
-    // Look for button indicating "(Number)"
-    const reviewText = await page.locator('button[aria-label*="reviews"]').first().innerText().catch(() => '');
-    if (reviewText) {
-      const rcMatch = reviewText.replace(/,/g, '').match(/\((\d+)\)/);
-      if (rcMatch) reviewCount = rcMatch[1];
+    // Fallback: Look for button indicating "(Number)" or "Number reviews"
+    if (!reviewCount) {
+      const reviewText = await page.locator('button:has-text("reviews"), button:has-text("Reviews"), button[aria-label*="reviews"]').first().innerText().catch(() => '');
+      if (reviewText) {
+        const rcMatch = reviewText.replace(/,/g, '').match(/([0-9]+)/);
+        if (rcMatch) reviewCount = rcMatch[1];
+      }
     }
 
     // Extract Address
@@ -340,6 +596,136 @@ export async function scrapeGoogleBusinessProfile(url: string, photosUrl?: strin
             .innerText()
             .catch(() => '');
 
+    // --- Extract Reviews ---
+    const extractedReviews: ReviewData[] = [];
+    try {
+        console.log('Attempting to extract 5-star reviews...');
+        await page.waitForTimeout(2000);
+        await openExpandedReviewsPanel(page);
+
+        const reviewMap = new Map<string, ReviewData>();
+        let stagnantPasses = 0;
+        let maxVisibleReviewCards = 0;
+        const maxReviewPasses = 300;
+
+        for (let pass = 0; pass < maxReviewPasses; pass++) {
+            await expandVisibleReviewBodies(page);
+
+            const visibleReviews = await page.evaluate((reviewSelector) => {
+                const rows = Array.from(document.querySelectorAll(reviewSelector));
+                const results: { author: string; rating: number; text: string }[] = [];
+
+                const isLikelyUiNoise = (line: string) => {
+                    return /^(Like|Share|Reply|Edit|Owner|Local Guide)$/i.test(line) ||
+                        /^(a|an|\d+)\s+(day|week|month|year)s?\s+ago$/i.test(line) ||
+                        /^\d+\s+reviews?(\s*·\s*\d+\s+photos?)?$/i.test(line);
+                };
+
+                const parseRating = (raw: string): number => {
+                    const normalized = raw.replace(',', '.');
+                    const starsWordMatch = normalized.match(/([1-5](?:\.[0-9])?)\s*stars?/i);
+                    if (starsWordMatch) return Number(starsWordMatch[1]);
+
+                    const slashMatch = normalized.match(/([1-5](?:\.[0-9])?)\s*\/\s*5/);
+                    if (slashMatch) return Number(slashMatch[1]);
+
+                    const outOfMatch = normalized.match(/([1-5](?:\.[0-9])?)\s*(?:out of|sur|de|von|di|dari)?\s*5/i);
+                    if (outOfMatch) return Number(outOfMatch[1]);
+
+                    const genericMatches = Array.from(normalized.matchAll(/([1-5](?:\.[0-9])?)/g))
+                        .map((match) => Number(match[1]))
+                        .filter((value) => Number.isFinite(value));
+                    if (genericMatches.length > 0) return Math.max(...genericMatches);
+
+                    return 0;
+                };
+
+                for (const row of rows) {
+                    const card = row as HTMLElement;
+                    const rawAuthor = (card.querySelector('.d4r55, .TSUbDb, .WNxzHc') as HTMLElement | null)?.innerText?.trim() || '';
+                    const author = rawAuthor
+                        .split('\n')
+                        .map((value) => value.trim())
+                        .find((value) => value.length > 0) || '';
+
+                    const textCandidates = Array.from(
+                        card.querySelectorAll('.wiI7pd, .MyEned, [data-review-text], span[jsname="fbQN7e"], div[jsname="bN97Pc"]'),
+                    )
+                        .map((el) => (el as HTMLElement).innerText?.trim() || '')
+                        .filter((value) => value.length > 0)
+                        .sort((a, b) => b.length - a.length);
+
+                    let text = textCandidates[0] || '';
+
+                    if (!text) {
+                        const lines = card.innerText
+                            .split('\n')
+                            .map((line) => line.trim())
+                            .filter((line) => line.length > 0);
+
+                        for (const line of lines) {
+                            if (line.length < 8) continue;
+                            if (/stars?/i.test(line)) continue;
+                            if (isLikelyUiNoise(line)) continue;
+                            if (line.length > text.length) text = line;
+                        }
+                    }
+
+                    const ratingLabels = Array.from(card.querySelectorAll('[aria-label]'))
+                        .map((node) => node.getAttribute('aria-label') || '')
+                        .filter((label) => /star|\/\s*5|out of|sur\s*5|de\s*5|von\s*5|di\s*5|dari\s*5/i.test(label));
+
+                    let rating = 0;
+                    for (const label of ratingLabels) {
+                        const parsed = parseRating(label);
+                        if (parsed > rating) rating = parsed;
+                    }
+
+                    if (!author || !text) continue;
+                    if (text.length < 8) continue;
+                    if (rating < 4.8) continue;
+
+                    results.push({ author, rating: 5, text: text.replace(/\s+/g, ' ').trim() });
+                }
+
+                return results;
+            }, REVIEW_CARD_SELECTOR);
+
+            const beforeCount = reviewMap.size;
+            for (const review of visibleReviews) {
+                const key = `${review.author.toLowerCase()}::${review.text.toLowerCase()}`;
+                if (!reviewMap.has(key)) {
+                    reviewMap.set(key, review);
+                }
+            }
+
+            const visibleCardCount = await page.locator(REVIEW_CARD_SELECTOR).count().catch(() => 0);
+            const discoveredNewCards = visibleCardCount > maxVisibleReviewCards;
+            if (discoveredNewCards) maxVisibleReviewCards = visibleCardCount;
+
+            const { moved, atEnd } = await scrollReviewPanelStep(page);
+
+            if (reviewMap.size > beforeCount || discoveredNewCards) {
+                stagnantPasses = 0;
+            } else if (moved) {
+                stagnantPasses += 1;
+            } else {
+                stagnantPasses += 2;
+            }
+
+            if (atEnd && stagnantPasses >= 6) break;
+            if (stagnantPasses >= 20) break;
+
+            await page.waitForTimeout(stagnantPasses > 0 ? 950 : 700);
+        }
+
+        extractedReviews.push(...Array.from(reviewMap.values()));
+        console.log(`Successfully scraped ${extractedReviews.length} 5-star reviews.`);
+    } catch (e) {
+        console.log('Error extracting 5-star reviews:', e);
+    }
+    // -----------------------
+
         const imageUrlSet = new Set<string>();
 
     if (photosUrl) {
@@ -347,6 +733,10 @@ export async function scrapeGoogleBusinessProfile(url: string, photosUrl?: strin
         await page.goto(photosUrl, { waitUntil: 'domcontentloaded', timeout: 30000 }).catch(() => console.log('Navigation timeout, proceeding anyway...'));
         await page.waitForTimeout(5000);
     } else {
+        // Reviews scraping may leave us in an overlay/dialog context; reset to details page first.
+        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 }).catch(() => {});
+        await page.waitForTimeout(3500);
+
         // Extract Images (Scroll side panel slightly to ensure images load)
         try {
             console.log('Attempting to open the fully expanded photo gallery...');
@@ -354,11 +744,14 @@ export async function scrapeGoogleBusinessProfile(url: string, photosUrl?: strin
             // Try multiple selectors that Google Maps uses for the gallery button
             // "See all", "Photos", or an element with an aria-label containing "photo"
             const photoButtonSelectors = [
+                'button:has-text("See all photos")',
                 'button:has-text("See photos")',
-                'div:has-text("See photos")',
+                'a:has-text("See photos")',
                 'button:has-text("See all")',
                 'button:has-text("Photos")',
                 'button[aria-label*="photo" i]',
+                'div[role="button"][aria-label*="photo" i]',
+                'div[role="button"]:has-text("See photos")',
                 'div[role="button"]:has-text("Photos")',
                 'div.fontHeadlineSmall:has-text("Photos")'
             ];
@@ -369,7 +762,14 @@ export async function scrapeGoogleBusinessProfile(url: string, photosUrl?: strin
                 if (await btn.count() === 0) continue;
 
                 try {
-                    await btn.click({ force: true, timeout: 3000 });
+                    const href = await btn.getAttribute('href').catch(() => null);
+                    if (href && /^https?:\/\//i.test(href)) {
+                        await page.goto(href, { waitUntil: 'domcontentloaded', timeout: 30000 }).catch(() => {});
+                    } else {
+                        await btn.click({ force: true, timeout: 3000 });
+                    }
+
+                    await page.waitForTimeout(1800);
                     clicked = true;
                     console.log(`Clicked photos button using selector: ${selector}`);
                     break;
@@ -468,6 +868,7 @@ export async function scrapeGoogleBusinessProfile(url: string, photosUrl?: strin
             address: cleanedAddress || 'Address not found',
             phone: cleanedPhone || 'Phone not found',
       imageUrls: uniqueImageUrls,
+            reviews: extractedReviews.filter(r => r.rating === 5),
     };
   } catch (error) {
     console.error('Error during scraping:', error);

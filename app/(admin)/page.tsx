@@ -12,7 +12,7 @@ export default function IntakePage() {
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!url.includes('google.com/maps')) {
+    if (!/(google\.[^/]+\/maps|maps\.app\.goo\.gl|g\.page|maps\.google\.|g\.co|google\.[^/]+\/search|goo\.gl)/i.test(url)) {
       setError('Please provide a valid Google Maps URL.');
       return;
     }
@@ -23,7 +23,7 @@ export default function IntakePage() {
       const res = await fetch('/api/intake', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ gbpUrl: url }),
       });
       const data = await res.json();
       
