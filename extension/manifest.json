@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Google Maps Clinic Scraper",
+  "version": "1.0.0",
+  "description": "Extract clinic info, reviews, and photos from Google Maps in 3 manual steps",
+  "permissions": [
+    "scripting",
+    "webRequest",
+    "downloads",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.google.com/*",
+    "https://www.google.co.in/*",
+    "https://maps.google.com/*",
+    "https://maps.google.co.in/*",
+    "https://lh3.googleusercontent.com/*",
+    "https://*.googleusercontent.com/*",
+    "https://*.ggpht.com/*"
+  ],
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_title": "Clinic Scraper"
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.com/*",
+        "https://www.google.co.in/*",
+        "https://maps.google.com/*",
+        "https://maps.google.co.in/*"
+      ],
+      "js": ["src/content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "src/icons/icon128.svg",
+    "48": "src/icons/icon128.svg",
+    "128": "src/icons/icon128.svg"
+  }
+}

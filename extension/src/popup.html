@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Scraper</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📍 Clinic Scraper</h1>
+        <p class="subtitle">3-Step Manual Extraction</p>
+        
+        <div class="steps">
+            <!-- Step 1: Extract Profile -->
+            <div class="step">
+                <div class="step-header">
+                    <span class="step-number">1</span>
+                    <span class="step-title">Extract Profile Info</span>
+                </div>
+                <div class="step-instructions">
+                    <p>Make sure you're on a Google Maps clinic profile page.</p>
+                    <button id="extractProfile" class="btn btn-primary">Extract Profile</button>
+                </div>
+                <div id="profileStatus" class="status"></div>
+            </div>
+
+            <!-- Step 2: Extract Reviews -->
+            <div class="step">
+                <div class="step-header">
+                    <span class="step-number">2</span>
+                    <span class="step-title">Extract Reviews</span>
+                </div>
+                <div class="step-instructions">
+                    <p>Click below to enable on-page mode. Then open "See all reviews", scroll, and use the floating page button.</p>
+                    <button id="extractReviews" class="btn btn-primary" disabled>Enable Reviews Mode</button>
+                </div>
+                <div id="reviewStatus" class="status"></div>
+            </div>
+
+            <!-- Step 3: Extract Photos -->
+            <div class="step">
+                <div class="step-header">
+                    <span class="step-number">3</span>
+                    <span class="step-title">Extract Clinic Images</span>
+                </div>
+                <div class="step-instructions">
+                    <p>Click below to enable on-page mode. Then collect only clinic profile photos and use the floating page button.</p>
+                    <button id="extractPhotos" class="btn btn-primary" disabled>Enable Photos Mode</button>
+                </div>
+                <div id="photosStatus" class="status"></div>
+            </div>
+
+            <!-- Final Download -->
+            <div class="step final">
+                <div class="step-header">
+                    <span class="step-number">✓</span>
+                    <span class="step-title">Download & Complete</span>
+                </div>
+                <div class="step-instructions">
+                    <p id="downloadMessage" class="hidden">Data ready! Downloading JSON and images...</p>
+                    <button id="downloadData" class="btn btn-success" disabled>Download JSON + Images</button>
+                </div>
+                <div id="downloadStatus" class="status"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <button id="clearData" class="btn btn-secondary btn-small">Clear Data</button>
+            <button id="showPreview" class="btn btn-secondary btn-small">Preview Data</button>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Data Preview</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div id="previewBody" class="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

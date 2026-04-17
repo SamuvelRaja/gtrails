@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { MapPin, ArrowRight, Loader2, Link as LinkIcon, Database, LayoutTemplate } from 'lucide-react';
+import { MapPin, ArrowRight, Loader2, Link as LinkIcon, Database, LayoutTemplate, Upload } from 'lucide-react';
+import Link from 'next/link';
 
 export default function IntakePage() {
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [method, setMethod] = useState<'auto' | 'manual'>('auto');
   const router = useRouter();
 
   const handleGenerate = async (e: React.FormEvent) => {
@@ -44,47 +46,74 @@ export default function IntakePage() {
             Generate a clinic website
           </h1>
           <p className="text-gray-500 text-lg">
-            Paste a Google Maps URL, and we'll extract the data to build a ready-to-publish website automatically.
+            Paste a Google Maps URL, or import data from the Chrome extension.
           </p>
         </div>
 
-        <form onSubmit={handleGenerate} className="w-full relative z-10">
-          <div className="bg-white p-1.5 rounded-2xl shadow-sm border border-gray-200 flex items-center focus-within:ring-2 focus-within:ring-gray-900 focus-within:border-transparent transition-all">
-            <div className="pl-4 pr-2 text-gray-400">
-              <LinkIcon className="w-5 h-5" />
-            </div>
-            <input
-              type="url"
-              className="flex-1 w-full bg-transparent border-none outline-none py-3 text-gray-900 placeholder-gray-400 text-base"
-              placeholder="https://www.google.com/maps/place/..."
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              disabled={loading}
-              required
-            />
-            <button
-              type="submit"
-              disabled={loading}
-              className="bg-gray-900 text-white px-6 py-3 rounded-xl font-medium text-sm hover:bg-gray-800 transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" /> Processing
-                </>
-              ) : (
-                <>
-                  Generate <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </button>
-          </div>
+        {/* Method Selection */}
+        <div className="w-full flex gap-3 mb-8">
+          <button
+            onClick={() => {
+              setMethod('auto');
+              setError('');
+            }}
+            className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
+              method === 'auto'
+                ? 'bg-gray-900 text-white shadow-md'
+                : 'bg-white text-gray-700 border border-gray-200 hover:border-gray-300'
+            }`}
+          >
+            <LinkIcon className="inline mr-2 w-4 h-4" />
+            Auto (Maps URL)
+          </button>
+          <Link
+            href="/admin/import"
+            className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all text-center bg-blue-50 text-blue-700 border border-blue-200 hover:border-blue-300 hover:bg-blue-100`}
+          >
+            <Upload className="inline mr-2 w-4 h-4" />
+            Manual (JSON)
+          </Link>
+        </div>
 
-          {error && (
-            <div className="mt-4 p-3 bg-red-50 border border-red-100 text-red-600 rounded-lg text-sm flex items-center justify-center">
-              {error}
+        {method === 'auto' && (
+          <form onSubmit={handleGenerate} className="w-full relative z-10">
+            <div className="bg-white p-1.5 rounded-2xl shadow-sm border border-gray-200 flex items-center focus-within:ring-2 focus-within:ring-gray-900 focus-within:border-transparent transition-all">
+              <div className="pl-4 pr-2 text-gray-400">
+                <LinkIcon className="w-5 h-5" />
+              </div>
+              <input
+                type="url"
+                className="flex-1 w-full bg-transparent border-none outline-none py-3 text-gray-900 placeholder-gray-400 text-base"
+                placeholder="https://www.google.com/maps/place/..."
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                disabled={loading}
+                required
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className="bg-gray-900 text-white px-6 py-3 rounded-xl font-medium text-sm hover:bg-gray-800 transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" /> Processing
+                  </>
+                ) : (
+                  <>
+                    Generate <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
+              </button>
             </div>
-          )}
-        </form>
+
+            {error && (
+              <div className="mt-4 p-3 bg-red-50 border border-red-100 text-red-600 rounded-lg text-sm flex items-center justify-center">
+                {error}
+              </div>
+            )}
+          </form>
+        )}
 
         <div className="mt-16 w-full grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-gray-200 pt-10">
           <div className="flex flex-col items-center text-center space-y-3">
