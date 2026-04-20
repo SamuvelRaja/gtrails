@@ -1,4 +1,4 @@
-import { readSourceConfig } from "@/lib/dataBuilder";
+import { getAllSlugs, readSourceConfig } from "@/lib/dataBuilder";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -15,6 +15,11 @@ type LayoutProps = {
   children: ReactNode;
   params: Promise<{ slug: string }>;
 };
+
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
 
 export default async function ClinicLayout({ children, params }: LayoutProps) {
   const resolvedParams = await params;

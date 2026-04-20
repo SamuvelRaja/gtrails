@@ -1,0 +1,104 @@
+{
+  "clinic": {
+    "name": "JANS Dental Care",
+    "slug": "jans-dental-care",
+    "tagline": "Exceptional Dental Care in Your City",
+    "description": "Welcome to JANS Dental Care. Providing top-tier dental services tailored to your needs in a comfortable environment.",
+    "address": {
+      "full": "1st floor, JANS Dental Care nataraja complex, bus stop, opposite to Vijayamangalam Road, behind vennila stores, Vijayapuri, Tamil Nadu 638056",
+      "area": "",
+      "city": "behind vennila stores",
+      "state": "Vijayapuri",
+      "country": "India"
+    },
+    "contact": {
+      "phone": "06379596858",
+      "website": ""
+    }
+  },
+  "business": {
+    "rating": "4.9",
+    "reviewCount": "",
+    "timings": [],
+    "services": [
+      "Teeth Cleaning",
+      "Root Canal Treatment",
+      "Dental Implants",
+      "Braces & Aligners",
+      "Teeth Whitening"
+    ],
+    "highlights": [
+      "Experienced dental team",
+      "Modern equipment",
+      "Patient-friendly care"
+    ]
+  },
+  "doctor": {
+    "name": "Dr. JANS Team",
+    "images": [],
+    "experience": "5+ years",
+    "specialization": "General Dentistry"
+  },
+  "reviews": [],
+  "media": {
+    "clinicImages": [
+      "/api/media?slug=jans-dental-care&file=clinicImages-1.jpg",
+      "/api/media?slug=jans-dental-care&file=clinicImages-2.jpg",
+      "/api/media?slug=jans-dental-care&file=clinicImages-3.jpg",
+      "/api/media?slug=jans-dental-care&file=clinicImages-4.jpg"
+    ],
+    "treatmentImages": [
+      "/api/media?slug=jans-dental-care&file=treatmentImages-5.jpg",
+      "/api/media?slug=jans-dental-care&file=treatmentImages-6.jpg",
+      "/api/media?slug=jans-dental-care&file=treatmentImages-7.jpg",
+      "/api/media?slug=jans-dental-care&file=treatmentImages-8.jpg"
+    ],
+    "otherImages": [
+      "/api/media?slug=jans-dental-care&file=otherImages-9.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-10.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-11.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-12.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-13.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-14.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-15.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-16.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-17.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-18.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-19.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-20.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-21.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-22.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-23.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-24.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-25.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-26.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-27.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-28.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-29.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-30.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-31.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-32.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-33.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-34.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-35.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-36.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-37.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-38.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-39.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-40.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-41.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-42.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-43.jpg",
+      "/api/media?slug=jans-dental-care&file=otherImages-44.jpg"
+    ]
+  },
+  "overrides": {
+    "doctorName": "",
+    "doctorImages": [],
+    "extraImages": []
+  },
+  "meta": {
+    "generatedAt": "2026-04-20T15:34:23.209Z",
+    "source": "google_maps"
+  }
+}

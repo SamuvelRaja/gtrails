@@ -1,0 +1,97 @@
+{
+  "clinic": {
+    "name": "Dr.Thanuja’s Dental Clinic",
+    "slug": "dr-thanuja-s-dental-clinic",
+    "tagline": "Exceptional Dental Care in Your City",
+    "description": "Welcome to Dr.Thanuja’s Dental Clinic. Providing top-tier dental services tailored to your needs in a comfortable environment.",
+    "address": {
+      "full": "2nd floor, Mariam towers, Plot no. A-2/159, East Coast Rd, near Saibaba temple bus stop, Injambakkam, Chennai, Tamil Nadu 600115",
+      "area": "",
+      "city": "Injambakkam",
+      "state": "Chennai",
+      "country": "India"
+    },
+    "contact": {
+      "phone": "07845909373",
+      "website": ""
+    }
+  },
+  "business": {
+    "rating": "5.0",
+    "reviewCount": "",
+    "timings": [],
+    "services": [
+      "Teeth Cleaning",
+      "Root Canal Treatment",
+      "Dental Implants",
+      "Braces & Aligners",
+      "Teeth Whitening"
+    ],
+    "highlights": [
+      "Experienced dental team",
+      "Modern equipment",
+      "Patient-friendly care"
+    ]
+  },
+  "doctor": {
+    "name": "Dr. Dr.Thanuja’s Team",
+    "images": [],
+    "experience": "5+ years",
+    "specialization": "General Dentistry"
+  },
+  "reviews": [],
+  "media": {
+    "clinicImages": [
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=clinicImages-1.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=clinicImages-2.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=clinicImages-3.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=clinicImages-4.jpg"
+    ],
+    "treatmentImages": [
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=treatmentImages-5.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=treatmentImages-6.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=treatmentImages-7.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=treatmentImages-8.jpg"
+    ],
+    "otherImages": [
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-9.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-10.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-11.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-12.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-13.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-14.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-15.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-16.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-17.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-18.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-19.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-20.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-21.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-22.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-23.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-24.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-25.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-26.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-27.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-28.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-29.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-30.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-31.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-32.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-33.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-34.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-35.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-36.jpg",
+      "/api/media?slug=dr-thanuja-s-dental-clinic&file=otherImages-37.jpg"
+    ]
+  },
+  "overrides": {
+    "doctorName": "",
+    "doctorImages": [],
+    "extraImages": []
+  },
+  "meta": {
+    "generatedAt": "2026-04-20T12:56:11.451Z",
+    "source": "google_maps"
+  }
+}

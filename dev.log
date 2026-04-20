@@ -1,0 +1,18 @@
+
+> gtrails@0.1.0 dev
+> next dev
+
+⚠ Port 3000 is in use by process 8513, using available port 3002 instead.
+▲ Next.js 16.2.3 (Turbopack)
+- Local:         http://localhost:3002
+- Network:       http://192.168.31.30:3002
+✓ Ready in 513ms
+⨯ Another next dev server is already running.
+
+- Local:        http://localhost:3000
+- PID:          8513
+- Dir:          /Users/samuvelraja/dev/Webagency/gtrails
+- Log:          .next/dev/logs/next-development.log
+
+Run kill 8513 to stop it.
+[?25h

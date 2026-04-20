@@ -1,4 +1,4 @@
-import { readSourceConfig } from '@/lib/dataBuilder';
+import { readSourceConfig, getAllSlugs } from '@/lib/dataBuilder';
 import { notFound } from 'next/navigation';
 import { 
   ArrowUpRight, Stethoscope
@@ -7,6 +7,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import { Fustat, Inter } from 'next/font/google';
+
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs();
+  return slugs.map((slug) => ({
+    slug: slug,
+  }));
+}
 
 const fustat = Fustat({
   subsets: ['latin'],

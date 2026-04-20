@@ -1,10 +1,17 @@
-import { readSourceConfig } from '@/lib/dataBuilder';
+import { readSourceConfig, getAllSlugs } from '@/lib/dataBuilder';
 import { notFound } from 'next/navigation';
 import { 
   MapPin, Phone, Stethoscope
 } from 'lucide-react';
 import Link from 'next/link';
 import { ReactNode } from 'react';
+
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs();
+  return slugs.map((slug) => ({
+    slug: slug,
+  }));
+}
 
 type LayoutProps = {
   children: ReactNode;

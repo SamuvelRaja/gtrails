@@ -99,3 +99,28 @@ export async function readSourceConfig(slug: string): Promise<GeneratedData | nu
     return null;
   }
 }
+
+export async function getAllSlugs(): Promise<string[]> {
+  const dataPath = path.join(process.cwd(), 'data');
+  try {
+    const entries = await fs.readdir(dataPath, { withFileTypes: true });
+    
+    // Check if source.json exists in each directory
+    const slugs: string[] = [];
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        try {
+          const stats = await fs.stat(path.join(dataPath, entry.name, 'source.json'));
+          if (stats.isFile()) {
+            slugs.push(entry.name);
+          }
+        } catch (e) {
+          // source.json doesn't exist or isn't a file
+        }
+      }
+    }
+    return slugs;
+  } catch (error) {
+    return [];
+  }
+}
