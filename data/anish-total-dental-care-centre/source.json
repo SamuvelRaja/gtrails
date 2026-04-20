@@ -1,0 +1,146 @@
+{
+  "clinic": {
+    "name": "Anish Total Dental Care Centre",
+    "slug": "anish-total-dental-care-centre",
+    "tagline": "Exceptional Dental Care in Your City",
+    "description": "Welcome to Anish Total Dental Care Centre. Providing top-tier dental services tailored to your needs in a comfortable environment.",
+    "address": {
+      "full": "277, Opp. Power House, EVN Rd, Erode, Tamil Nadu 638001",
+      "area": "",
+      "city": "EVN Rd",
+      "state": "Erode",
+      "country": "India"
+    },
+    "contact": {
+      "phone": "04242240802",
+      "website": ""
+    }
+  },
+  "business": {
+    "rating": "5.0",
+    "reviewCount": "",
+    "timings": [],
+    "services": [
+      "Teeth Cleaning",
+      "Root Canal Treatment",
+      "Dental Implants",
+      "Braces & Aligners",
+      "Teeth Whitening"
+    ],
+    "highlights": [
+      "Experienced dental team",
+      "Modern equipment",
+      "Patient-friendly care"
+    ]
+  },
+  "doctor": {
+    "name": "Dr. Anish Team",
+    "images": [],
+    "experience": "5+ years",
+    "specialization": "General Dentistry"
+  },
+  "reviews": [],
+  "media": {
+    "clinicImages": [
+      "/api/media?slug=anish-total-dental-care-centre&file=clinicImages-1.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=clinicImages-2.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=clinicImages-3.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=clinicImages-4.jpg"
+    ],
+    "treatmentImages": [
+      "/api/media?slug=anish-total-dental-care-centre&file=treatmentImages-5.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=treatmentImages-6.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=treatmentImages-7.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=treatmentImages-8.jpg"
+    ],
+    "otherImages": [
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-9.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-10.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-11.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-12.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-13.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-14.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-15.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-16.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-17.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-18.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-19.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-20.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-21.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-22.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-23.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-24.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-25.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-26.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-27.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-28.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-29.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-30.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-31.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-32.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-33.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-34.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-35.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-36.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-37.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-38.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-39.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-40.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-41.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-42.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-43.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-44.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-45.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-46.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-47.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-48.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-49.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-50.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-51.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-52.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-53.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-54.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-55.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-56.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-57.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-58.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-59.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-60.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-61.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-62.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-63.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-64.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-65.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-66.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-67.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-68.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-69.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-70.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-71.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-72.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-73.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-74.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-75.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-76.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-77.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-78.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-79.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-80.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-81.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-82.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-83.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-84.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-85.jpg",
+      "/api/media?slug=anish-total-dental-care-centre&file=otherImages-86.jpg"
+    ]
+  },
+  "overrides": {
+    "doctorName": "",
+    "doctorImages": [],
+    "extraImages": []
+  },
+  "meta": {
+    "generatedAt": "2026-04-20T05:32:58.656Z",
+    "source": "google_maps"
+  }
+}
