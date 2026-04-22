@@ -15,6 +15,7 @@ export interface ScrapedData {
   phone: string;
   imageUrls: string[];
   reviews: ReviewData[];
+  mapEmbedUrl: string;
 }
 
 const GOOGLE_PHOTO_HOST_RE = /(googleusercontent\.com|ggpht\.com|gstatic\.com|googleapis\.com)/i;
@@ -1055,6 +1056,31 @@ export async function scrapeGoogleBusinessProfile(url: string, photosUrl?: strin
         const cleanedAddress = cleanLabeledText(address).replace(/\s*\n\s*/g, ', ');
         const cleanedPhone = cleanLabeledText(phone).replace(/[^\d+]/g, '');
 
+    // --- Build a Google Maps embed URL ---
+    let mapEmbedUrl = '';
+    try {
+      // Try to extract lat/lng from the URL pattern: @LAT,LNG,ZOOMz
+      const currentUrl = page.url();
+      const coordsMatch = currentUrl.match(/@(-?[\d.]+),(-?[\d.]+),([\d.]+)z/);
+      if (coordsMatch) {
+        const lat = coordsMatch[1];
+        const lng = coordsMatch[2];
+        mapEmbedUrl = `https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3000!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1`;
+      }
+      // Fallback: use a search-based embed with the business name + address
+      if (!mapEmbedUrl && name.trim()) {
+        const query = encodeURIComponent(`${name.trim()} ${cleanedAddress || ''}`.trim());
+        mapEmbedUrl = `https://www.google.com/maps/embed/v1/place?key=&q=${query}`;
+      }
+      // Best fallback: use a simple search embed (works without API key)
+      if (!mapEmbedUrl || mapEmbedUrl.includes('key=&')) {
+        const query = encodeURIComponent(`${name.trim()} ${cleanedAddress || ''}`.trim());
+        mapEmbedUrl = `https://maps.google.com/maps?q=${query}&output=embed`;
+      }
+    } catch {
+      console.log('Could not extract map embed data from URL.');
+    }
+
     return {
       name: name.trim(),
       rating: rating.trim(),
@@ -1063,6 +1089,7 @@ export async function scrapeGoogleBusinessProfile(url: string, photosUrl?: strin
             phone: cleanedPhone || 'Phone not found',
       imageUrls: uniqueImageUrls,
             reviews: extractedReviews.filter(r => r.rating === 5),
+      mapEmbedUrl,
     };
   } catch (error) {
     console.error('Error during scraping:', error);

@@ -158,6 +158,7 @@ export async function POST(req: Request) {
       phone: scrapedData.phone,
       media: mediaObj,
       reviews: scrapedData.reviews,
+      mapEmbedUrl: scrapedData.mapEmbedUrl,
     });
 
     // 5. Trigger auto-generation of the deploy-ready static output

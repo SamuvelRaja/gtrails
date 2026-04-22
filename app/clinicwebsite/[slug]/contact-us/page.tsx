@@ -57,7 +57,7 @@ export default async function ContactUsPage({ params }: { params: Promise<{ slug
 
               {/* Contact Cards */}
               <div className="space-y-6">
-                <div className="flex items-start gap-5 p-8 bg-white rounded-[2rem] border border-[#E5E5E5] shadow-sm hover:border-[#0A0A0A] transition-colors group">
+                <div className="flex items-start gap-5 p-8 bg-white rounded-4xl border border-[#E5E5E5] shadow-sm hover:border-[#0A0A0A] transition-colors group">
                   <div className="w-14 h-14 bg-[#FCFAF6] rounded-full flex items-center justify-center shrink-0 border border-[#E5E5E5] text-[#0A0A0A] group-hover:bg-[#C1FF72] group-hover:border-[#C1FF72] transition-colors">
                     <MapPin className="w-6 h-6" />
                   </div>
@@ -70,7 +70,7 @@ export default async function ContactUsPage({ params }: { params: Promise<{ slug
                   </div>
                 </div>
                 
-                <div className="flex items-start gap-5 p-8 bg-white rounded-[2rem] border border-[#E5E5E5] shadow-sm hover:border-[#0A0A0A] transition-colors group">
+                <div className="flex items-start gap-5 p-8 bg-white rounded-4xl border border-[#E5E5E5] shadow-sm hover:border-[#0A0A0A] transition-colors group">
                   <div className="w-14 h-14 bg-[#FCFAF6] rounded-full flex items-center justify-center shrink-0 border border-[#E5E5E5] text-[#0A0A0A] group-hover:bg-[#C1FF72] group-hover:border-[#C1FF72] transition-colors">
                     <Phone className="w-6 h-6" />
                   </div>
@@ -84,7 +84,7 @@ export default async function ContactUsPage({ params }: { params: Promise<{ slug
                   </div>
                 </div>
 
-                <div className="flex items-start gap-5 p-8 bg-white rounded-[2rem] border border-[#E5E5E5] shadow-sm hover:border-[#0A0A0A] transition-colors group">
+                <div className="flex items-start gap-5 p-8 bg-white rounded-4xl border border-[#E5E5E5] shadow-sm hover:border-[#0A0A0A] transition-colors group">
                   <div className="w-14 h-14 bg-[#FCFAF6] rounded-full flex items-center justify-center shrink-0 border border-[#E5E5E5] text-[#0A0A0A] group-hover:bg-[#C1FF72] group-hover:border-[#C1FF72] transition-colors">
                     <Clock className="w-6 h-6" />
                   </div>
@@ -102,7 +102,7 @@ export default async function ContactUsPage({ params }: { params: Promise<{ slug
 
             {/* Right Column: Contact Form */}
             <div className="lg:col-span-3">
-              <div className="bg-white p-10 lg:p-14 rounded-[2rem] border border-[#E5E5E5] shadow-sm">
+              <div className="bg-white p-10 lg:p-14 rounded-4xl border border-[#E5E5E5] shadow-sm">
                 <div className="flex flex-col mb-10">
                   <h3 className="text-3xl font-extrabold text-[#0A0A0A] tracking-tighter mb-4">Book an Appointment</h3>
                   <p className="text-gray-500 font-medium text-[15px]">Fill in your details and we will get back to you within 2 business hours to confirm your appointment.</p>
@@ -188,7 +188,7 @@ export default async function ContactUsPage({ params }: { params: Promise<{ slug
               { step: '03', title: 'Treatment Plan', desc: 'You will receive a clear, honest explanation of your dental health status and a customised treatment plan with transparent pricing.' },
               { step: '04', title: 'Begin Treatment', desc: 'If you are ready, we can often begin treatment the same day. Otherwise, we will schedule follow-ups at times that work best for your routine.' },
             ].map((item, i) => (
-              <div key={i} className="text-center bg-[#FCFAF6] p-10 rounded-[2rem] border border-[#E5E5E5] flex flex-col items-center">
+              <div key={i} className="text-center bg-[#FCFAF6] p-10 rounded-4xl border border-[#E5E5E5] flex flex-col items-center">
                 <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-[#0A0A0A] font-bold text-xl mb-8 border border-[#E5E5E5] shadow-sm">
                   {item.step}
                 </div>
@@ -241,7 +241,7 @@ export default async function ContactUsPage({ params }: { params: Promise<{ slug
 
             {/* Map Placeholder */}
             <div className="flex-1 w-full">
-              <div className="aspect-4/3 bg-white rounded-[2rem] border border-[#E5E5E5] shadow-sm flex items-center justify-center flex-col p-8 text-center group hover:border-[#0A0A0A] transition-colors relative overflow-hidden">
+              <div className="aspect-4/3 bg-white rounded-4xl border border-[#E5E5E5] shadow-sm flex items-center justify-center flex-col p-8 text-center group hover:border-[#0A0A0A] transition-colors relative overflow-hidden">
                 <div className="absolute inset-0 bg-gray-50/50 mix-blend-multiply"></div>
                 <Navigation className="w-12 h-12 text-[#C1FF72] mb-6 relative z-10" />
                 <p className="font-extrabold text-[#0A0A0A] text-2xl mb-2 relative z-10">Interactive Map</p>

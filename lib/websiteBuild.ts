@@ -5,14 +5,18 @@ import util from 'util';
 
 const execAsync = util.promisify(exec);
 
-const REQUIRED_TEMPLATE_IDS = ['template1', 'template2', 'template3', 'template4'] as const;
+export const REQUIRED_TEMPLATE_IDS = ['template1', 'template2', 'template3', 'template4'] as const;
+
+export function getGeneratedWebsiteRoot(slug: string): string {
+  return path.join(process.cwd(), 'data', slug, 'website');
+}
 
 type BuildDeployResult =
   | { ok: true }
   | { ok: false; message: string };
 
 export async function hasGeneratedWebsiteOutput(slug: string): Promise<boolean> {
-  const websiteRoot = path.join(process.cwd(), 'data', slug, 'website');
+  const websiteRoot = getGeneratedWebsiteRoot(slug);
 
   for (const templateId of REQUIRED_TEMPLATE_IDS) {
     const templateIndexPath = path.join(websiteRoot, templateId, 'index.html');

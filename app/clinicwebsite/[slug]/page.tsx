@@ -62,7 +62,7 @@ export default async function ClinicHome({ params }: PageProps) {
 
   return (
     <div className="font-sans text-[#0A0A0A] bg-[#FCFAF6] min-h-screen selection:bg-[#C1FF72] selection:text-[#0A0A0A]">
-      <ClientHero clinic={clinic} business={business} basePath={basePath} />
+      <ClientHero clinic={clinic} business={business} basePath={basePath} heroImage={heroImage} />
 
       {/* WHY CHOOSE US */}
       <section className="py-24 lg:py-32 bg-white border-b border-[#E5E5E5]">
@@ -85,7 +85,7 @@ export default async function ClinicHome({ params }: PageProps) {
               { title: "Patient Comfort Focus", desc: "We prioritize your comfort with a welcoming atmosphere, painless sedation dentistry, and premium care.", icon: Smile },
               { title: "Affordable Care", desc: "Quality dental services are accessible. We believe everyone deserves great dental health without hidden costs.", icon: Users }
             ].map((feature, idx) => (
-              <div key={idx} className="flex flex-col group p-8 rounded-[2rem] bg-[#FCFAF6] hover:bg-white border border-transparent hover:border-[#0A0A0A] hover:shadow-xl transition-all duration-300">
+              <div key={idx} className="flex flex-col group p-8 rounded-4xl bg-[#FCFAF6] hover:bg-white border border-transparent hover:border-[#0A0A0A] hover:shadow-xl transition-all duration-300">
                 <div className="w-14 h-14 rounded-full bg-white border border-[#E5E5E5] flex items-center justify-center mb-8 text-[#0A0A0A] group-hover:bg-[#C1FF72] group-hover:border-[#C1FF72] transition-colors duration-300">
                   <feature.icon className="w-6 h-6" />
                 </div>
@@ -118,7 +118,7 @@ export default async function ClinicHome({ params }: PageProps) {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {servicesList.map((svc: string, i: number) => (
-              <div key={i} className="bg-white p-10 rounded-[2rem] border border-[#E5E5E5] hover:border-[#0A0A0A] hover:shadow-xl transition-all duration-300 flex flex-col group min-h-80 relative overflow-hidden">
+              <div key={i} className="bg-white p-10 rounded-4xl border border-[#E5E5E5] hover:border-[#0A0A0A] hover:shadow-xl transition-all duration-300 flex flex-col group min-h-80 relative overflow-hidden">
                 <div className="mb-8 relative z-10 flex justify-between items-start">
                    <div className="w-12 h-12 rounded-full bg-[#FCFAF6] flex items-center justify-center text-[#0A0A0A] group-hover:bg-[#C1FF72] transition-colors">
                      <Activity className="w-5 h-5" />
@@ -160,32 +160,39 @@ export default async function ClinicHome({ params }: PageProps) {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { title: 'Smile Makeover', sub: 'Cosmetic Veneers' },
-              { title: 'Dental Implants', sub: 'Full-Arch Restoration' },
-              { title: 'Orthodontic Correction', sub: 'Invisalign Results' },
-            ].map((item, idx) => (
-              <div key={idx} className="group cursor-pointer flex flex-col h-full bg-white/5 p-4 rounded-[2rem] border border-white/10 hover:border-white/30 transition-colors">
-                <div className="aspect-4/3 bg-white/10 rounded-2xl overflow-hidden relative mb-6">
-                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-500"></div>
-                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                     <span className="flex flex-col items-center justify-center bg-[#C1FF72] text-[#0A0A0A] w-24 h-24 rounded-full shadow-lg transform group-hover:scale-110 transition-transform">
-                        <Camera className="w-8 h-8 mb-1" />
-                        <span className="text-[10px] uppercase font-bold tracking-widest">View</span>
-                     </span>
-                   </div>
-                </div>
-                <div className="flex justify-between items-center px-4 pb-2">
-                  <div>
-                    <h5 className="text-xl font-bold text-white">{item.title}</h5>
-                    <p className="text-[#C1FF72] mt-1 text-xs font-bold tracking-widest uppercase">{item.sub}</p>
+            {(() => {
+              const allPreviewImages = [...(media.clinicImages || []), ...(media.treatmentImages || []), ...(media.otherImages || [])];
+              const previewItems = [
+                { title: 'Smile Makeover', sub: 'Cosmetic Veneers', img: allPreviewImages[0] },
+                { title: 'Dental Implants', sub: 'Full-Arch Restoration', img: allPreviewImages[1] },
+                { title: 'Orthodontic Correction', sub: 'Invisalign Results', img: allPreviewImages[2] },
+              ];
+              return previewItems.map((item, idx) => (
+                <Link key={idx} href={`${basePath}/gallery`} className="group cursor-pointer flex flex-col h-full bg-white/5 p-4 rounded-4xl border border-white/10 hover:border-white/30 transition-colors">
+                  <div className="aspect-4/3 bg-white/10 rounded-2xl overflow-hidden relative mb-6">
+                     {item.img ? (
+                       <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                     ) : null}
+                     <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500"></div>
+                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                       <span className="flex flex-col items-center justify-center bg-[#C1FF72] text-[#0A0A0A] w-24 h-24 rounded-full shadow-lg transform group-hover:scale-110 transition-transform">
+                          <Camera className="w-8 h-8 mb-1" />
+                          <span className="text-[10px] uppercase font-bold tracking-widest">View</span>
+                       </span>
+                     </div>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-[#C1FF72] group-hover:text-[#0A0A0A] transition-all">
-                    <ArrowRight className="w-4 h-4 group-hover:-rotate-45 transition-transform" />
+                  <div className="flex justify-between items-center px-4 pb-2">
+                    <div>
+                      <h5 className="text-xl font-bold text-white">{item.title}</h5>
+                      <p className="text-[#C1FF72] mt-1 text-xs font-bold tracking-widest uppercase">{item.sub}</p>
+                    </div>
+                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-[#C1FF72] group-hover:text-[#0A0A0A] transition-all">
+                      <ArrowRight className="w-4 h-4 group-hover:-rotate-45 transition-transform" />
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                </Link>
+              ));
+            })()}
           </div>
         </div>
       </section>
@@ -195,8 +202,8 @@ export default async function ClinicHome({ params }: PageProps) {
         <div className="max-w-7xl mx-auto px-8 w-full">
            <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
              <div className="order-2 lg:order-1 relative">
-                <img src={doctorImage} alt={doctor.name || "Specialist"} className="w-full aspect-4/5 object-cover rounded-[2rem] bg-[#FCFAF6] border border-[#E5E5E5]" />
-                <div className="absolute -bottom-8 -right-4 md:right-8 bg-white p-6 rounded-[2rem] shadow-xl border border-[#E5E5E5] flex items-center gap-6">
+                <img src={doctorImage} alt={doctor.name || "Specialist"} className="w-full aspect-4/5 object-cover rounded-4xl bg-[#FCFAF6] border border-[#E5E5E5]" />
+                <div className="absolute -bottom-8 -right-4 md:right-8 bg-white p-6 rounded-4xl shadow-xl border border-[#E5E5E5] flex items-center gap-6">
                    <div>
                      <h4 className="text-xl font-bold text-[#0A0A0A]">{doctor.name || 'Our Lead Specialist'}</h4>
                      <p className="text-xs text-gray-500 uppercase tracking-widest mt-1 font-bold">{doctor.specialization || 'Orthodontist & Implantologist'}</p>
@@ -272,7 +279,7 @@ export default async function ClinicHome({ params }: PageProps) {
           ) : (
             <div className="grid md:grid-cols-3 gap-6">
               {displayReviews.map((review: any, i: number) => (
-                <div key={i} className="bg-white p-10 rounded-[2rem] border border-[#E5E5E5] flex flex-col h-full hover:shadow-xl hover:border-[#0A0A0A] transition-all duration-300">
+                <div key={i} className="bg-white p-10 rounded-4xl border border-[#E5E5E5] flex flex-col h-full hover:shadow-xl hover:border-[#0A0A0A] transition-all duration-300">
                    <div className="flex gap-1 mb-8">
                      {[...Array(5)].map((_, j) => (
                        <Star key={j} className={`w-5 h-5 ${j < parseInt(review.rating) ? 'fill-[#C1FF72] text-[#0A0A0A]' : 'fill-[#FCFAF6] text-[#E5E5E5]'}`} />
@@ -309,7 +316,7 @@ export default async function ClinicHome({ params }: PageProps) {
 
           <div className="space-y-4">
             {faqs.map((faq, idx) => (
-               <details key={idx} className="group border border-[#E5E5E5] rounded-[2rem] bg-[#FCFAF6] px-8 open:bg-white open:border-[#0A0A0A] hover:border-[#0A0A0A] transition-colors">
+               <details key={idx} className="group border border-[#E5E5E5] rounded-4xl bg-[#FCFAF6] px-8 open:bg-white open:border-[#0A0A0A] hover:border-[#0A0A0A] transition-colors">
                  <summary className="flex items-center justify-between py-6 cursor-pointer list-none font-bold text-xl text-[#0A0A0A]">
                    <span className="pr-8">{faq.q}</span>
                    <span className="flex shrink-0 w-10 h-10 items-center justify-center rounded-full bg-white group-open:bg-[#C1FF72] group-open:text-[#0A0A0A] transition-colors border border-[#E5E5E5] group-open:border-[#0A0A0A]">
@@ -324,7 +331,7 @@ export default async function ClinicHome({ params }: PageProps) {
             ))}
           </div>
           
-          <div className="mt-16 bg-[#FCFAF6] rounded-[2rem] p-12 text-center border border-[#E5E5E5] flex flex-col items-center">
+          <div className="mt-16 bg-[#FCFAF6] rounded-4xl p-12 text-center border border-[#E5E5E5] flex flex-col items-center">
              <h5 className="font-extrabold text-3xl text-[#0A0A0A] mb-4">Have a different question?</h5>
              <p className="text-gray-500 font-medium mb-8 max-w-lg mx-auto">Our front-desk team is always available to help you with your queries.</p>
              <a href={`tel:${clinic.contact?.phone || ''}`} className="inline-flex items-center justify-center px-10 py-4 rounded-full bg-[#0A0A0A] text-white hover:bg-[#1A1A1A] transition-all hover:scale-105 active:scale-95 font-bold tracking-wide shadow-sm">

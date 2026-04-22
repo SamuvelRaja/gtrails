@@ -194,7 +194,7 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
                 </div>
 
                 <h3 className="text-4xl lg:text-5xl font-extrabold text-[#0A0A0A] mb-8 leading-[1.05] tracking-tighter text-center">{guide.title}</h3>
-                <p className="text-gray-500 text-[18px] leading-relaxed mb-12 border-l-4 border-[#C1FF72] pl-6 font-medium italic bg-[#FCFAF6] p-6 rounded-r-[2rem]">{guide.intro}</p>
+                <p className="text-gray-500 text-[18px] leading-relaxed mb-12 border-l-4 border-[#C1FF72] pl-6 font-medium italic bg-[#FCFAF6] p-6 rounded-r-4xl">{guide.intro}</p>
 
                 {/* Content Sections */}
                 <div className="space-y-12 mb-12">
@@ -207,7 +207,7 @@ export default async function PatientGuidesPage({ params }: { params: Promise<{ 
                 </div>
 
                 {/* Tips Box */}
-                <div className="bg-[#FCFAF6] rounded-[2rem] p-10 border border-[#E5E5E5] shadow-sm">
+                <div className="bg-[#FCFAF6] rounded-4xl p-10 border border-[#E5E5E5] shadow-sm">
                   <div className="flex items-center gap-3 mb-6">
                     <Lightbulb className="w-6 h-6 text-[#C1FF72]" />
                     <h4 className="font-bold text-[#0A0A0A] text-lg">Expert Tips</h4>

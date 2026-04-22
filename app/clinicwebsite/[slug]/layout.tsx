@@ -52,11 +52,8 @@ export default async function ClinicLayout({ children, params }: LayoutProps) {
       {/* Navbar */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-8 h-24 flex justify-between items-center">
-          <Link href={basePath} className="flex items-center gap-4 leading-none">
-            <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-[#202A36] border border-gray-200">
-              <Stethoscope className="w-6 h-6" />
-            </div>
-            <h1 className="text-xl font-medium tracking-tight text-[#202A36]">
+          <Link href={basePath} className="leading-none">
+            <h1 className="text-xl font-bold tracking-tight text-[#202A36]">
               {clinic.name || 'Clinic Name'}
             </h1>
           </Link>
@@ -81,8 +78,29 @@ export default async function ClinicLayout({ children, params }: LayoutProps) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 pt-24 pb-12 px-8 mt-auto">
+      <footer className="bg-white border-t border-gray-200 pt-16 pb-12 px-8 mt-auto">
         <div className="max-w-7xl mx-auto">
+          {/* Map Embed */}
+          {(() => {
+            const mapUrl = clinic.mapEmbedUrl || 
+              `https://maps.google.com/maps?q=${encodeURIComponent((clinic.name || '') + ' ' + (clinic.address?.full || ''))}&output=embed`;
+            return (
+              <div className="mb-16 rounded-3xl overflow-hidden border border-gray-200 shadow-sm bg-gray-50">
+                <iframe
+                  src={mapUrl}
+                  width="100%"
+                  height="350"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title={`Location of ${clinic.name || 'our clinic'}`}
+                  className="w-full block"
+                ></iframe>
+              </div>
+            );
+          })()}
+
           {/* Footer Navigation Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16 text-gray-500">
             <div className="lg:col-span-2 space-y-6">
@@ -99,9 +117,11 @@ export default async function ClinicLayout({ children, params }: LayoutProps) {
               <h5 className="text-gray-400 font-semibold mb-8 tracking-[0.15em] uppercase text-xs">Contact Info</h5>
               <ul className="space-y-6">
                 <li className="flex items-start gap-4">
+                  <MapPin className="w-4 h-4 mt-1 shrink-0 text-gray-400" />
                   <span className="text-[15px] font-light leading-relaxed">{clinic.address?.full || 'Clinic Location'}</span>
                 </li>
                 <li className="flex items-start gap-4">
+                  <Phone className="w-4 h-4 mt-1 shrink-0 text-gray-400" />
                   <span className="text-[15px] font-light">{clinic.contact?.phone || 'Phone Number'}</span>
                 </li>
               </ul>

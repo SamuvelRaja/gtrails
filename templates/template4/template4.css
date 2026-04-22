@@ -222,7 +222,7 @@
 /* Block Grid (Founders) */
 .template4-wrapper .block-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 8%;
     align-items: center;
 }
@@ -314,7 +314,7 @@
 /* Programs Grid */
 .template4-wrapper .programs-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 40px;
 }
 .template4-wrapper .program-card {
@@ -375,7 +375,7 @@
 /* Vault / Media Grid */
 .template4-wrapper .vault-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 40px;
 }
 .template4-wrapper .vault-item {
@@ -389,7 +389,7 @@
 }
 .template4-wrapper .media-grid-clean {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 40px;
 }
 .template4-wrapper .media-embed-wrap {

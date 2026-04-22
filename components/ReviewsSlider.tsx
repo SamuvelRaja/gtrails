@@ -27,7 +27,7 @@ type ThemeClasses = {
 
 const THEME_CLASSES: Record<SliderTheme, ThemeClasses> = {
   template1: {
-    card: 'bg-white p-10 rounded-[2rem] border border-[#E5E5E5] flex flex-col h-full hover:shadow-xl hover:border-[#0A0A0A] transition-all duration-300',
+    card: 'bg-white p-10 rounded-4xl border border-[#E5E5E5] flex flex-col h-full hover:shadow-xl hover:border-[#0A0A0A] transition-all duration-300',
     starActive: 'fill-[#C1FF72] text-[#0A0A0A]',
     starInactive: 'fill-[#FCFAF6] text-[#E5E5E5]',
     quote: 'text-[#0A0A0A] leading-relaxed mb-10 text-[16px] grow font-bold text-lg',

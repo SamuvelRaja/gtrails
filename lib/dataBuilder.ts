@@ -44,7 +44,8 @@ export async function createSourceConfig(slug: string, data: any): Promise<Gener
       contact: {
         phone: data.phone || '',
         website: ''
-      }
+      },
+      mapEmbedUrl: data.mapEmbedUrl || ''
     },
     business: {
       rating: data.rating || '',

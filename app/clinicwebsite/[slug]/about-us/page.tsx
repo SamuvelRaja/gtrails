@@ -46,7 +46,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
             {/* Image */}
             <div className="flex-1 w-full">
-              <div className="relative rounded-[2rem] overflow-hidden border border-[#E5E5E5] bg-[#FCFAF6] shadow-xl p-2 pb-0">
+              <div className="relative rounded-4xl overflow-hidden border border-[#E5E5E5] bg-[#FCFAF6] shadow-xl p-2 pb-0">
                 <img
                   src={clinicImage}
                   alt={`${clinic.name || 'Clinic'} facility`}
@@ -87,7 +87,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
         <div className="max-w-7xl mx-auto px-8 w-full">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
             {/* Vision */}
-            <div className="bg-white rounded-[2rem] p-10 lg:p-12 border border-[#E5E5E5] flex flex-col group shadow-sm hover:shadow-xl hover:border-[#0A0A0A] transition-all duration-300">
+            <div className="bg-white rounded-4xl p-10 lg:p-12 border border-[#E5E5E5] flex flex-col group shadow-sm hover:shadow-xl hover:border-[#0A0A0A] transition-all duration-300">
               <div className="w-16 h-16 bg-[#FCFAF6] rounded-full border border-[#E5E5E5] flex items-center justify-center text-[#0A0A0A] mb-8 group-hover:bg-[#C1FF72] group-hover:border-[#C1FF72] transition-colors duration-300">
                 <Eye className="w-7 h-7" />
               </div>
@@ -98,7 +98,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
             </div>
 
             {/* Mission */}
-            <div className="bg-white rounded-[2rem] p-10 lg:p-12 border border-[#E5E5E5] flex flex-col group shadow-sm hover:shadow-xl hover:border-[#0A0A0A] transition-all duration-300">
+            <div className="bg-white rounded-4xl p-10 lg:p-12 border border-[#E5E5E5] flex flex-col group shadow-sm hover:shadow-xl hover:border-[#0A0A0A] transition-all duration-300">
               <div className="w-16 h-16 bg-[#FCFAF6] rounded-full border border-[#E5E5E5] flex items-center justify-center text-[#0A0A0A] mb-8 group-hover:bg-[#C1FF72] group-hover:border-[#C1FF72] transition-colors duration-300">
                 <Target className="w-7 h-7" />
               </div>
@@ -134,7 +134,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
               { icon: Sparkles, title: 'Transparency & Trust', desc: 'No surprise bills, no unnecessary procedures. We present every treatment option honestly, with clear pricing, so you can make informed decisions.' },
               { icon: Smile, title: 'Comfort & Compassion', desc: 'We understand dental anxiety is real. Our welcoming environment, gentle technique, and sedation options ensure every visit is stress-free.' },
             ].map((value, i) => (
-              <div key={i} className="p-8 rounded-[2rem] bg-[#FCFAF6] flex flex-col group border border-[#E5E5E5] hover:bg-white hover:border-[#0A0A0A] hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+              <div key={i} className="p-8 rounded-4xl bg-[#FCFAF6] flex flex-col group border border-[#E5E5E5] hover:bg-white hover:border-[#0A0A0A] hover:shadow-xl transition-all duration-300 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#C1FF72] rounded-bl-full opacity-0 group-hover:opacity-10 transition-opacity blur-xl"></div>
                 <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#0A0A0A] mb-8 border border-[#E5E5E5] group-hover:bg-[#C1FF72] group-hover:border-[#C1FF72] transition-colors relative z-10">
                   <value.icon className="w-5 h-5" />
@@ -194,13 +194,13 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
         <div className="max-w-7xl mx-auto px-8 w-full">
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
             <div className="flex-1 w-full order-2 lg:order-1">
-              <div className="relative rounded-[2rem] overflow-hidden bg-[#FCFAF6] border border-[#E5E5E5] p-2 aspect-3/4">
+              <div className="relative rounded-4xl overflow-hidden bg-[#FCFAF6] border border-[#E5E5E5] p-2 aspect-3/4">
                  <img 
                    src={doctorImage} 
                    alt={doctor.name || 'Specialist'} 
                    className="w-full h-full object-cover rounded-3xl"
                  />
-                 <div className="absolute bottom-6 left-6 right-6 bg-white rounded-[2rem] p-6 shadow-xl border border-[#E5E5E5] text-center">
+                 <div className="absolute bottom-6 left-6 right-6 bg-white rounded-4xl p-6 shadow-xl border border-[#E5E5E5] text-center">
                     <h4 className="text-xl font-bold text-[#0A0A0A]">{doctor.name || 'Our Lead Specialist'}</h4>
                     <p className="text-gray-500 font-bold mt-1 text-xs tracking-widest uppercase">{doctor.specialization || 'Orthodontist & Implantologist'} • {doctor.experience || '10+ Years'}</p>
                  </div>
@@ -270,7 +270,7 @@ export default async function AboutUsPage({ params }: { params: Promise<{ slug: 
               { icon: Users, title: 'Pediatric Dentists', desc: 'Child-friendly dental experts who make clinic visits fun and stress-free. Specialised in early intervention, sealants, and managing dental development.' },
               { icon: Award, title: 'Prosthodontists', desc: 'Artists of dentistry who design and craft veneers, crowns, bridges, and full-mouth aesthetic rehabilitations for picture-perfect smiles.' },
             ].map((dept, i) => (
-              <div key={i} className="bg-white p-8 rounded-[2rem] border border-[#E5E5E5] flex flex-col group hover:shadow-xl hover:border-[#0A0A0A] transition-all duration-300">
+              <div key={i} className="bg-white p-8 rounded-4xl border border-[#E5E5E5] flex flex-col group hover:shadow-xl hover:border-[#0A0A0A] transition-all duration-300">
                 <div className="w-12 h-12 bg-[#FCFAF6] rounded-full flex items-center justify-center text-[#0A0A0A] mb-8 border border-[#E5E5E5] group-hover:bg-[#C1FF72] group-hover:border-[#C1FF72] transition-colors duration-300">
                   <dept.icon className="w-5 h-5" />
                 </div>

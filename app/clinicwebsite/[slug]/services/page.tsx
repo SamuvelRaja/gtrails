@@ -310,7 +310,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ slug:
 
                   {/* Right: Process Steps */}
                   <div className={`flex-1 w-full ${!isEven ? 'lg:order-1' : ''}`}>
-                    <div className="bg-[#FCFAF6] rounded-[2rem] border border-[#E5E5E5] p-10 lg:p-12 h-full flex flex-col shadow-sm">
+                    <div className="bg-[#FCFAF6] rounded-4xl border border-[#E5E5E5] p-10 lg:p-12 h-full flex flex-col shadow-sm">
                       <h4 className="text-2xl font-extrabold text-[#0A0A0A] mb-10 tracking-tight">How It Works</h4>
                       <div className="space-y-10 grow relative">
                         {/* Connecting Line */}
